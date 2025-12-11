@@ -43,4 +43,6 @@ app-example
 /android
 
 # keys
-keys.ts
+keys.*
+
+FirebaseConfig.ts
