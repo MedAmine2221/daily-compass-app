@@ -1,0 +1,148 @@
+{
+    "language": "Langue",
+    "header":{
+        "title": "Votre boussole quotidienne",
+        "body": "Guidez votre journée avec clarté",
+        "editPhoto": "Modifier la photo",
+        "userAdress": "Adresse de l'utilisateur",
+        "userLang": "Langue de l'utilisateur",
+        "userName": "Nom d'utilisateur"
+    },
+    "modulesNames": {
+        "welcome": "Bienvenue",
+        "toDo": "À faire",
+        "chatbot": "Chatbot",
+        "agenda": "Agenda",
+        "stats":"Statistiques",
+        "settings":"Paramètres",
+        "profile":"Profil"
+    },
+    "navBar": {
+        "home": "Accueil",
+        "profile":"Profil",
+        "settings":"Paramètres"
+    },
+    "profile": {
+        "goals": "Objectifs",
+        "phoneNbr": "Numéro de téléphone",
+        "email": "E-mail",
+        "editProfile": "Modifier le profil",
+        "changePassword": "Changer le mot de passe",
+        "DeleteAccount": "Supprimer le compte",
+        "DeletingAccount": "Suppression du compte...",
+        "userPhone": "Numéro de téléphone de l'utilisateur",
+        "goalsNull": "Aucun objectif pour le moment"
+    },
+    "editProfileModal": {
+        "title": "Modifier votre profil",
+        "userName": "Nom d'utilisateur",
+        "phoneNbr": "Numéro de téléphone",
+        "address": "Adresse",
+        "addGoal": "Ajouter un objectif",
+        "submit": "Soumettre",
+        "goalName": "Nom de l'objectif",
+        "goalDesc": "Description"
+    },
+    "agendaEmpty":{
+        "title":"Aucun événement prévu",
+        "body":"Vous n'avez pas d'événements programmés pour aujourd'hui. Profitez de votre journée !"
+    },
+    "agenda":{
+        "event": "Événement"
+    },
+    "headerMenu":{
+        "profile":"Profil",
+        "settings":"Paramètres",
+        "logout":"Déconnexion"
+    },
+    "statEmpty":{
+        "title":"Prêt à suivre vos performances ?",
+        "body":"Commencez par créer un objectif et vos statistiques apparaîtront automatiquement."
+    },
+    "privacy": {
+        "title": "Conditions & Confidentialité",
+        "terms": {
+          "title": "Conditions d’utilisation",
+          "lastUpdate": "Dernière mise à jour : 12/11/2025",
+          "welcome": "Bienvenue sur Your Daily Compass. En utilisant cette application, vous acceptez les conditions suivantes :",
+          "sections": {
+            "personalUseTitle": "1. Utilisation personnelle",
+            "personalUseBody": "L’application est conçue pour un usage personnel. Vous êtes responsable du contenu que vous ajoutez (tâches, notes, objectifs, etc.).",
+
+            "accountTitle": "2. Compte utilisateur",
+            "accountBody": "Vous devez fournir des informations exactes lors de la création de votre compte. Vous êtes seul responsable de la confidentialité de vos identifiants.",
+
+            "contentDeletionTitle": "3. Contenu et suppression",
+            "contentDeletionBody": "Vous pouvez modifier ou supprimer vos données à tout moment depuis l’application. Nous pouvons supprimer un compte inactif ou qui viole nos règles.",
+
+            "limitationsTitle": "4. Limitations",
+            "limitationsBody": "Nous faisons de notre mieux pour garantir la disponibilité du service, mais nous ne garantissons pas l’absence d’erreurs ou d’interruptions."
+          }
+        },
+
+        "privacy": {
+          "title": "Politique de confidentialité",
+          "sections": {
+            "collectedDataTitle": "1. Données collectées",
+            "collectedDataBody": "Nous collectons uniquement les données nécessaires au bon fonctionnement de l’application : informations de compte (nom d’utilisateur, e-mail, numéro de téléphone), contenu créé dans l’application (tâches, objectifs, etc.) et données d’usage anonymes (crash reports, performance).",
+
+            "dataUsageTitle": "2. Utilisation des données",
+            "dataUsageBody": "Les données sont utilisées pour sauvegarder vos informations, synchroniser votre compte, améliorer l’application et vous offrir une meilleure expérience utilisateur.",
+
+            "dataSharingTitle": "3. Partage des données",
+            "dataSharingBody": "Nous ne vendons ni ne partageons vos données personnelles avec des tiers, sauf obligation légale.",
+
+            "securityTitle": "4. Sécurité",
+            "securityBody": "Vos informations sont stockées de manière sécurisée. Nous utilisons Firebase pour l’authentification et le stockage.",
+
+            "yourRightsTitle": "5. Vos droits",
+            "yourRightsBody": "Vous pouvez demander la suppression de vos données ou la désactivation de votre compte à tout moment via la section « Contact » de l’application."
+          }
+        },
+
+        "contact": {
+          "title": "Contact",
+          "body": "Pour toute question concernant ces conditions ou la politique de confidentialité, vous pouvez nous contacter à :"
+        }
+    },
+    "contact": {
+      "title": "Contactez-nous",
+      "contactDeveloper": "Contacter le développeur",
+      "emailLabel": "E-mail :",
+      "qrTitle": "Scannez pour installer l’application Portfolio du développeur"
+    },
+    "rating": {
+        "rateApp": "Évaluer l'application",
+        "header": "Évaluez Votre Application Daily Compass",
+        "tapStar": "Touchez une étoile pour donner votre note",
+        "problemsLabel": "Problèmes",
+        "submit": "Soumettre"
+    },
+    "chat": {
+      "prompt": "Instruction",
+      "firstMsgBot": "Salut 👋, comment puis-je t’aider ?"
+    },
+    "stats": {
+      "taskStatusDistribution": "Répartition des statuts des tâches",
+      "goalCompletionRate": "Taux de complétion par objectif",
+      "selectGoal": "Sélectionner un objectif"
+    },
+    "changePassword": {
+      "title": "Changer le mot de passe",
+      "oldPass": "Ancien mot de passe",
+      "newPass": "Nouveau mot de passe",
+      "confirmNewPass": "Confirmer le nouveau mot de passe",
+      "submit": "Confirmer"
+    },
+    "todo":{
+      "status":{
+        "todo": "À faire",
+        "inProgress": "En cours",
+        "done": "Terminé"
+      },
+      "taskCritical": "urgent task"
+    },
+    "settings":{
+      "emailNotif": "Notifications par email"
+    }
+}

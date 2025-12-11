@@ -1,0 +1,147 @@
+{
+    "language": "Language",
+    "header":{
+        "title": "Your Daily Compass",
+        "body": "Guide your day with clarity",
+        "editPhoto": "Edit Photo",
+        "userAdress": "User Address",
+        "userLang": "User Language",
+        "userName": "User Name"
+    },
+    "modulesNames": {
+        "welcome": "Welcome",
+        "toDo": "To-Do",
+        "chatbot": "Chatbot",
+        "agenda": "Agenda",
+        "stats":"Statistics",
+        "settings":"Settings",
+        "profile":"Profile"
+    },
+    "navBar": {
+        "home": "Home",
+        "profile":"Profile",
+        "settings":"Settings"
+    },
+    "profile": {
+        "goals": "Goals",
+        "phoneNbr": "Phone Number",
+        "email": "E-mail",
+        "editProfile": "Edit Profile",
+        "changePassword": "Change Password",
+        "DeleteAccount": "Supprimer le compte",
+        "DeletingAccount": "Deleting Account...",
+        "userPhone": "User Phone Number",
+        "goalsNull": "No objective at the moment"
+    },
+    "editProfileModal": {
+        "title": "Edit Your Profile",
+        "userName": "UserName",
+        "phoneNbr": "Phone Number",
+        "address": "Address",
+        "addGoal": "Add Goal",
+        "submit": "Submit",
+        "goalName": "Goal Name",
+        "goalDesc": "Description"
+    },
+    "agendaEmpty":{
+        "title":"No events planned",
+        "body":"You have no events scheduled for today. Enjoy your day!"
+    },
+    "agenda":{
+        "event": "Event"
+    },
+    "headerMenu":{
+        "profile":"Profile",
+        "settings":"Settings",
+        "logout":"Logout"
+    },
+    "statEmpty":{
+        "title":"Ready to track your performance?",
+        "body":"Start by creating a goal and your statistics will appear automatically."
+    },
+    "privacy": {
+      "title": "Terms and Privacy",
+        "terms": {
+          "title": "Terms of Use",
+          "lastUpdate": "Last update: 12/11/2025",
+          "welcome": "Welcome to Your Daily Compass. By using this application, you agree to the following terms:",
+          "sections": {
+            "personalUseTitle": "1. Personal Use",
+            "personalUseBody": "The app is designed for personal use. You are responsible for the content you add (tasks, notes, goals, etc.).",
+            
+            "accountTitle": "2. User Account",
+            "accountBody": "You must provide accurate information when creating your account. You are solely responsible for keeping your credentials confidential.",
+
+            "contentDeletionTitle": "3. Content and Deletion",
+            "contentDeletionBody": "You can edit or delete your data at any time from the app. We may remove any inactive account or account violating our rules.",
+
+            "limitationsTitle": "4. Limitations",
+            "limitationsBody": "We do our best to ensure service availability, but we cannot guarantee the absence of errors or interruptions."
+          }
+        },
+
+        "privacy": {
+          "title": "Privacy Policy",
+          "sections": {
+            "collectedDataTitle": "1. Data Collected",
+            "collectedDataBody": "We only collect the data necessary for the proper functioning of the app: account information (username, email, phone number), content created in the app (tasks, goals, etc.), and anonymous usage data (crash reports, performance).",
+            
+            "dataUsageTitle": "2. Use of Data",
+            "dataUsageBody": "Your data is used to save your information, synchronize your account, enhance app features, and provide a better user experience.",
+            
+            "dataSharingTitle": "3. Data Sharing",
+            "dataSharingBody": "We do not sell or share your personal data with third parties unless legally required.",
+            
+            "securityTitle": "4. Security",
+            "securityBody": "Your information is securely stored. We use Firebase for authentication and storage.",
+            
+            "yourRightsTitle": "5. Your Rights",
+            "yourRightsBody": "You may request deletion of your data or account deactivation at any time through the 'Contact' section of the app."
+          }
+        },
+        "contact": {
+          "title": "Contact",
+          "body": "For any questions regarding the Terms or Privacy Policy, you can contact us at:"
+        }
+      },
+      "contact": {
+        "title": "Contact Us",
+        "contactDeveloper": "Contact Developer",
+        "emailLabel": "Email:",
+        "qrTitle": "Scan to Install Developer Portfolio App"
+      },
+      "rating": {
+        "rateApp": "Rate App",
+        "header": "Rating Your Daily Compass App",
+        "tapStar": "Tap a star to give your rating",
+        "problemsLabel": "Problems",
+        "submit": "Submit"
+    },
+    "chat":{
+      "prompt": "Prompt",
+      "firstMsgBot": "Hi 👋, how can I help you?"
+    },
+    "stats": {
+      "taskStatusDistribution": "Task Status Distribution",
+      "goalCompletionRate": "Goal Completion Rate",
+      "selectGoal": "Select Goal"
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "oldPass": "Old Password",
+      "newPass": "New Password",
+      "confirmNewPass": "Confirm New Password",
+      "submit": "Confirm"
+    },
+    "todo":{
+      "status":{
+        "todo": "To Do",
+        "inProgress": "In Progress",
+        "done": "Done"
+      },
+      "taskCritical": "urgent task"
+    },
+    "settings":{
+      "emailNotif": "Email Notifications"
+    }
+  }
