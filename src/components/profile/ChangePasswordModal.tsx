@@ -3,7 +3,9 @@ import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
 import changePassSchema from "@/src/schema/changePassword";
+import { logout } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "expo-router";
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,6 +19,7 @@ import AppInput from "../AppInput";
 export default function ChangePassword({ visible, hideModal }: any) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const router = useRouter()
   const loading = useSelector((state: RootState)=> state.loading.loading)
   const [openModal, setOpenModal] = useState(false);
   const {
@@ -47,7 +50,8 @@ export default function ChangePassword({ visible, hideModal }: any) {
       // Password update
       await updatePassword(user, data.confirmNewPassword);
 
-      closeModal()
+      closeModal();
+      logout(router, dispatch);
 
     } catch (err: any) {
       console.log("Error changing password:", err);
