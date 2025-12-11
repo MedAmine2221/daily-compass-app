@@ -143,6 +143,7 @@ export default function ChangePassword({ visible, hideModal }: any) {
           visible={openModal}
           onConfirm={handleSubmit(onSubmit)}
           onCancel={()=>{setOpenModal(false)}}
+          cancel
         />}
       </Modal>
 

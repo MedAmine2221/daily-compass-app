@@ -183,6 +183,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
               visible={openModal} 
               onConfirm={handleSubmit(onSubmit)}
               onCancel={onCancel}
+              cancel
             />
         } 
       </Modal>

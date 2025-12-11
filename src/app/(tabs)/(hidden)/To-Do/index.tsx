@@ -224,7 +224,8 @@ export default function ToDo() {
         onConfirm={() => {
           if (selectedTask) onSubmitDelete(selectedTask);
         }}
-        onCancel={()=>{setOpenModal(false)}} 
+        onCancel={()=>{setOpenModal(false)}}
+        cancel
       />}
       {visible && (
         <AddTaskModal visible={visible} hideModal={hideModal} />

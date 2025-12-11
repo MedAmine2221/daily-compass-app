@@ -63,6 +63,7 @@ export interface AlertVerificationInterface {
   visible: boolean
   onConfirm: () => void,
   onCancel: () => void,
+  cancel?: boolean
 }
 
 export interface AddTaskModalInterface{

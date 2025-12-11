@@ -11,7 +11,8 @@ export default function AlertVerification({
   icon, 
   visible, 
   onConfirm, 
-  onCancel 
+  onCancel,
+  cancel
 }: AlertVerificationInterface) {  
   const loading = useSelector((state: RootState)=> state.loading.loading)
   return (
@@ -44,7 +45,7 @@ export default function AlertVerification({
                     theme={{colors: { outline: PRIMARY_COLOR }}}
                     onPress={onCancel}
                 >
-                    Cancel
+                    {cancel ? "Cancel": "Continuer sans IA"}
                 </Button>
 
                 <Button 
@@ -52,7 +53,7 @@ export default function AlertVerification({
                     buttonColor={loading ? PRIMARY_COLOR+"50" : PRIMARY_COLOR} 
                     onPress={onConfirm}
                 >
-                    {loading ? "Confirm...": "Confirm"}
+                    {loading&& cancel ? "Confirm...": !loading && cancel ? "Confirm" : !loading && !cancel ? "Confirmer avec IA" : "Confirmer avec IA ..."}
                 </Button>
             </View>
         </Modal>
