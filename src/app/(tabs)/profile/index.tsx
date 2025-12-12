@@ -30,6 +30,7 @@ export default function Profile() {
   const [visible, setVisible] = useState(false);
   const [visibleChangePass, setVisibleChangePass] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [deleteGoalOpenModal, setDeleteGoalOpenModal] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const showChangePassModal = () => setVisibleChangePass(true);
@@ -149,8 +150,32 @@ export default function Profile() {
                                   size={20}
                                   style={{marginHorizontal: 5}}
                                 /> :
-                                <IconButton icon={"trash-can-outline"} iconColor="red" size={24} onPress={()=>deleteGoal(index, item.subtitle)}/>
+                                <IconButton 
+                                  icon={"trash-can-outline"} 
+                                  iconColor="red" 
+                                  size={24} 
+                                  onPress={
+                                    () => setDeleteGoalOpenModal(true)
+                                  }
+                                />
                             }
+                            {
+                              deleteGoalOpenModal &&
+                                <AlertVerification
+                                  title={`Are you sure you want to delete this Goal?`}
+                                  body={"This action cannot be undone."}
+                                  icon={'plus'}
+                                  visible={deleteGoalOpenModal} 
+                                  onConfirm={
+                                    () => deleteGoal(index, item.subtitle)
+                                  }
+                                  onCancel={
+                                    () =>setDeleteGoalOpenModal(false)
+                                  }
+                                  cancel
+                                  action= "delete"
+                                />
+                            } 
                           </View>
                         ))}
                       </View>
@@ -210,12 +235,16 @@ export default function Profile() {
       {
         openModal &&
           <AlertVerification
-            title={"Are you sure you want to delete your account?"}
+            title={`Are you sure you want to delete your account`}
             body={"This action cannot be undone."}
             icon={'plus'}
             visible={openModal} 
-            onConfirm={()=> deleteAccount(router, dispatch, login?.uid as string)}
-            onCancel={()=> setOpenModal(false)}
+            onConfirm={
+              ()=> deleteAccount(router, dispatch, login?.uid as string)
+            }
+            onCancel={
+              ()=> setOpenModal(false)
+            }
             cancel
             action= "delete"
           />

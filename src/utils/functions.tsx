@@ -244,11 +244,11 @@ export const getActionColor = (action: string) => {
 export const getIconColor = (action: string) => {
   switch (action) {
     case "add":
-      return "#0f5f27"; // vert beaucoup plus foncé
+      return "#0f5f27";
     case "update":
-      return "#9a3c02"; // orange/brun foncé
+      return "#9a3c02";
     case "delete":
-      return "#b81e1e"; // rouge foncé
+      return "#b81e1e";
     default:
       return "#b81e1e";
   }
