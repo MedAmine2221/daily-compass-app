@@ -30,6 +30,44 @@ export const removeToken = async () => {
     console.error('Error removing token:', error);
   }
 };
+
+
+export const uploadImageToCloudinary = async (localUri: string) => {
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error("Utilisateur non connecté");
+
+    const data = new FormData();
+    data.append('file', {
+      uri: localUri,
+      type: 'image/jpeg',
+      name: 'profile.jpg',
+    } as any);
+    
+    // Ton preset name (attention à l'espace !)
+    data.append('upload_preset', 'daily compass app');
+    
+    const res = await fetch('https://api.cloudinary.com/v1_1/dfukepvh3/image/upload', {
+      method: 'POST',
+      body: data,
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error('Cloudinary error:', errorData);
+      throw new Error(`Upload failed: ${res.status}`);
+    }
+
+    const json = await res.json();
+    console.log('✅ Upload success:', json.secure_url);
+
+    return json.secure_url; // URL publique de l'image
+  } catch (error) {
+    console.error("❌ Erreur upload image:", error);
+    return null;
+  }
+};
+
 export const pickImageFromGallery = async () => {
   // Request permissions if not already granted
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -43,11 +81,15 @@ export const pickImageFromGallery = async () => {
     aspect: [4, 3],
     quality: 1,
   });
+  console.log("result ",result);
+  let selectedImageUri;
   if (!result.canceled && result.assets && result.assets.length > 0) {
-    const selectedImageUri = result.assets[0].uri;
+    selectedImageUri = result.assets[0].uri;
     console.log('Selected image URI:', selectedImageUri);
   }
+  return selectedImageUri;
 };
+
 export const openLink = async (url: string) => {
   const supported = await Linking.canOpenURL(url);
   if (supported) {

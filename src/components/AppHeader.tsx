@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { auth } from "@/FirebaseConfig";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  Alert,
   Animated,
   Image,
   Platform,
@@ -9,11 +11,13 @@ import {
   Text,
   View,
 } from "react-native";
-import { Avatar, Button, IconButton } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { ActivityIndicator, Avatar, Button, IconButton } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import { PRIMARY_COLOR } from "../constants/colors";
+import { setLoadingFalse, setLoadingTrue } from "../redux/loadingReducer";
 import { RootState } from "../redux/store";
-import { pickImageFromGallery } from "../utils/functions";
+import { setUser } from "../redux/user/userReducer";
+import { pickImageFromGallery, updateItems, uploadImageToCloudinary } from "../utils/functions";
 import AppHeaderMenu from "./HeaderMenu";
 
 export default function AppHeader({
@@ -27,7 +31,33 @@ export default function AppHeader({
   const [isVisible, setIsVisible] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
   const user = useSelector((state: RootState) => state.user.items);
-  
+  const loading = useSelector((state: RootState) => state.loading.loading);
+  const dispatch = useDispatch();
+
+  const updatePhoto = async () => {
+    try {
+      dispatch(setLoadingTrue());
+      const selectedImgUri = await pickImageFromGallery();
+      if (!selectedImgUri) return;
+      
+      // Upload sur Firebase Storage
+      const downloadUrl = await uploadImageToCloudinary(selectedImgUri);
+      if (!downloadUrl) return;
+      
+      const firebaseUser = auth.currentUser;
+      if(user){ 
+        await updateItems({
+          collectionName: "users", 
+          userId: firebaseUser!.uid, 
+          dataToUpdated: { imageUrl: downloadUrl }
+        }, dispatch, setUser({ ...(user as any), imageUrl: downloadUrl })) 
+      }
+    } catch (error) {
+      Alert.alert("Error Whene uploading Image ", error)
+    } finally {
+      dispatch(setLoadingFalse());
+    }
+  };
   const toggleMenu = () => {
     if (isVisible) {
       Animated.timing(fadeAnim, {
@@ -44,7 +74,6 @@ export default function AppHeader({
       }).start();
     }
   };
-
   return (
     <View
       className="relative rounded-b-3xl pb-8"
@@ -93,8 +122,8 @@ export default function AppHeader({
           >
             <Image
               source={
-                data?.photoUrl
-                  ? { uri: data.photoUrl }
+                data?.imageUrl
+                  ? { uri: data?.imageUrl }
                   : require("../assets/images/user.png")
               }
               style={{
@@ -104,8 +133,27 @@ export default function AppHeader({
                 borderWidth: 3,
                 borderColor: "#fff",
                 backgroundColor: "#5F5CE0",
+                opacity: loading ? 0.6 : 1, // dimmer pendant upload
+
               }}
             />
+            {loading && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 120,
+                  height: 120,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 60,
+                  backgroundColor: "rgba(0,0,0,0.25)",
+                }}
+              >
+                <ActivityIndicator size="large" color="#fff" />
+              </View>
+            )}
           </View>
 
           {moduleName === t("modulesNames.profile") && (
@@ -119,7 +167,7 @@ export default function AppHeader({
                 paddingHorizontal: 20,
               }}
               labelStyle={{ fontWeight: "bold" }}
-              onPress={pickImageFromGallery}
+              onPress={ updatePhoto }
               rippleColor={"transparent"}
             >
               {t("header.editPhoto")}
