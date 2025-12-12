@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { PRIMARY_COLOR } from '../constants/colors';
 import { AlertVerificationInterface } from '../constants/interfaces';
 import { RootState } from '../redux/store';
+import { getActionColor, getIconColor } from '../utils/functions';
 
 export default function AlertVerification({ 
   title, 
@@ -12,7 +13,8 @@ export default function AlertVerification({
   visible, 
   onConfirm, 
   onCancel,
-  cancel
+  cancel,
+  action,
 }: AlertVerificationInterface) {  
   const loading = useSelector((state: RootState)=> state.loading.loading)
   return (
@@ -26,8 +28,8 @@ export default function AlertVerification({
                 borderRadius: 40,
             }}
         >
-            <View className='bg-red-100 p-4 w-16 h-16 rounded-lg items-center justify-center' >
-                <Icon source={icon} color='red' size={25} />
+            <View style={{backgroundColor: getActionColor(action)}} className='p-4 w-16 h-16 rounded-lg items-center justify-center' >
+                <Icon source={icon} color={getIconColor(action)} size={25} />
             </View>
 
             <View>

@@ -225,6 +225,7 @@ export default function ToDo() {
           if (selectedTask) onSubmitDelete(selectedTask);
         }}
         onCancel={()=>{setOpenModal(false)}}
+        action= "delete"
         cancel
       />}
       {visible && (

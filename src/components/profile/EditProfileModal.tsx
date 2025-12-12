@@ -307,6 +307,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
         icon="information-variant-circle-outline"
         onConfirm={modalHandlers.onConfirm}
         onCancel={modalHandlers.onCancel}
+        action= "add"
       />}
     </Portal>
   );

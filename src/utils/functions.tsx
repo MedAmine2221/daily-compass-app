@@ -228,6 +228,32 @@ export const getStatusColorClass = (status: string) => {
   }
 };
 
+export const getActionColor = (action: string) => {
+    switch (action) {
+    case "add":
+      return "#86efac";
+    case "update":
+      return "#fdba74";
+    case "delete":
+      return "#fee2e2";
+    default:
+      return "#fee2e2";
+  }
+}
+
+export const getIconColor = (action: string) => {
+  switch (action) {
+    case "add":
+      return "#0f5f27"; // vert beaucoup plus foncé
+    case "update":
+      return "#9a3c02"; // orange/brun foncé
+    case "delete":
+      return "#b81e1e"; // rouge foncé
+    default:
+      return "#b81e1e";
+  }
+};
+
 export const getStatusIcons = (status: string) => {
   switch (status) {
     case STATUS.InProgress:

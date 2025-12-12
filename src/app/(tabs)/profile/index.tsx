@@ -217,6 +217,7 @@ export default function Profile() {
             onConfirm={()=> deleteAccount(router, dispatch, login?.uid as string)}
             onCancel={()=> setOpenModal(false)}
             cancel
+            action= "delete"
           />
       } 
     </PaperProvider>
