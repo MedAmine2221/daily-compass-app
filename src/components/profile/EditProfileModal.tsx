@@ -9,7 +9,7 @@ import { removeTaskWithGoalName, setTask } from "@/src/redux/task/taskReducer";
 import { setUser } from "@/src/redux/user/userReducer";
 import editProfileSchema from "@/src/schema/editProfileSchema";
 import editProfileWithGoalsSchema from "@/src/schema/editProfileWithGoalsSchema";
-import { gemini, transformTasksForCalendar, updateItems } from "@/src/utils/functions";
+import { gemini, getPrompt, transformTasksForCalendar, updateItems } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
@@ -112,43 +112,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
     const tasksRef = collection(db, "tasks");
 
     for (const goal of newGoals) {
-      const prompt = `
-        Create a detailed breakdown of tasks to achieve the following goal:
-        * Goal Name: ${goal.name}
-        * Description: ${goal.description}
-        * Priority: ${goal.priority}
-        * Start Date: ${new Date().toISOString().split("T")[0]}
-        * Deadline: ${goal.deadline}
-        Rules:
-        1. If the goal priority is **CRITICAL** or **HIGH**:
-
-           * Each day must have **3 tasks**.
-           * Each task should be **no longer than 2 hours**.
-        2. **If the goal priority is ****MEDIUM**:
-
-           * Each day should have **2 tasks**.
-           * Each task should be **no longer than 2 hours**.
-        3. **If the goal priority is LOW**:
-
-           * Each day should have **1 task** **no longer than 2 hours**.
-        4. Divide the goal into the **maximum number of achievable tasks**, considering that the person has **very low capacity**.
-
-        Return **only a valid JSON array** in the following format:
-
-        [
-          {
-            "title": "Task title",
-            "description": "Short description",
-            "priority": "${goal.priority}",
-            "startDate": "YYYY-MM-DD hh:mm",
-            "endDate": "YYYY-MM-DD hh:mm",
-            "status": "todo",
-            "goalName": "${goal.name}"
-            "emailNotification": ${false}
-          }
-        ]
-        Replace "priority", "goalName", "emailNotification" and "status" with the actual values based on the goal details above.
-      `;
+      const prompt = getPrompt(goal);
       let aiResponse = await gemini(prompt);
       const clean = aiResponse
         .replace(/```json/i, "")

@@ -355,7 +355,41 @@ export const deleteItem = async (options: DeleteItemOptions, dispatch?: any, clo
 export const updateItems = async ({collectionName, userId, dataToUpdated}:any, dispatch?: any, updateStates?: any) => {
   await updateDoc(doc(db, collectionName, userId), dataToUpdated);
   if(dispatch && updateStates){
-    dispatch(updateStates())
+    dispatch(updateStates)
   }
 }
 
+export const getPrompt = (goal: any) => {
+  return `
+    Create a detailed breakdown of tasks to achieve the following goal:
+    * Goal Name: ${goal.name}
+    * Description: ${goal.description}
+    * Priority: ${goal.priority}
+    * Start Date: ${new Date().toISOString().split("T")[0]}
+    * Deadline: ${goal.deadline}
+    Rules:
+    1. If the goal priority is **CRITICAL** or **HIGH**
+       * Each day must have **3 tasks**.
+       * Each task should be **no longer than 2 hours**.
+    2. **If the goal priority is ****MEDIUM**
+       * Each day should have **2 tasks**.
+       * Each task should be **no longer than 2 hours**.
+    3. **If the goal priority is LOW**
+       * Each day should have **1 task** **no longer than 2 hours**.
+    4. Divide the goal into the **maximum number of achievable tasks**, considering that the person has **very low capacity**
+    Return **only a valid JSON array** in the following format
+    [
+      {
+        "title": "Task title",
+        "description": "Short description",
+        "priority": "${goal.priority}",
+        "startDate": "YYYY-MM-DD hh:mm",
+        "endDate": "YYYY-MM-DD hh:mm",
+        "status": "todo",
+        "goalName": "${goal.name}"
+        "emailNotification": ${false}
+      }
+    ]
+    Replace "priority", "goalName", "emailNotification" and "status" with the actual values based on the goal details above.
+  `
+}
