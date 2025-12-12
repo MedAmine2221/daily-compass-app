@@ -54,6 +54,7 @@ export default function ForgotPassword() {
                     label='E-mail' 
                     icon="email"
                 />
+                <View className='mt-5'/>
                 <Button
                   theme={{ colors: { primary: loading ? PRIMARY_COLOR +"50" : PRIMARY_COLOR } }}
                   mode="contained"
