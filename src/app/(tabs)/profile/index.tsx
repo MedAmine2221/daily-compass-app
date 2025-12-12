@@ -1,4 +1,5 @@
 import { auth, db } from "@/FirebaseConfig";
+import AlertVerification from "@/src/components/AlertVerification";
 import AppHeader from "@/src/components/AppHeader";
 import ChangePassword from "@/src/components/profile/ChangePasswordModal";
 import EditProfileModal from "@/src/components/profile/EditProfileModal";
@@ -28,7 +29,7 @@ export default function Profile() {
   const loading = useSelector((state: RootState) => state.loading.loading);  
   const [visible, setVisible] = useState(false);
   const [visibleChangePass, setVisibleChangePass] = useState(false);
-
+  const [openModal, setOpenModal] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const showChangePassModal = () => setVisibleChangePass(true);
@@ -183,7 +184,7 @@ export default function Profile() {
             mode = "contained" 
             buttonColor = {loading ? RED+"50" : RED} 
             onPress = {
-              async () => deleteAccount(router, dispatch, login?.uid as string)
+              () => setOpenModal(true)
             }
           >
             {
@@ -206,6 +207,18 @@ export default function Profile() {
       </SafeAreaView>
       {visible && <EditProfileModal userInfo={user} visible={visible} hideModal={hideModal}  />}
       {visibleChangePass && <ChangePassword visible={visibleChangePass} hideModal={hideChangePassModal} />}
+      {
+        openModal &&
+          <AlertVerification
+            title={"Are you sure you want to delete your account?"}
+            body={"This action cannot be undone."}
+            icon={'plus'}
+            visible={openModal} 
+            onConfirm={()=> deleteAccount(router, dispatch, login?.uid as string)}
+            onCancel={()=> setOpenModal(false)}
+            cancel
+          />
+      } 
     </PaperProvider>
 
   );
