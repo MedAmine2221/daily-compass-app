@@ -7,7 +7,6 @@ import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
 import { removeTaskWithGoalName, setTask } from "@/src/redux/task/taskReducer";
 import { setUser } from "@/src/redux/user/userReducer";
-import editProfileSchema from "@/src/schema/editProfileSchema";
 import editProfileWithGoalsSchema from "@/src/schema/editProfileWithGoalsSchema";
 import { gemini, getPrompt, transformTasksForCalendar, updateItems } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,8 +30,6 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
   const tasks = useSelector((state: RootState)=> state.tasks.tasks);
   const initGoalsListLength = userInfo?.goals?.length || 0;
   const [addGoals, setAddGoals] = useState(false);
-  const [removeGoals, setRemoveGoals] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
   const [modalHandlers, setModalHandlers] = useState({
     onConfirm: () => {},
@@ -57,16 +54,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
       });
     });
   };
-
   const { control, handleSubmit, formState: { errors }, reset } = useForm({
-    resolver: yupResolver(editProfileSchema),
-    defaultValues: {
-      username: userInfo?.username,
-      phoneNumber: userInfo?.phoneNumber,
-      address: userInfo?.address,
-    },
-  });
-  const { control: control2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, reset: reset2 } = useForm({
     resolver: yupResolver(editProfileWithGoalsSchema),
     defaultValues: {
       username: userInfo?.username,
@@ -77,7 +65,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
   });
 
   const { fields, append, remove } = useFieldArray({
-    control: control2,
+    control: control,
     name: "goals",
   });
 
@@ -99,8 +87,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
       dataToUpdated: data
     }, dispatch, setUser({ ...(userInfo || {}), ...data })) 
     const updatedUser = { ...(userInfo || {}), ...data };
-    reset(updatedUser);
-    reset2({ ...updatedUser, goals: updatedUser.goals || [] });
+    reset({ ...updatedUser, goals: updatedUser.goals || [] });
   };
 
   /** GENERATE AI TASKS */
@@ -177,7 +164,6 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
 
   const closeModal = () => {
     reset();
-    reset2();
     setAddGoals(false);
     hideModal();
   };
@@ -200,29 +186,41 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
             <IconButton icon="close" iconColor="black" size={30} onPress={closeModal} />
           </View>
 
-          <AppInput control={addGoals ? control2 : control} errors={addGoals ? errors2 : errors} name="username" label={t("editProfileModal.userName")} icon="account" />
-          <AppInput control={addGoals ? control2 : control} errors={addGoals ? errors2 : errors} name="phoneNumber" label={t("editProfileModal.phoneNbr")} icon="phone" keyboardType="phone-pad" />
-          <AppInput control={addGoals ? control2 : control} errors={addGoals ? errors2 : errors} name="address" label={t("editProfileModal.address")} icon="map-marker" />
+          <AppInput control={
+            control
+            } errors={
+             errors
+             } name="username" label={t("editProfileModal.userName")} icon="account" />
+          <AppInput control={
+            control
+            } errors={
+              errors
+              } name="phoneNumber" label={t("editProfileModal.phoneNbr")} icon="phone" keyboardType="phone-pad" />
+          <AppInput control={
+            control
+            } errors={
+              errors
+              } name="address" label={t("editProfileModal.address")} icon="map-marker" />
 
           {fields.map((field, index) => (
             <View key={field.id}>
               <View className="flex-row items-center justify-between">
-                <AppInput control={control2} errors={errors2} name={`goals.${index}.name`} label={t("editProfileModal.goalName")} icon="target" />
+                <AppInput control={control} errors={errors} name={`goals.${index}.name`} label={t("editProfileModal.goalName")} icon="target" />
                 <IconButton 
                   icon="trash-can-outline" 
                   size={30} 
                   iconColor="red" 
                   onPress={() => {
                     remove(index); 
-                    setRemoveGoals(true);
+                    // setRemoveGoals(true);
                   }} 
                 />
               </View>
 
-              <AppInput control={control2} errors={errors2} name={`goals.${index}.description`} label={t("editProfileModal.goalDesc")} icon="text" multiline />
+              <AppInput control={control} errors={errors} name={`goals.${index}.description`} label={t("editProfileModal.goalDesc")} icon="text" multiline />
               <AppDropdown 
-                control={control2}
-                errors={errors2}
+                control={control}
+                errors={errors}
                 name={`goals.${index}.priority`}
                 label="Priority"
                 data={priorities}
@@ -230,8 +228,8 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
               />
               <View className="my-3" />
               <AppDatePicker
-                control={control2} 
-                errors={errors2} 
+                control={control} 
+                errors={errors} 
                 name={`goals.${index}.deadline`} 
                 label="Deadline"
               />
@@ -250,7 +248,9 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
 
             <Button
               mode="contained"
-              onPress={(addGoals || removeGoals) ? handleSubmit2(onSubmit) : handleSubmit(onSubmit)}
+              onPress={
+                handleSubmit(onSubmit) 
+              }
               style={{
                 backgroundColor: !loading ? PRIMARY_COLOR : PRIMARY_COLOR + "50",
                 marginTop: 10,
