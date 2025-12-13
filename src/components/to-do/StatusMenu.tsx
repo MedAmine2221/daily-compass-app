@@ -1,7 +1,7 @@
 import { auth } from '@/FirebaseConfig';
 import { STATUS } from '@/src/constants/enums';
 import { TaskInterface } from '@/src/constants/interfaces';
-import { removeDoneTasks, updateTask } from '@/src/redux/task/taskReducer';
+import { removeDoneTasks, removeInProgressTasks, updateTask } from '@/src/redux/task/taskReducer';
 import { getItems, updateItems } from '@/src/utils/functions';
 import { useTranslation } from 'react-i18next';
 import { View } from "react-native";
@@ -44,16 +44,20 @@ export default function StatusMenu({item}:{item: TaskInterface}) {
           ]
         })
         if (snapshot && !snapshot.empty) {
+          const now = new Date().toISOString();
             await Promise.all(snapshot.docs.map((d) =>
                 updateItems({
                   collectionName: "tasks", 
                   userId: d.id, 
-                  dataToUpdated: { status }
+                  dataToUpdated: { status, statusUpdatedAt: now }
                 })
             ));
-            dispatch(updateTask({ title: item.title, updatedData: { status } }));            
+            dispatch(updateTask({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));            
             if(status === STATUS?.DONE){
                 dispatch(removeDoneTasks({title: item.title}))
+            }
+            if(status === STATUS?.InProgress){
+                dispatch(removeInProgressTasks({title: item.title}))
             }
         }
     }

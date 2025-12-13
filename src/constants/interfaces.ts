@@ -36,7 +36,8 @@ export interface TaskInterface {
     startDate: string;
     endDate: string;
     goalName: string;
-    emailNotification: boolean
+    emailNotification: boolean;
+    statusUpdatedAt: string;
 }
 export interface ToDoRenderItemData {
     item: TaskInterface;

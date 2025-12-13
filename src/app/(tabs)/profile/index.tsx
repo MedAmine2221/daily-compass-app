@@ -3,6 +3,7 @@ import AlertVerification from "@/src/components/AlertVerification";
 import AppHeader from "@/src/components/AppHeader";
 import ChangePassword from "@/src/components/profile/ChangePasswordModal";
 import EditProfileModal from "@/src/components/profile/EditProfileModal";
+import GoalHistoryModal from "@/src/components/profile/GoalHistory";
 import { PRIMARY_COLOR, RED } from "@/src/constants/colors";
 import { GoalsInterface } from "@/src/constants/interfaces";
 import { removeCalendarTasksByGoalName } from "@/src/redux/calendar/calendarReducer";
@@ -28,11 +29,13 @@ export default function Profile() {
   const user = useSelector((state: RootState) => state.user.items);
   const loading = useSelector((state: RootState) => state.loading.loading);  
   const [visible, setVisible] = useState(false);
+  const [historyVisible, setHistoryVisible] = useState(false);
   const [visibleChangePass, setVisibleChangePass] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [deleteGoalOpenModal, setDeleteGoalOpenModal] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const hideGoalHistoryModal = () => setHistoryVisible(false);
   const showChangePassModal = () => setVisibleChangePass(true);
   const hideChangePassModal = () => setVisibleChangePass(false);
 
@@ -143,6 +146,15 @@ export default function Profile() {
                             <Text style={{color: "black"}} key={index} className="text-base mr-1">
                               {index+1 + " - "+goal?.name + " for "+ goal?.deadline}{index + 1 < item.subtitle.length - 1 ? ',' : ''}
                             </Text>
+                            <IconButton 
+                              icon={"history"} 
+                              iconColor="black" 
+                              size={24} 
+                              onPress={
+                                () => setHistoryVisible(true)
+                              }
+                            />
+                            {historyVisible && <GoalHistoryModal goalInfo={goal} visible={historyVisible} hideModal={hideGoalHistoryModal} />}
                             {
                               loading ?             
                                 <ActivityIndicator

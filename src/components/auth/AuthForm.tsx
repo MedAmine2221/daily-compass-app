@@ -1,11 +1,12 @@
 import { auth } from '@/FirebaseConfig';
 import { PRIMARY_COLOR } from '@/src/constants/colors';
+import { STATUS } from '@/src/constants/enums';
 import { AuthDataInterface, AuthFormsPropsInterface } from '@/src/constants/interfaces';
 import { setCalendar } from '@/src/redux/calendar/calendarReducer';
 import { setChat } from '@/src/redux/chat/chatReducer';
 import { setLoadingFalse, setLoadingTrue } from '@/src/redux/loadingReducer';
 import { RootState } from '@/src/redux/store';
-import { setTask } from '@/src/redux/task/taskReducer';
+import { setTask, setTaskDone, setTaskInProgress } from '@/src/redux/task/taskReducer';
 import { setUser } from '@/src/redux/user/userReducer';
 import { getData, getItems, getUsers, saveToken, transformTasksForCalendar } from '@/src/utils/functions';
 import { useRouter } from 'expo-router';
@@ -65,7 +66,22 @@ export default function AuthForm({
         if (userSnap.exists()) {
           dispatch(setUser(userSnap.data()))
           messages?.docs.map(doc => dispatch(setChat(doc.data())))
-          task?.docs.map(doc => dispatch(setTask(doc.data())))
+          task?.docs.map(doc => {            
+              switch(doc.data().status){
+                  case STATUS.TODO : 
+                    dispatch(setTask(doc.data()));
+                    break;
+                  case STATUS.InProgress : 
+                    dispatch(setTaskInProgress(doc.data())); 
+                    break;
+                  case STATUS.DONE : 
+                    dispatch(setTaskDone(doc.data()));
+                    break;
+                  default: console.warn("Unknown status:", doc.data().status);
+              } 
+              
+            }
+          )
           const taskDocs = task?.docs.map(doc => doc.data());
           if(taskDocs){
             const calendarReadyData = transformTasksForCalendar(taskDocs);            
