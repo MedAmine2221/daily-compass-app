@@ -57,7 +57,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <AppHeader moduleName={t("modulesNames.settings")} data={user}/>
+      <AppHeader moduleName={t("modulesNames.settings")} data={profile}/>
       <FlashList
         data={[
           { title: t("language") , leftIcon: "translate", rightIcon: "arrow-right-thin", leftIconColor: "#ff960d", settingType: "lang" },

@@ -59,9 +59,7 @@ export const uploadImageToCloudinary = async (localUri: string) => {
     }
 
     const json = await res.json();
-    console.log('✅ Upload success:', json.secure_url);
-
-    return json.secure_url; // URL publique de l'image
+    return json.secure_url;
   } catch (error) {
     console.error("❌ Erreur upload image:", error);
     return null;
@@ -81,11 +79,9 @@ export const pickImageFromGallery = async () => {
     aspect: [4, 3],
     quality: 1,
   });
-  console.log("result ",result);
   let selectedImageUri;
   if (!result.canceled && result.assets && result.assets.length > 0) {
     selectedImageUri = result.assets[0].uri;
-    console.log('Selected image URI:', selectedImageUri);
   }
   return selectedImageUri;
 };
