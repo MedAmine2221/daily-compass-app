@@ -76,7 +76,7 @@ export default function AppHeader({
   };
   return (
     <View
-      className="relative rounded-b-3xl pb-8"
+      className={`relative ${moduleName === t("modulesNames.toDo") ? "" : "rounded-b-3xl"} pb-8`}
       style={{
         backgroundColor: PRIMARY_COLOR,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 50,

@@ -431,3 +431,17 @@ export const getPrompt = (goal: any) => {
     Replace "priority", "goalName", "emailNotification" and "status" with the actual values based on the goal details above.
   `
 }
+
+
+export const getTabColor = (tabKey: string) => {
+  switch (tabKey) {
+    case 'first':
+      return '#EF4444'; 
+    case 'second':
+      return '#F59E0B';
+    case 'third':
+      return '#10B981';
+    default:
+      return '#6B7280';
+  }
+};

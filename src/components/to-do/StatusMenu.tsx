@@ -1,18 +1,19 @@
 import { auth } from '@/FirebaseConfig';
 import { STATUS } from '@/src/constants/enums';
 import { TaskInterface } from '@/src/constants/interfaces';
-import { removeDoneTasks, removeInProgressTasks, updateTask } from '@/src/redux/task/taskReducer';
+import { Done_To_InProgress, Done_To_ToDo, inProgress_To_Done, inProgress_To_ToDo, removeDoneTasks, removeInProgressTasks, updateTask, updateTaskDone, updateTaskInProgress } from '@/src/redux/task/taskReducer';
 import { getItems, updateItems } from '@/src/utils/functions';
 import { useTranslation } from 'react-i18next';
 import { View } from "react-native";
 import { Icon, Menu } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
-export default function StatusMenu({item}:{item: TaskInterface}) {
+export default function StatusMenu({from, item}:{from: string; item: TaskInterface}) {
     const dispatch = useDispatch();
     const user = auth.currentUser;
     const { t } = useTranslation();
     const updateStatus = async (status: string) => {
+      
         const snapshot = await getItems({
           collectionName: "tasks",
           filters: [
@@ -45,20 +46,56 @@ export default function StatusMenu({item}:{item: TaskInterface}) {
         })
         if (snapshot && !snapshot.empty) {
           const now = new Date().toISOString();
-            await Promise.all(snapshot.docs.map((d) =>
-                updateItems({
-                  collectionName: "tasks", 
-                  userId: d.id, 
-                  dataToUpdated: { status, statusUpdatedAt: now }
-                })
-            ));
-            dispatch(updateTask({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));            
-            if(status === STATUS?.DONE){
-                dispatch(removeDoneTasks({title: item.title}))
-            }
-            if(status === STATUS?.InProgress){
-                dispatch(removeInProgressTasks({title: item.title}))
-            }
+          await Promise.all(snapshot.docs.map((d) =>
+              updateItems({
+                collectionName: "tasks", 
+                userId: d.id, 
+                dataToUpdated: { status, statusUpdatedAt: now }
+              })
+          ));
+          dispatch(updateTask({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
+          dispatch(updateTaskDone({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
+          dispatch(updateTaskInProgress({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
+          switch(from){
+            case STATUS.TODO : 
+              switch(status){
+                case STATUS?.DONE :
+                  dispatch(removeDoneTasks({title: item.title}));
+                  break;
+                case STATUS.InProgress :
+                  dispatch(removeInProgressTasks({title: item.title}));
+                  break;
+                default :
+                  console.error("unkown status");
+              }
+              break;
+            case STATUS.InProgress : 
+              switch(status){
+                case STATUS?.DONE :
+                  dispatch(inProgress_To_Done({title: item.title}));
+                  break;
+                case STATUS.TODO :
+                  dispatch(inProgress_To_ToDo({title: item.title}));
+                  break;
+                default :
+                  console.error("unkown status ");
+              }
+              break;
+            case STATUS.DONE :
+              switch(status){
+                case STATUS?.InProgress :
+                  dispatch(Done_To_InProgress({title: item.title}));
+                  break;
+                case STATUS.TODO :
+                  dispatch(Done_To_ToDo({title: item.title}));
+                  break;
+                default :
+                  console.error("unkown status");
+              }
+              break;
+            default :
+              console.error("unkown default status");
+          }
         }
     }
   return (

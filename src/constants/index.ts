@@ -95,3 +95,9 @@ export const flags = [
   { lang: LANG.FR, name: LANG.FR+" 🇫🇷" },
   { lang: LANG.ENG, name: LANG.ENG+" 🇺🇸" },
 ];
+
+export const routes = [
+  { key: 'first', title: 'To Do List' },
+  { key: 'second', title: 'In Progress List' },
+  { key: 'third', title: 'Done List' },
+];

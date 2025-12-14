@@ -4,6 +4,7 @@ import { useState } from "react";
 import { View } from "react-native";
 import { IconButton, Modal, Portal, Text } from "react-native-paper";
 import { useSelector } from "react-redux";
+import EmptyComponent from "../EmptyList";
 import SearchInput from "../SearchInput";
 
 export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) {
@@ -15,7 +16,7 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
   );
   const tasksDone = useSelector((state: RootState) => state.tasks.tasksDone).filter(
     (task) => task.goalName === goalInfo.name
-  );  
+  );
   const [taskList, setTaskList] = useState({
     todo: true,
     inProgress: false,
@@ -28,59 +29,8 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
     hideModal();
   };
 
-  // Select tasks based on current tab
   const selectedTasks =
     taskList.todo ? tasks : taskList.inProgress ? tasksInProgress : tasksDone;
-
-  // Define complete class strings for each state
-  const getCircleClasses = (index: number) => {
-    if (index === 0) {
-      if (taskList.todo) return "w-5 h-5 rounded-full border-2 bg-red-400 border-red-400";
-      if (taskList.inProgress) return "w-5 h-5 rounded-full border-2 bg-orange-400 border-orange-400";
-      return "w-5 h-5 rounded-full border-2 bg-green-400 border-green-400";
-    }
-    if (taskList.todo) return "w-5 h-5 rounded-full border-2 bg-white border-red-300";
-    if (taskList.inProgress) return "w-5 h-5 rounded-full border-2 bg-white border-orange-300";
-    return "w-5 h-5 rounded-full border-2 bg-white border-green-300";
-  };
-
-  const getLineClasses = () => {
-    if (taskList.todo) return "w-0.5 h-full bg-red-300 mt-1";
-    if (taskList.inProgress) return "w-0.5 h-full bg-orange-300 mt-1";
-    return "w-0.5 h-full bg-green-300 mt-1";
-  };
-
-  const getCardClasses = (index: number) => {
-    if (index === 0) {
-      if (taskList.todo) return "flex-1 p-4 rounded-2xl bg-red-100";
-      if (taskList.inProgress) return "flex-1 p-4 rounded-2xl bg-orange-100";
-      return "flex-1 p-4 rounded-2xl bg-green-100";
-    }
-    return "flex-1 p-4 rounded-2xl bg-gray-50";
-  };
-
-  const getTitleClasses = (index: number) => {
-    if (index === 0) {
-      if (taskList.todo) return "text-lg font-semibold text-red-900";
-      if (taskList.inProgress) return "text-lg font-semibold text-orange-900";
-      return "text-lg font-semibold text-green-900";
-    }
-    return "text-lg font-semibold text-gray-800";
-  };
-
-  const getTextClasses = (index: number) => {
-    if (index === 0) {
-      if (taskList.todo) return "text-sm text-red-700";
-      if (taskList.inProgress) return "text-sm text-orange-700";
-      return "text-sm text-green-700";
-    }
-    return "text-sm text-gray-500";
-  };
-
-  const getStatusTextClasses = () => {
-    if (taskList.inProgress) return "text-xs text-orange-600 font-medium mt-2";
-    return "text-xs text-green-600 font-medium mt-2";
-  };
 
   const formatDate = (date: any) => {
     if (!date) return '';
@@ -88,39 +38,135 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
     return d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
-  const renderItem = ({ item, index }: any) => (
-    <View className="flex-row mb-12">
-      <View className="items-center mr-4">
-        <View className={getCircleClasses(index)} />
-        {/* Afficher statusUpdatedAt pour done et inProgress */}
-        {(taskList.done || taskList.inProgress) && item?.statusUpdatedAt && (
-          <Text className={getStatusTextClasses()} style={{ marginTop: 4, textAlign: 'center', maxWidth: 70 }}>
-            {formatDate(item.statusUpdatedAt)}
-          </Text>
-        )}
-        {index < selectedTasks.length - 1 && (
-          <View
-            className={getLineClasses()}
-            style={{ minHeight: 60 }}
-          />
-        )}
-      </View>
+  const renderItem = ({ item, index }: any) => {
+    const isFirst = index === 0;
+    const isLast = index === selectedTasks.length - 1;
 
-      <View className={getCardClasses(index)}>
-        <View className="flex-row justify-between items-start mb-2">
-          <Text className={getTitleClasses(index)} style={{ flex: 1, marginRight: 8 }}>
-            {item?.title}
-          </Text>
-          <Text className={getTextClasses(index)} numberOfLines={1}>
-            {item?.startDate} - {item?.endDate}
+    return (
+      <View className="flex-row mb-8">
+        <View className="items-center mr-5">
+          {/* Circle */}
+          <View
+            className={
+              isFirst
+                ? taskList.todo
+                  ? "w-6 h-6 rounded-full bg-red-400"
+                  : taskList.inProgress
+                  ? "w-6 h-6 rounded-full bg-orange-400"
+                  : "w-6 h-6 rounded-full bg-green-400"
+                : taskList.todo
+                ? "w-5 h-5 rounded-full border-2 bg-white border-red-200"
+                : taskList.inProgress
+                ? "w-5 h-5 rounded-full border-2 bg-white border-orange-200"
+                : "w-5 h-5 rounded-full border-2 bg-white border-green-200"
+            }
+            style={isFirst ? {
+              shadowColor: taskList.todo ? "#ef4444" : taskList.inProgress ? "#f97316" : "#22c55e",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            } : undefined}
+          />
+
+          {/* Date Badge */}
+          {item?.statusUpdatedAt && (
+            <Text
+              className={
+                taskList.inProgress
+                  ? "text-xs font-semibold mt-2 bg-orange-50 text-orange-600 px-2 py-1 rounded-full text-center"
+                  : taskList.todo
+                    ? "text-xs font-semibold mt-2 bg-orange-50 text-red-600 px-2 py-1 rounded-full text-center"
+                    : "text-xs font-semibold mt-2 bg-green-50 text-green-600 px-2 py-1 rounded-full text-center"
+              }
+              style={{ maxWidth: 75 }}
+            >
+              {formatDate(item.statusUpdatedAt)}
+            </Text>
+          )}
+
+          {/* Line */}
+          {!isLast && (
+            <View
+              className={
+                taskList.todo
+                  ? "w-0.5 bg-red-200 mt-2"
+                  : taskList.inProgress
+                  ? "w-0.5 bg-orange-200 mt-2"
+                  : "w-0.5 bg-green-200 mt-2"
+              }
+              style={{ minHeight: 70, flex: 1 }}
+            />
+          )}
+        </View>
+
+        {/* Card */}
+        <View
+          className={
+            isFirst
+              ? taskList.todo
+                ? "flex-1 p-5 rounded-2xl bg-red-50 border border-red-200"
+                : taskList.inProgress
+                ? "flex-1 p-5 rounded-2xl bg-orange-50 border border-orange-200"
+                : "flex-1 p-5 rounded-2xl bg-green-50 border border-green-200"
+              : "flex-1 p-5 rounded-2xl bg-white border border-gray-100"
+          }
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.05,
+            shadowRadius: 2,
+            elevation: isFirst ? 2 : 1,
+          }}
+        >
+          <View className="flex-row justify-between items-start mb-3">
+            <Text
+              className={
+                isFirst
+                  ? taskList.todo
+                    ? "text-lg font-bold text-red-900 flex-1"
+                    : taskList.inProgress
+                    ? "text-lg font-bold text-orange-900 flex-1"
+                    : "text-lg font-bold text-green-900 flex-1"
+                  : "text-lg font-semibold text-gray-800 flex-1"
+              }
+            >
+              {item?.title}
+            </Text>
+            <View className="bg-gray-100 py-1 rounded-full">
+              <Text
+                className={
+                  isFirst
+                    ? taskList.todo
+                      ? "text-xs font-medium text-red-700"
+                      : taskList.inProgress
+                      ? "text-xs font-medium text-orange-700"
+                      : "text-xs font-medium text-green-700"
+                    : "text-xs text-gray-600"
+                }
+                numberOfLines={1}
+              >
+                {item?.startDate} - {item?.endDate}
+              </Text>
+            </View>
+          </View>
+          <Text
+            className={
+              isFirst
+                ? taskList.todo
+                  ? "text-sm font-medium text-red-700 leading-5"
+                  : taskList.inProgress
+                  ? "text-sm font-medium text-orange-700 leading-5"
+                  : "text-sm font-medium text-green-700 leading-5"
+                : "text-sm text-gray-600 leading-5"
+            }
+          >
+            {item?.description || "No description"}
           </Text>
         </View>
-        <Text className={getTextClasses(index)}>
-          {item?.description || "No description"}
-        </Text>
       </View>
-    </View>
-  );
+    );
+  };
 
   const filteredTasks = selectedTasks.filter((task) =>
     task.title.toLowerCase().includes(value.toLowerCase())
@@ -133,39 +179,87 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
         onDismiss={closeModal}
         contentContainerStyle={{
           backgroundColor: "white",
-          padding: 20,
-          borderRadius: 30,
-          height: 500,
-          maxHeight: "85%",
+          padding: 24,
+          borderRadius: 28,
+          maxHeight: "88%",
+          height:600,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.15,
+          shadowRadius: 20,
+          elevation: 10,
         }}
       >
+        {/* Header */}
+        <View className="mb-6 items-center">
+          <Text className="text-2xl font-bold text-gray-900 text-center mb-1">
+            {goalInfo?.name || "Task History"}
+          </Text>
+          <Text className="text-sm text-gray-500 text-center">
+            Track your progress
+          </Text>
+        </View>
+
         {/* Tabs */}
-        <View className="flex-row justify-around items-center mb-4">
-          <View className={taskList.todo ? "bg-red-200 rounded-full" : "bg-red-100 rounded-full"}>
+        <View className="flex-row justify-around items-center p-2 mb-5">
+          <View
+            className={`${taskList.todo ? "bg-red-500" : "bg-transparent"}`}
+            style={taskList.todo ? {
+              borderRadius: "100%",
+              padding: 2,
+              shadowColor: "#ef4444",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            } : { padding: 2 }}
+          >
             <IconButton
               icon="format-list-bulleted"
-              iconColor="red"
-              size={25}
+              iconColor={taskList.todo ? "white" : "#ef4444"}
+              size={24}
               onPress={() =>
                 setTaskList({ todo: true, inProgress: false, done: false })
               }
             />
           </View>
-          <View className={taskList.inProgress ? "bg-orange-200 rounded-full" : "bg-orange-100 rounded-full"}>
+          <View
+            className={taskList.inProgress ? "bg-orange-500" : "bg-transparent"}
+            style={taskList.inProgress ? {
+              borderRadius: "100%",
+              padding: 2,
+              shadowColor: "#f97316",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            } : { padding: 2 }}
+          >
             <IconButton
               icon="clock-time-two-outline"
-              iconColor="orange"
-              size={25}
+              iconColor={taskList.inProgress ? "white" : "#f97316"}
+              size={24}
               onPress={() =>
                 setTaskList({ todo: false, inProgress: true, done: false })
               }
             />
           </View>
-          <View className={taskList.done ? "bg-green-200 rounded-full" : "bg-green-100 rounded-full"}>
+          <View
+            className={taskList.done ? "bg-green-500" : "bg-transparent"}
+            style={taskList.done ? {
+              borderRadius: "100%",
+              padding: 2,
+              shadowColor: "#22c55e",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            } : { padding: 2 }}
+          >
             <IconButton
               icon="check-circle-outline"
-              iconColor="green"
-              size={25}
+              iconColor={taskList.done ? "white" : "#22c55e"}
+              size={24}
               onPress={() =>
                 setTaskList({ todo: false, inProgress: false, done: true })
               }
@@ -174,7 +268,7 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
         </View>
 
         {/* Search Input */}
-        <View className="mb-4">
+        <View className="mb-5">
           <SearchInput onChange={setValue} label="search with task name" icon="text-search-variant" />
         </View>
 
@@ -185,11 +279,14 @@ export default function GoalHistoryModal({ goalInfo, visible, hideModal }: any) 
               data={filteredTasks}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
             />
           ) : (
-            <View className="flex-1 items-center justify-center">
-              <Text className="text-gray-500 text-base">No tasks found</Text>
-            </View>
+            <EmptyComponent
+              emoji="📋"
+              title={"No tasks found"}
+              desc={"Try a different search term"}
+            />
           )}
         </View>
       </Modal>
