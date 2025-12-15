@@ -6,6 +6,18 @@
         "inProgress": "En cours",
         "done": "Terminé"
     },
+    "verifyDeleteItem":{
+      "title":"Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "body":"Cette action est irréversible."
+    },
+    "verifyChangePassword":{
+      "title":"Êtes-vous sûr de vouloir changer votre mot de passe ?",
+      "body":"Cette action est irréversible."
+    },
+    "verifyEditProfil":{
+      "title":"Êtes-vous sûr de vouloir autoriser la création de tâches par l'IA ?",
+      "body":"Cette action est irréversible."
+    },
     "header":{
         "title": "Votre boussole quotidienne",
         "body": "Guidez votre journée avec clarté",

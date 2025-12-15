@@ -265,8 +265,8 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
       </Modal>
       {openModal && <AlertVerification
         visible={openModal}
-        title="Are you sure you want to allow AI task creation?"
-        body="This action cannot be undone."
+        title={t("verifyEditProfil.title")}
+        body={t("verifyEditProfil.body")}
         icon="information-variant-circle-outline"
         onConfirm={modalHandlers.onConfirm}
         onCancel={modalHandlers.onCancel}

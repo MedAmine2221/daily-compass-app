@@ -171,8 +171,8 @@ export default function DoneList() {
           }
         />
         {openModal && <AlertVerification
-          title={"Are you sure you want to delete this item?"}
-          body={"This action cannot be undone."}
+          title={t("verifyDeleteItem.title")}
+          body={t("verifyDeleteItem.body")}
           icon={'trash-can-outline'}
           visible={openModal} 
           onConfirm={() => {

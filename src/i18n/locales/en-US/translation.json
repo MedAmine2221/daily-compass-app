@@ -6,6 +6,18 @@
         "inProgress": "In Progress",
         "done": "Done"
     },
+    "verifyDeleteItem":{
+      "title":"Are you sure you want to delete this item?",
+      "body":"This action is irreversible."
+    },
+    "verifyChangePassword":{
+      "title":"Are you sure you want to change your password ?",
+      "body":"This action is irreversible."
+    },
+    "verifyEditProfil":{
+      "title":"Are you sure you want to allow AI task creation ?",
+      "body":"This action is irreversible."
+    },
     "header":{
         "title": "Your Daily Compass",
         "body": "Guide your day with clarity",

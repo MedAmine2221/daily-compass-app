@@ -141,8 +141,8 @@ export default function ChangePassword({ visible, hideModal }: any) {
           </View>
         </ScrollView>
         {openModal && <AlertVerification
-          title={"Are you sure you want to change your password?"}
-          body={"This action cannot be undone."}
+          title={t("verifyChangePassword.title")}
+          body={t("verifyChangePassword.body")}
           icon={'pencil'}
           visible={openModal}
           onConfirm={handleSubmit(onSubmit)}
