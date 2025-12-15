@@ -1,6 +1,11 @@
 {
     "language": "Langue",
     "at": "à",
+    "statusName":{
+        "todo": "À faire",
+        "inProgress": "En cours",
+        "done": "Terminé"
+    },
     "header":{
         "title": "Votre boussole quotidienne",
         "body": "Guidez votre journée avec clarté",

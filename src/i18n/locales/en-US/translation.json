@@ -1,6 +1,11 @@
 {
     "language": "Language",
     "at": "at",
+    "statusName":{
+        "todo": "To Do",
+        "inProgress": "In Progress",
+        "done": "Done"
+    },
     "header":{
         "title": "Your Daily Compass",
         "body": "Guide your day with clarity",

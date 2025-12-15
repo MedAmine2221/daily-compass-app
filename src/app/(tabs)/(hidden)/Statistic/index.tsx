@@ -55,11 +55,11 @@ export default function Statistic() {
     ).length;
 
     return [
-      { value: (todo / total) * 100 || 0, text: `${todo}%`, color: "#16a34a", text2: "To Do" },
-      { value: (pending / total) * 100 || 0, text: `${pending}%`, color: "#eab308", text2: "Pending" },
-      { value: (done / total) * 100 || 0, text: `${done}%`, color: "#ef4444", text2: "Done" },
+      { value: (todo / total) * 100 || 0, text: `${todo}%`, color: "#ef4444", text2: t("statusName.todo") },
+      { value: (pending / total) * 100 || 0, text: `${pending}%`, color: "#eab308", text2: t("statusName.inProgress") },
+      { value: (done / total) * 100 || 0, text: `${done}%`, color: "#16a34a", text2: t("statusName.done") },
     ];
-  }, [selectedGoal, tasks]);
+  }, [selectedGoal, t, tasks]);
 
   const barData = useMemo(() => {
     return goals.map((g: { label: string, value: string }) => {
