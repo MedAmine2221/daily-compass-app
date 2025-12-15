@@ -197,5 +197,54 @@
     "deleteAccount":{
       "title": "Êtes-vous sûr de vouloir supprimer votre compte ?",
       "body": "Cette action est irréversible."
+    },
+    "months": {
+      "January": "Janvier",
+      "February": "Février",
+      "March": "Mars",
+      "April": "Avril",
+      "May": "Mai",
+      "June": "Juin",
+      "July": "Juillet",
+      "August": "Août",
+      "September": "Septembre",
+      "October": "Octobre",
+      "November": "Novembre",
+      "December": "Décembre"
+    },
+    "monthsShort": {
+      "Jan": "Jan.",
+      "Feb": "Fév.",
+      "Mar": "Mars",
+      "Apr": "Avr.",
+      "May": "Mai",
+      "Jun": "Juin",
+      "Jul": "Juil.",
+      "Aug": "Août",
+      "Sep": "Sept.",
+      "Oct": "Oct.",
+      "Nov": "Nov.",
+      "Dec": "Déc."
+    },
+    "days": {
+      "Sunday": "Dimanche",
+      "Monday": "Lundi",
+      "Tuesday": "Mardi",
+      "Wednesday": "Mercredi",
+      "Thursday": "Jeudi",
+      "Friday": "Vendredi",
+      "Saturday": "Samedi"
+    },
+    "daysShort": {
+      "Sun": "Dim.",
+      "Mon": "Lun.",
+      "Tue": "Mar.",
+      "Wed": "Mer.",
+      "Thu": "Jeu.",
+      "Fri": "Ven.",
+      "Sat": "Sam."
+    },
+    "today": {
+      "Today": "Aujourd'hui"
     }
 }

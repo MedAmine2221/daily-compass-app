@@ -321,7 +321,7 @@ export const getCurrentTask = (data: any) => {
   return currentTask;
 };
 
-export const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string, lang?:string) => {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
@@ -329,7 +329,7 @@ export const formatDate = (dateString: string) => {
     month: "long",
     day: "numeric",
   };
-  return date.toLocaleDateString("fr-FR", options);
+  return date.toLocaleDateString(lang ? lang : "fr-FR", options);
 };
 
 export const getDatesBetween = (start: string, end: string) => {
