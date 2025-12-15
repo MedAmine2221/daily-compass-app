@@ -1,5 +1,6 @@
 {
     "language": "Language",
+    "at": "at",
     "header":{
         "title": "Your Daily Compass",
         "body": "Guide your day with clarity",
@@ -173,5 +174,16 @@
     },
     "settings":{
       "emailNotif": "Email Notifications"
+    },
+    "GoalHistory":{
+      "updateStatusMsg": "This task has been moved to the status",
+      "modalTitle": "Track your progress",
+      "empty": {
+        "title": "No tasks found",
+        "desc": "Try a different search term"
+      },
+      "searchInput":{
+        "label":"Search by task name"
+      }
     }
   }

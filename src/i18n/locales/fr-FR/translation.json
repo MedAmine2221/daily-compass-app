@@ -1,5 +1,6 @@
 {
     "language": "Langue",
+    "at": "à",
     "header":{
         "title": "Votre boussole quotidienne",
         "body": "Guidez votre journée avec clarté",
@@ -174,5 +175,16 @@
     },
     "settings":{
       "emailNotif": "Notifications par email"
+    },
+    "goalHistory":{
+      "updateStatusMsg": "Cette tâche a été passée vers le statut",
+      "modalTitle": "Suivez vos progrès",
+      "empty": {
+        "title": "Aucune tâche trouvée",
+        "desc": "Essayez un autre terme de recherche"
+      },
+      "searchInput":{
+        "label":"Rechercher par nom de tâche"
+      }
     }
 }
