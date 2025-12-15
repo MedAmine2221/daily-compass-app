@@ -19,12 +19,12 @@ export default function Statistic() {
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const goals =
-    useSelector((state: RootState) => state.user.items)?.goals.map((goal: GoalsInterface) => (
-      {
-        label: goal.name,
-        value: goal.name,
-      }
-  )) || [];
+  useSelector((state: RootState) => state.user.items?.goals)?.map(
+    (goal: GoalsInterface) => ({
+      label: goal.name,
+      value: goal.name,
+    })
+  ) || [];
 
   const [selectedGoal, setSelectedGoal] = useState(
     goals.length > 0 ? goals[0].value : ""
