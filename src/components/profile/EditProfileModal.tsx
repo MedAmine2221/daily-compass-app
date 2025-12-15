@@ -186,22 +186,20 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
             <IconButton icon="close" iconColor="black" size={30} onPress={closeModal} />
           </View>
 
-          <AppInput control={
-            control
-            } errors={
-             errors
-             } name="username" label={t("editProfileModal.userName")} icon="account" />
+          <AppInput control={ control } errors={ errors } name="username" label={t("editProfileModal.userName")} icon="account" />
+          <View className="my-2" />
           <AppInput control={
             control
             } errors={
               errors
               } name="phoneNumber" label={t("editProfileModal.phoneNbr")} icon="phone" keyboardType="phone-pad" />
+          <View className="my-2" />
           <AppInput control={
             control
             } errors={
               errors
               } name="address" label={t("editProfileModal.address")} icon="map-marker" />
-
+          <View className="my-2" />
           {fields.map((field, index) => (
             <View key={field.id}>
               <View className="flex-row items-center justify-between">
@@ -216,22 +214,23 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
                   }} 
                 />
               </View>
-
+              <View className="my-2" />
               <AppInput control={control} errors={errors} name={`goals.${index}.description`} label={t("editProfileModal.goalDesc")} icon="text" multiline />
+              <View className="my-2" />
               <AppDropdown 
                 control={control}
                 errors={errors}
                 name={`goals.${index}.priority`}
-                label="Priority"
+                label={t("editProfileModal.priority")}
                 data={priorities}
                 icon = "alert-circle-outline"
               />
-              <View className="my-3" />
+              <View className="my-2" />
               <AppDatePicker
                 control={control} 
                 errors={errors} 
                 name={`goals.${index}.deadline`} 
-                label="Deadline"
+                label={t("editProfileModal.deadline")}
               />
             </View>
           ))}

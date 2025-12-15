@@ -42,7 +42,9 @@
         "addGoal": "Add Goal",
         "submit": "Submit",
         "goalName": "Goal Name",
-        "goalDesc": "Description"
+        "goalDesc": "Description",
+        "priority": "Priority",
+        "deadline": "Deadline"
     },
     "agendaEmpty":{
         "title":"No events planned",
@@ -185,5 +187,13 @@
       "searchInput":{
         "label":"Search by task name"
       }
+    },
+    "deleteGoal":{
+      "title": "Are you sure you want to delete this Goal?",
+      "body": "This action is irreversible."
+    },
+    "deleteAccount":{
+      "title": "Are you sure you want to delete your account ?",
+      "body": "Cette action est irréversible."
     }
   }

@@ -174,9 +174,9 @@ export default function Profile() {
                             {
                               deleteGoalOpenModal &&
                                 <AlertVerification
-                                  title={`Are you sure you want to delete this Goal?`}
-                                  body={"This action cannot be undone."}
-                                  icon={'plus'}
+                                  title={t("deleteGoal.title")}
+                                  body={t("deleteGoal.body")}
+                                  icon={'trash-can-outline'}
                                   visible={deleteGoalOpenModal} 
                                   onConfirm={
                                     () => deleteGoal(index, item.subtitle)
@@ -247,9 +247,9 @@ export default function Profile() {
       {
         openModal &&
           <AlertVerification
-            title={`Are you sure you want to delete your account`}
-            body={"This action cannot be undone."}
-            icon={'plus'}
+            title={t("deleteAccount.title")}
+            body={t("deleteAccount.body")}
+            icon={'trash-can-outline'}
             visible={openModal} 
             onConfirm={
               ()=> deleteAccount(router, dispatch, login?.uid as string)
