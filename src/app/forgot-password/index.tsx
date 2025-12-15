@@ -11,7 +11,7 @@ import { useRouter } from 'expo-router';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -64,7 +64,12 @@ export default function ForgotPassword() {
                   labelStyle={{ fontSize: 16 }}
                   >
                   {loading ? "sending ... ": "send"}
-                </Button>  
+                </Button> 
+                <Text className='mt-5 self-center' style={{fontSize: 15}}>Already have your password ? 
+                    <Text style={{fontWeight: "bold", fontSize: 15}} onPress={()=> router.replace("/auth")}>
+                        {" Sign in "}
+                  </Text>
+                </Text>
             </View>
             <Footer />   
         </SafeAreaView>
