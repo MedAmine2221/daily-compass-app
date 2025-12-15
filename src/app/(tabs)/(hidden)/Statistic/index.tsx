@@ -2,7 +2,6 @@ import AppDropdown from "@/src/components/AppDropdown";
 import AppHeader from "@/src/components/AppHeader";
 import EmptyComponent from "@/src/components/EmptyList";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
-import { STATUS } from "@/src/constants/enums";
 import { GoalsInterface, TaskInterface } from "@/src/constants/interfaces";
 import { RootState } from "@/src/redux/store";
 import { normalize } from "@/src/utils/functions";
@@ -15,75 +14,120 @@ import { useSelector } from "react-redux";
 
 export default function Statistic() {
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
+  const tasksInProgress = useSelector((state: RootState) => state.tasks.tasksInProgress);
+  const tasksDone = useSelector((state: RootState) => state.tasks.tasksDone);
   const { t } = useTranslation();
-  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const goals =
-  useSelector((state: RootState) => state.user.items?.goals)?.map(
-    (goal: GoalsInterface) => ({
+  const rawGoals =
+    useSelector((state: RootState) => state.user.items?.goals) || [];
+
+  const goals = useMemo(() => {
+    const mappedGoals = rawGoals.map((goal: GoalsInterface) => ({
       label: goal.name,
       value: goal.name,
-    })
-  ) || [];
+    }));
+
+    const urgentGoal = {
+      label: t("urgentTask") ?? "Urgent task",
+      value: "urgent task",
+    };
+
+    const exists = mappedGoals.some(
+      g => normalize(g.value) === normalize(urgentGoal.value)
+    );
+
+    return exists ? mappedGoals : [urgentGoal, ...mappedGoals];
+  }, [rawGoals, t]);
+
 
   const [selectedGoal, setSelectedGoal] = useState(
     goals.length > 0 ? goals[0].value : ""
   );
-
+  const total = useMemo(() => {
+      const totalTodo = tasks.filter(
+        (task: TaskInterface) =>
+          normalize(task.goalName) === normalize(selectedGoal)
+      ).length
+      const totalInProgress = tasksInProgress.filter(
+        (task: TaskInterface) =>
+          normalize(task.goalName) === normalize(selectedGoal)
+      ).length
+      const totalDone = tasksDone.filter(
+          (task: TaskInterface) =>
+            normalize(task.goalName) === normalize(selectedGoal)
+      ).length;
+      const total = totalTodo + totalInProgress + totalDone;
+      return total;
+  }, [selectedGoal, tasks, tasksDone, tasksInProgress])
   const pieData = useMemo(() => {
-    const total = tasks.filter(
-      (task: TaskInterface) =>
-        normalize(task.goalName) === normalize(selectedGoal)
-    ).length;
-
     const todo = tasks.filter(
       (task: TaskInterface) =>
-        task.status === STATUS.TODO &&
         normalize(task.goalName) === normalize(selectedGoal)
     ).length;
 
-    const pending = tasks.filter(
+    const pending = tasksInProgress.filter(
       (task: TaskInterface) =>
-        task.status === STATUS.InProgress &&
         normalize(task.goalName) === normalize(selectedGoal)
     ).length;
 
-    const done = tasks.filter(
+    const done = tasksDone.filter(
       (task: TaskInterface) =>
-        task.status === STATUS.DONE &&
         normalize(task.goalName) === normalize(selectedGoal)
     ).length;
 
     return [
-      { value: (todo / total) * 100 || 0, text: `${todo}%`, color: "#ef4444", text2: t("statusName.todo") },
-      { value: (pending / total) * 100 || 0, text: `${pending}%`, color: "#eab308", text2: t("statusName.inProgress") },
-      { value: (done / total) * 100 || 0, text: `${done}%`, color: "#16a34a", text2: t("statusName.done") },
+      {
+        value: Math.round((todo / total) * 100) || 0,
+        text: `${Math.round((todo / total) * 100)}%`,
+        color: "#ef4444",
+        text2: t("statusName.todo"),
+      },
+      {
+        value: Math.round((pending / total) * 100) || 0,
+        text: `${Math.round((pending / total) * 100)}%`,
+        color: "#eab308",
+        text2: t("statusName.inProgress"),
+      },
+      {
+        value: Math.round((done / total) * 100) || 0,
+        text: `${Math.round((done / total) * 100)}%`,
+        color: "#16a34a",
+        text2: t("statusName.done"),
+      },
     ];
-  }, [selectedGoal, t, tasks]);
+
+  }, [selectedGoal, t, tasks, tasksDone, tasksInProgress, total]);
 
   const barData = useMemo(() => {
-    return goals.map((g: { label: string, value: string }) => {
-      const total = tasks.filter(
+    return goals.map((g: { label: string; value: string }) => {
+      const todo = tasks.filter(
         (task: TaskInterface) =>
           normalize(task.goalName) === normalize(g.value)
       ).length;
 
-      const done = tasks.filter(
+      const inProgress = tasksInProgress.filter(
         (task: TaskInterface) =>
-          task.status === STATUS.DONE &&
           normalize(task.goalName) === normalize(g.value)
       ).length;
+
+      const done = tasksDone.filter(
+        (task: TaskInterface) =>
+          normalize(task.goalName) === normalize(g.value)
+      ).length;
+
+      const totalGoal = todo + inProgress + done;
 
       return {
         label: g.label,
-        value: total > 0 ? (done / total) * 100 : 0,
+        value: totalGoal > 0 ? Math.round((done / totalGoal) * 100) : 0,
         frontColor:
           normalize(selectedGoal) === normalize(g.value)
             ? PRIMARY_COLOR
             : "#cccccc",
       };
     });
-  }, [tasks, goals, selectedGoal]);
+  }, [goals, tasks, tasksInProgress, tasksDone, selectedGoal]);
+
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
