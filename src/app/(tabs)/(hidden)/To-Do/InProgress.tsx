@@ -3,10 +3,8 @@ import AppDropdown from "@/src/components/AppDropdown";
 import Badge from "@/src/components/Badge";
 import EmptyComponent from "@/src/components/EmptyList";
 import SearchInput from "@/src/components/SearchInput";
-import { AddTaskModal } from "@/src/components/to-do/AddTaskModal";
 import StatusMenu from "@/src/components/to-do/StatusMenu";
 import { priorities } from "@/src/constants";
-import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { PRIORITY } from "@/src/constants/enums";
 import { TaskInterface } from "@/src/constants/interfaces";
 import { removeCalendarTask } from "@/src/redux/calendar/calendarReducer";
@@ -15,17 +13,15 @@ import { RootState } from "@/src/redux/store";
 import { removeTask } from "@/src/redux/task/taskReducer";
 import { deleteItem, getStatusIcons } from "@/src/utils/functions";
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { AnimatedFAB, Card, DefaultTheme, IconButton, PaperProvider, Text } from "react-native-paper";
+import { Card, IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function InProgressList() {
-  const [isExtended, setIsExtended] = React.useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskInterface>();
   const [editingTaskId, setEditingTaskId] = useState<number>();
   const [openStatusMenuId, setOpenStatusMenuId] = useState<number>();
@@ -38,10 +34,6 @@ export default function InProgressList() {
     
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const onScroll = ({ nativeEvent }: any) => {
-    const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0;
-    setIsExtended(currentScrollPosition <= 0);
-  };
   const onSubmitDelete = async (item: TaskInterface) => {    
     await deleteItem(
       {
@@ -62,21 +54,7 @@ export default function InProgressList() {
     setOpenModal(false);
     dispatch(setLoadingFalse());
   }
-  const hideModal = useCallback(() => setVisible(false), []);
   return (
-    <PaperProvider 
-      theme={
-        {
-          ...DefaultTheme,
-          colors: {
-            ...DefaultTheme.colors,
-            background: '#f3f4f6',
-            surface: 'white',
-            primary: PRIMARY_COLOR,
-          },
-        }
-      }
-    >
       <SafeAreaView style={{ flex: 1, backgroundColor: "#f3f4f6" }}>
         <View className="flex-row w-[50%]">
           <SearchInput onChange={setValue} label={t("todo.searchInput.label")} icon="text-search-variant" />
@@ -92,7 +70,6 @@ export default function InProgressList() {
         </View>
         <FlashList
           data={value === "" && selectedPriority === PRIORITY?.CRITICAL ? tasksList : filterdData}
-          onScroll={onScroll}
           renderItem={({ item, index }: {item:TaskInterface, index:number}) => (
             <View key={index} style={{ marginBottom: 16, marginHorizontal: 12 }}>
               <Card style= {{ backgroundColor: "white" }}>
@@ -190,45 +167,18 @@ export default function InProgressList() {
             </View>
           }
         />
-
-        <AnimatedFAB
-          icon="plus"
-          label={t("todo.addTaskButton")}
-          color="white"
-          extended={isExtended}
-          onPress={() => setVisible(true)}
-          visible
-          animateFrom="right"
-          iconMode="dynamic"
-          style={{
-            position: "absolute",
-            bottom: 16,
-            right: 16,
-            backgroundColor: PRIMARY_COLOR,
-            borderRadius: 16,
-            elevation: 6,
+        {openModal && <AlertVerification
+          title={"Are you sure you want to delete this item?"}
+          body={"This action cannot be undone."}
+          icon={'trash-can-outline'}
+          visible={openModal} 
+          onConfirm={() => {
+            if (selectedTask) onSubmitDelete(selectedTask);
           }}
-        
-          theme={{
-            colors: { onSecondaryContainer: "white" },
-          }}
-        />
+          onCancel={()=>{setOpenModal(false)}}
+          action= "delete"
+          cancel
+        />}
       </SafeAreaView>
-      {openModal && <AlertVerification
-        title={"Are you sure you want to delete this item?"}
-        body={"This action cannot be undone."}
-        icon={'trash-can-outline'}
-        visible={openModal} 
-        onConfirm={() => {
-          if (selectedTask) onSubmitDelete(selectedTask);
-        }}
-        onCancel={()=>{setOpenModal(false)}}
-        action= "delete"
-        cancel
-      />}
-      {visible && (
-        <AddTaskModal visible={visible} hideModal={hideModal} />
-      )}
-    </PaperProvider>
   );
 }
