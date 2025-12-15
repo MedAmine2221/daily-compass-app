@@ -119,7 +119,8 @@
         "header": "Évaluez Votre Application Daily Compass",
         "tapStar": "Touchez une étoile pour donner votre note",
         "problemsLabel": "Problèmes",
-        "submit": "Soumettre"
+        "submit": "Soumettre",
+        "alreadyVoted": "Vous avez déjà évalué l'application. Merci !"
     },
     "chat": {
       "prompt": "Instruction",

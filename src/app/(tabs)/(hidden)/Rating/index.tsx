@@ -1,25 +1,61 @@
 import { auth, db } from "@/FirebaseConfig";
 import AppInput from "@/src/components/AppInput";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
+import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
+import { RootState } from "@/src/redux/store";
 import ratingSchema from "@/src/schema/ratingSchema";
+import { getItems } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Image, Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { ActivityIndicator, Button, Text } from "react-native-paper";
 import { Rating } from "react-native-ratings";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ContactUs() {
+  const dispatch = useDispatch();
   const [rating, setRating] = useState(3);
+    const user = auth.currentUser;
+
+  const [voted, setVoted] = useState(false);
   const ratingCompleted = (r: number) => setRating(r);
+  const loading = useSelector((state: RootState) => state.loading.loading);
   const { t } = useTranslation();
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(ratingSchema),
+    defaultValues: {
+      problem: '',
+    },
   });
-  const user = auth.currentUser;
+  useEffect(() => {
+    const fetchRatings = async () => {
+      if (!user) return;
+
+      const res = await getItems({
+        collectionName: "rating",
+        filters: [
+          { field: "userId", operator: "==", value: user.uid },
+        ],
+      });
+
+      if (res && res.docs) {
+        const ratingsData = res.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        if (ratingsData.length > 0) {
+          setVoted(true);
+          setRating((ratingsData[0]?.ratingPercent / 100) * 5);
+          // Mettre à jour le champ 'problem' dans le formulaire
+          reset({ problem: ratingsData[0]?.reason || '' });
+        }
+      }
+    };
+
+    fetchRatings();
+  }, [user, reset]);  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView className="flex-1 bg-white">
@@ -62,31 +98,21 @@ export default function ContactUs() {
               shadowColor: "#000",
               shadowOpacity: 0.1,
               shadowRadius: 5,
-              elevation: 6,
             }}
             contentContainerStyle={{ paddingBottom: 40 }}
             showsVerticalScrollIndicator={false}
           >
-            <Text
-              className="self-center"
-              style={{
-                padding: 10,
-                marginTop: 5,
-                color: "#4b5563",
-                fontWeight: "bold",
-                fontSize: 15,
-                textAlign: "center",
-              }}
-            >
-              {t("rating.tapStar")}
+            <Text style={{ textAlign: "center", marginBottom: 10, fontSize: 18, color: "#fbbf24" }}>
+              {/* Ton message personnalisé */}
+              {voted ? t("rating.alreadyVoted") : t("rating.tapStar")}
             </Text>
-
             <Rating
-              showRating
+              showRating ={!voted}
+              startingValue={rating}
               onFinishRating={ratingCompleted}
               style={{ paddingVertical: 10, marginTop: 10 }}
+              readonly={voted}
             />
-
             {rating <= 2 && (
               <View style={{ marginTop: 25 }}>
                 <AppInput
@@ -110,13 +136,14 @@ export default function ContactUs() {
                 }}
                 style={{
                   width: "70%",
-                  backgroundColor: PRIMARY_COLOR,
+                  backgroundColor: (loading || voted) ? PRIMARY_COLOR+"50": PRIMARY_COLOR,
                   borderRadius: 12,
                   paddingVertical: 5,
                 }}
                 onPress={
                   rating <= 2 ? 
                     handleSubmit(async (data) => {
+                      dispatch(setLoadingTrue());
                       const tasksRef = collection(db, "rating");
                       await addDoc(tasksRef, {
                         ratingPercent: ( rating/5 ) * 100,
@@ -124,19 +151,34 @@ export default function ContactUs() {
                         userId: user?.uid,
                         createdAt: new Date().toISOString(),
                       });
+                      setVoted(true);
+                      dispatch(setLoadingFalse());
                     })
                     : 
                     async () => {
+                      dispatch(setLoadingTrue());
                       const tasksRef = collection(db, "rating");
                       await addDoc(tasksRef, {
                         ratingPercent: ( rating/5 ) * 100,
                         userId: user?.uid,
                         createdAt: new Date().toISOString(),
                       });
+                      setVoted(true);
+                      dispatch(setLoadingFalse());
                     }
                 }
+                disabled={loading || voted}
               >
-                {t("rating.submit")}
+                {loading ? 
+                  <ActivityIndicator
+                    color= { PRIMARY_COLOR }
+                    size={25}
+                  />                    
+                    :
+                  <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
+                    {t("rating.submit")}
+                  </Text>
+                }
               </Button>
             </View>
           </ScrollView>

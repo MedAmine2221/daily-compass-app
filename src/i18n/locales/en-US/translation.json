@@ -118,7 +118,8 @@
         "header": "Rating Your Daily Compass App",
         "tapStar": "Tap a star to give your rating",
         "problemsLabel": "Problems",
-        "submit": "Submit"
+        "submit": "Submit",
+        "alreadyVoted": "You have already rated the app. Thank you!"
     },
     "chat":{
       "prompt": "Prompt",
