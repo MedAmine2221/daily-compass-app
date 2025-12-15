@@ -53,7 +53,7 @@ export default function Profile() {
     },
     { 
       title: t("profile.goals"),
-      subtitle: user?.goals.length === 0 ? t("profile.goalsNull") : user?.goals,
+      subtitle: user?.goals?.length === 0 ? t("profile.goalsNull") : user?.goals,
       icon: "target",
     },
   ]
