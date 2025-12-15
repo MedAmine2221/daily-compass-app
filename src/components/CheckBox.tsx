@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { Checkbox, Text } from 'react-native-paper';
 import { PRIMARY_COLOR } from '../constants/colors';
 import { CheckBoxInterface } from '../constants/interfaces';
-import { saveItem } from '../utils/functions';
+import { getData, saveItem } from '../utils/functions';
 
 export default function CheckBox({ text, getValues } : CheckBoxInterface) {
   const [checked, setChecked] = useState(false);
-
+  useEffect(() => {
+    const loadProfile = async () => {
+      const storedProfile = await getData({key: "profile"});
+      if (storedProfile) {
+        setChecked(true);
+      }
+    };
+    loadProfile();
+  }, []);
   const handlePress = () => {
-    const newState = !checked;
+    const newState = !checked;    
     setChecked(newState);
 
     if (newState) {
       const values = getValues(); 
       saveItem({key: "profile", value: values});
+    }else {
+      saveItem({key: "profile", value: null});
     }
   };
 

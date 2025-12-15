@@ -234,7 +234,7 @@ export const renderMessageText = (text: string, item: any) => {
     }
   });
 };
-export const saveItem = async ({ key, value }: { key: string, value: object | string }) => {
+export const saveItem = async ({ key, value }: { key: string, value: object | string | null}) => {
   try {
     // Convert non-string values (like objects or arrays) to a JSON string
     const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
