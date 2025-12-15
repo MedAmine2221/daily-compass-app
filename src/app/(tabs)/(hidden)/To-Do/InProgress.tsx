@@ -28,10 +28,14 @@ export default function InProgressList() {
   const [selectedPriority, setSelectedPriority] = useState(PRIORITY.CRITICAL)
   const [value, setValue] = useState("");
   const tasksList = useSelector((state: RootState) => state.tasks.tasksInProgress);
-  const filterdData = useMemo(()=>{
-    return tasksList.filter((task)=>task.title === value && task.priority === selectedPriority);
+  const filterdDataWithValue = useMemo(()=>{
+    return tasksList.filter((task)=>task.title.toLowerCase().includes(value.toLowerCase()) && task.priority === selectedPriority);
   },[tasksList, value, selectedPriority]);
-    
+
+  const filterdDataWithoutValue = useMemo(()=>{
+    return tasksList.filter((task)=>task.priority === selectedPriority);
+  },[tasksList, selectedPriority]);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const onSubmitDelete = async (item: TaskInterface) => {    
@@ -69,7 +73,7 @@ export default function InProgressList() {
           </View>
         </View>
         <FlashList
-          data={value === "" && selectedPriority === PRIORITY?.CRITICAL ? tasksList : filterdData}
+          data={value === "" ? filterdDataWithoutValue : filterdDataWithValue}
           renderItem={({ item, index }: {item:TaskInterface, index:number}) => (
             <View key={index} style={{ marginBottom: 16, marginHorizontal: 12 }}>
               <Card style= {{ backgroundColor: "white" }}>
