@@ -73,7 +73,6 @@ export default function MyAgenda() {
 
   const tasks = data?.[selected] || [];
   const markedDates: Record<string, any> = {};
-
   // Mark the dates of the tasks
   Object.entries(data || {}).forEach(([date, dayTasks]) => {
     dayTasks?.forEach((task: any) => {
@@ -142,7 +141,7 @@ export default function MyAgenda() {
               scrollEnabled={false}
               renderItem={({ item }) => (
                 <View className="bg-white rounded-xl p-4 mb-3 flex-row items-center shadow-sm">
-                  <View className={`w-1 h-12 rounded mr-4 ${getStatusColorClass(item.status)}`} />
+                  <View className={`w-1 h-12 rounded mr-4 ${getStatusColorClass(item.priority)}`} />
                   <View className="flex-1">
                     <Text className="text-sm font-semibold text-indigo-600 mb-1">
                       {item.dateDebut} → {item.dateFin}

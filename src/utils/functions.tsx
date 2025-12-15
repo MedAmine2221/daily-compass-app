@@ -8,7 +8,7 @@ import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, 
 import { Linking } from 'react-native';
 import { Text } from "react-native-paper";
 import { STATIC_KNOWLEDGE } from "../constants";
-import { STATUS } from "../constants/enums";
+import { PRIORITY, STATUS } from "../constants/enums";
 import { DeleteItemOptions, getItemsOptions, Message } from "../constants/interfaces";
 import { clearCalendar } from "../redux/calendar/calendarReducer";
 import { clearChat, setChat } from "../redux/chat/chatReducer";
@@ -253,13 +253,13 @@ export const getData = async ({key}:{key:string}) => {
     console.error("Error retrieving data:", e);
   }
 };
-export const getStatusColorClass = (status: string) => {
+export const getStatusColorClass = (status: string) => {  
   switch (status) {
-    case STATUS.InProgress:
+    case PRIORITY.MEDIUM:
       return "bg-orange-500";
-    case STATUS.TODO:
+    case PRIORITY.HIGH:
       return "bg-red-500";
-    case STATUS.DONE:
+    case PRIORITY.LOW:
       return "bg-green-500";
     default:
       return "bg-gray-500";

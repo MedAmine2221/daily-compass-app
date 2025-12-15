@@ -14,7 +14,7 @@ const calendarSlice = createSlice({
         },
         removeCalendarTask: (state, action) => {
             const { data } = action.payload;
-
+            
             Object.keys(state.calendar).forEach(date => {
                 state.calendar[date] = state.calendar[date].filter((task: any) =>
                     !(
