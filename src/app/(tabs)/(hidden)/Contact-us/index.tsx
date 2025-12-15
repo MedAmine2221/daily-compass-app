@@ -1,6 +1,5 @@
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { openLink } from "@/src/utils/functions";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Image, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
@@ -22,7 +21,7 @@ export default function ContactUs() {
                 }}  
                 source={require("../../../../assets/images/social-media.png")} 
             />
-            <View className="bg-white h-[55%]"
+            <View className="bg-white h-[65%]"
                 style={{
                     borderTopLeftRadius: 60,
                     borderTopRightRadius: 60,
@@ -46,13 +45,13 @@ export default function ContactUs() {
 
                         <IconButton icon={"github"} size={30} iconColor="white" onPress={()=>openLink("https://github.com/MedAmine2221")} />
                     </View>
-                    <View style={{alignItems:"center", justifyContent:"center", margin:10, backgroundColor: "#6b7280", borderRadius:100, width:50, height:50}}>
+                    {/* <View style={{alignItems:"center", justifyContent:"center", margin:10, backgroundColor: "#6b7280", borderRadius:100, width:50, height:50}}>
                         <IconButton icon={"web"} size={30} iconColor="white" onPress={()=>openLink("")} />
-                    </View>
+                    </View> */}
                 </View>
                 <View className="border-[0.5px] border-gray-700 w-full mb-5"/>
                 <Text style={{color:"#6b7280", fontWeight:"bold", padding:5, fontSize:20}}> {t("contact.contactDeveloper")} </Text>
-                <View className="m-5">
+                <View className="m-5 justify-center">
                     <View className="flex-row items-center mb-2">
                         <Text className="text-[18px] font-bold text-primary w-[110px]" style={{color:PRIMARY_COLOR, fontWeight: "bold"}}>
                             {t("contact.emailLabel")}
@@ -67,7 +66,7 @@ export default function ContactUs() {
                         <Text className="text-[16px]">+216 53 739 484</Text>
                     </View>
                 </View>
-                <View className="items-center justify-center">
+                {/* <View className="items-center justify-center">
                     <Image source={require("../../../../assets/images/qr-code.png")} style={{width: 100, height: 100}} />
                     <Text
                         style={{
@@ -80,7 +79,7 @@ export default function ContactUs() {
                     >
                         {t("contact.qrTitle")}
                     </Text>
-                </View>
+                </View> */}
             </View>
         </View>
     </SafeAreaView>
