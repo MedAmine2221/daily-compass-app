@@ -1,5 +1,4 @@
 import AppHeader from '@/src/components/AppHeader';
-import { routes } from '@/src/constants';
 import { getTabColor } from '@/src/utils/functions';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +19,11 @@ export default function ToDo() {
   const { t } = useTranslation();
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
+  const routes = [
+    { key: 'first', title: t("todo.filter.todo") },
+    { key: 'second', title: t("todo.filter.inProgress") },
+    { key: 'third', title: t("todo.filter.done") },
+  ];
   return (
     <SafeAreaView className='flex-1 bg-[#F9FAFB]'>
       <AppHeader moduleName={t("modulesNames.toDo")} />

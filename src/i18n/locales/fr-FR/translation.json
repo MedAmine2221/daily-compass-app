@@ -140,7 +140,37 @@
         "inProgress": "En cours",
         "done": "Terminé"
       },
-      "taskCritical": "urgent task"
+      "taskCritical": "urgent task",
+      "changeStatus":{
+        "message":"Appuie sur le statut pour le modifier"
+      },
+      "filter":{
+        "todo":"Liste des tâches a faire",
+        "inProgress":"liste des tâches en cours",
+        "done":"Liste des tâches complétées"
+      },
+      "searchInput":{
+        "label":"rechercher avec le nom"
+      },
+      "addTaskButton":"Ajouter une tâche",
+      "empty":{
+        "title":"Aucune tâches prévue",
+        "desc":"Rien à faire pour l'instant ! Profitez-en"
+      },
+      "addModal":{
+        "title":"Ajouter une nouvelle tâche",
+        "goalName":"Nom de l'objectif",
+        "TaskTitle":"Titre de la tâche",
+        "taskDesc":"Description de la tâche",
+        "taskStartDate":"Date de début",
+        "taskEndDate":"Date de fin",
+        "submit":"Ajouter",
+        "verificationModal":{
+          "title":"Êtes-vous sûr de vouloir ajouter cette tâche ?",
+          "body":"Cette action est irréversible.",
+          "alertMsg":"Tâche ajoutée avec succès!"
+        }
+      }
     },
     "settings":{
       "emailNotif": "Notifications par email"

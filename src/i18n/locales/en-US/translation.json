@@ -139,7 +139,37 @@
         "inProgress": "In Progress",
         "done": "Done"
       },
-      "taskCritical": "urgent task"
+      "taskCritical": "urgent task",
+      "changeStatus":{
+        "message":"Tap on the status to change it"
+      },
+      "filter":{
+        "todo":"List of tasks to do",
+        "inProgress":"list of tasks in progress",
+        "done":"Completed task list"
+      },
+      "searchInput":{
+        "label":"search with name"
+      },
+      "addTaskButton":"Add Task",
+      "empty":{
+        "title":"No tasks planned",
+        "desc":"Nothing to do for now! Enjoy it!"
+      },
+      "addModal":{
+        "title":"Add a new task",
+        "goalName":"Goal Name",
+        "TaskTitle":"Task Title",
+        "taskDesc":"Description",
+        "taskStartDate":"Start Date",
+        "taskEndDate":"End Date",
+        "submit":"Submit",
+        "verificationModal":{
+          "title": "Are you sure you want to add this task?",
+          "body": "This action cannot be undone.",
+          "alertMsg":"Task added successfully!"
+        }
+      }
     },
     "settings":{
       "emailNotif": "Email Notifications"

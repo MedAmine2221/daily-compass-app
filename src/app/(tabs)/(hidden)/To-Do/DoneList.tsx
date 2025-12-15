@@ -79,7 +79,7 @@ export default function DoneList() {
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: "#f3f4f6" }}>
         <View className="flex-row w-[50%]">
-          <SearchInput onChange={setValue} label={"search with task name"} icon="text-search-variant" />
+          <SearchInput onChange={setValue} label={t("todo.searchInput.label")} icon="text-search-variant" />
           <View className="w-[100%] bottom-1">
             <AppDropdown
               label=""
@@ -172,7 +172,7 @@ export default function DoneList() {
                     {openStatusMenuId === index && <StatusMenu from={"done"} item={item} />}
                     {editingTaskId === index && (
                       <Text style={{ color: "#b91c1c" }}>
-                        Appuie sur le statut pour le modifier
+                        {t("todo.changeStatus.message")}
                       </Text>
                     )}
                   </View>
@@ -184,16 +184,16 @@ export default function DoneList() {
             <View className="mt-20">
               <EmptyComponent
                 emoji="🏖️"
-                title={`Aucune tache de priorité ${selectedPriority} prévue`}
-                desc="Rien à faire pour l’instant ! Profitez-en 😎"
-                />
+                title={t("todo.empty.title")}
+                desc={t("todo.empty.desc")+"😎"}
+              />
             </View>
           }
         />
 
         <AnimatedFAB
           icon="plus"
-          label="Add Task"
+          label={t("todo.addTaskButton")}
           color="white"
           extended={isExtended}
           onPress={() => setVisible(true)}

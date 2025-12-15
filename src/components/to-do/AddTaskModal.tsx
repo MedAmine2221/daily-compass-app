@@ -77,8 +77,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
         });
 
         dispatch(setCalendar(mergedCalendar));
-
-        alert("your task are added successfully")
+        alert(t("todo.addModal.verificationModal.alertMsg"))
       }
       closeModal()
     }
@@ -108,10 +107,10 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
             <IconButton icon="close" iconColor="black" size={30} onPress={() => closeModal()} />
           </View>
           <Text className="text-3xl m-5" style={{color:PRIMARY_COLOR, fontWeight: "bold"}}>
-            {"Add New Task"}
+            {t("todo.addModal.title")}
           </Text>
           <AppDropdown                 
-            label="Goal Title"
+            label={t("todo.addModal.goalName")}
             data={goals}
             icon = "target"
             onChange={
@@ -124,7 +123,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
             control={control}
             errors={errors}
             name="title"
-            label={"title"}
+            label={t("todo.addModal.TaskTitle")}
             icon="format-title"
           />
           <View className="my-2"/>
@@ -132,16 +131,16 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
             control={control}
             errors={errors}
             name="description"
-            label={"description"}
+            label={t("todo.addModal.taskDesc")}
             multiline
             icon="subtitles"
           />
           <View className="my-2"/>
           <AppDatePicker
-            control={control} 
+            control={control}
             errors={errors} 
             name={"startDate"} 
-            label="start date"
+            label={t("todo.addModal.taskStartDate")}
             icon="clock-time-five-outline"
           />
           <View className="my-2"/>
@@ -149,7 +148,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
             control={control} 
             errors={errors} 
             name={"endDate"} 
-            label="end date"
+            label={t("todo.addModal.taskEndDate")}
             icon="timer-off"
           />                   
           <View className="items-center">
@@ -168,7 +167,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
                 <ActivityIndicator color={"white"} size={25}/>
                 :
                 <Text style={{color: "white"}}>
-                  {t("changePassword.submit")}
+                  {t("todo.addModal.submit")}
                 </Text>
               }
             </Button>
@@ -177,8 +176,8 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
         {
           openModal &&
             <AlertVerification
-              title={"Are you sure you want to add this task?"}
-              body={"This action cannot be undone."}
+              title={t("todo.addModal.verificationModal.title")}
+              body={t("todo.addModal.verificationModal.body")}
               icon={'plus'}
               visible={openModal} 
               onConfirm={handleSubmit(onSubmit)}
