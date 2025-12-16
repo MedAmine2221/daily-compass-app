@@ -1,6 +1,31 @@
 {
     "language": "Langue",
     "at": "à",
+    "alertVerification":{
+      "cancel":"Annuler",
+      "confirm":"Confirmer",
+      "confirmAI":"Confirmer avec IA",
+      "cancelAI":"Continuer sans IA"
+    },
+    "pickImageFromGalleryAlert": "Désolé, nous avons besoin des permissions de la pellicule pour que cela fonctionne !",
+    "deleteAccountAlertTry":"Compte utilisateur et données associées supprimés avec succès.",
+    "deleteAccountAlertCatch": "Erreur lors de la suppression du compte utilisateur : ",
+    "changeLanguageAlert": "Utilisateur non connecté.",
+    "onForgotPasswordAlert":"Un email de réinitialisation du mot de passe vous a été envoyé.",
+    "updatePhotoAlert": "Erreur lors du téléchargement de l'image : ",
+    "signInAlert":"Erreur lors de la connexion : ",
+    "changePasswordAlerts": {
+      "wrongOldPassword": "L’ancien mot de passe est incorrect.",
+      "weakNewPassword": "Le nouveau mot de passe est trop faible.",
+      "requiresRecentLogin": "Veuillez vous reconnecter pour changer votre mot de passe.",
+      "genericError": "Une erreur est survenue lors du changement de mot de passe."
+    },
+    "aiTasks": {
+      "success": "Les objectifs et les tâches associées ont été traités avec succès."
+    },
+    "onSubmitEditProfileAlert":"Une erreur est survenue.",
+    "registerFormAlert":"Erreur lors de l'enregistrement de l'utilisateur : ",
+    "registerFormAlertSuccess":"Inscription réussie !",
     "statusName":{
         "todo": "À faire",
         "inProgress": "En cours",

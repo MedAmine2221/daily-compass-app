@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,24 +20,17 @@ export default function ForgotPassword() {
     const {control, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(forgotPasswordSchema),
     });
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const router = useRouter()
     const loading = useSelector((state: RootState)=>state.loading.loading)
     const onForgotPassword = async (email: string) => {
-        
         try {
             dispatch(setLoadingTrue());
             await sendPasswordResetEmail(auth, email);
-            alert("Un email de réinitialisation du mot de passe vous a été envoyé.");
+            alert(t("onForgotPasswordAlert"));
         } catch (error: any) {
-            console.log("Forgot password error:", error);
-            if (error.code === "auth/user-not-found") {
-                alert("Aucun compte n'est associé à cet email.");
-            } else if (error.code === "auth/invalid-email") {
-                alert("L'adresse email est invalide.");
-            } else {
-                alert("Une erreur est survenue, veuillez réessayer.");
-            }
+            console.error("Forgot password error:", error);
         }finally{
             dispatch(setLoadingFalse());
             router.push("/auth");

@@ -133,7 +133,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
         dispatch(setCalendar(mergedCalendar));
       }
     }
-    Alert.alert("Goals and related tasks have been processed!");
+    Alert.alert(t("aiTasks.success"));
   };
 
   const onSubmit = async (data: any) => {    
@@ -156,7 +156,7 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
 
     } catch (e) {
       console.log("Error:", e);
-      Alert.alert("An error occurred.");
+      Alert.alert(t("onSubmitEditProfileAlert"));
     }finally{
       dispatch(setLoadingFalse());
     }

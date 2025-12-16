@@ -46,8 +46,8 @@ export default function Settings() {
     }
   }
 
-  const changeLanguage = async (lang: string) => {
-    if (!user) return alert("User not logged in.");
+  const changeLanguage = async (lang: string, t: any) => {
+    if (!user) return alert(t("changeLanguageAlert"));
     await updateItems({
       collectionName: "users", 
       userId: user?.uid, 
@@ -118,7 +118,7 @@ export default function Settings() {
                       labelField="name"
                       valueField="lang"
                       onChange={(item) => {
-                        changeLanguage(item.lang);
+                        changeLanguage(item.lang, t);
                       }}
                     />
 

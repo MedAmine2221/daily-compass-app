@@ -50,9 +50,9 @@ export default function RegisterForm() {
               minute: "2-digit",
             }),
           })
-          Alert.alert('Success', 'Account created successfully!');
+          Alert.alert(t("registerFormAlertSuccess"));
         } catch (error: any) {
-          Alert.alert('Registration failed', error.message);
+          Alert.alert(t("registerFormAlert"), error.message);
         }finally {
           dispatch(setLoadingFalse());
           router.replace('/auth');

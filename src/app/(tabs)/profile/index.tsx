@@ -96,37 +96,37 @@ export default function Profile() {
   };
 
   const deleteAccount = async (router: Router, dispatch: AppDispatch, userId: string) => {
-  try {
-    dispatch(setLoadingTrue());
-    await deleteItem(
-      {
-        collectionName: "chat",
-        filters: [
-          { field: "userId", operator: "==", value: userId },
-        ],
-      },
-    );
-    await deleteItem(
-      {
-        collectionName: "tasks",
-        filters: [
-          { field: "userId", operator: "==", value: userId },
-        ],
-      },
-    );
-    deleteDoc(doc(db, "users", userId));
-    auth.currentUser?.delete();
-    logout(router, dispatch);
-    alert("User account and associated data deleted successfully.");
-    return true;
-  } catch (err) {
-    alert(`Error deleting user account: ${err}`);
-    console.log("Error deleting user account:", err);
-    return false;
-  } finally {
-    dispatch(setLoadingFalse());
-  }
-};
+    try {
+      dispatch(setLoadingTrue());
+      await deleteItem(
+        {
+          collectionName: "chat",
+          filters: [
+            { field: "userId", operator: "==", value: userId },
+          ],
+        },
+      );
+      await deleteItem(
+        {
+          collectionName: "tasks",
+          filters: [
+            { field: "userId", operator: "==", value: userId },
+          ],
+        },
+      );
+      deleteDoc(doc(db, "users", userId));
+      auth.currentUser?.delete();
+      logout(router, dispatch);
+      alert(t("deleteAccountAlertTry"));
+      return true;
+    } catch (err) {
+      alert(t("deleteAccountAlertCatch") + ` ${err}`);
+      console.error("Error deleting user account:", err);
+      return false;
+    } finally {
+      dispatch(setLoadingFalse());
+    }
+  };
   return (
     <PaperProvider>
       <SafeAreaView className="flex-1 bg-white">

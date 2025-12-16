@@ -37,7 +37,7 @@ export default function AppHeader({
   const updatePhoto = async () => {
     try {
       dispatch(setLoadingTrue());
-      const selectedImgUri = await pickImageFromGallery();
+      const selectedImgUri = await pickImageFromGallery(t);
       if (!selectedImgUri) return;
       
       // Upload sur Firebase Storage
@@ -53,7 +53,7 @@ export default function AppHeader({
         }, dispatch, setUser({ ...(user as any), imageUrl: downloadUrl })) 
       }
     } catch (error) {
-      Alert.alert("Error Whene uploading Image ", error)
+      Alert.alert(t("updatePhotoAlert"), error)
     } finally {
       dispatch(setLoadingFalse());
     }

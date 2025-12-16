@@ -12,6 +12,7 @@ import { getData, getItems, getUsers, saveToken, transformTasksForCalendar } fro
 import { useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, View } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +36,7 @@ export default function AuthForm({
   const dispatch = useDispatch();
   const router = useRouter();
   const loading = useSelector((state: RootState) => state.loading.loading);
+  const { t } = useTranslation()
   const signIn = async (data: AuthDataInterface) => {
     try{
       setAuthData(data);
@@ -95,8 +97,7 @@ export default function AuthForm({
       }
     }catch(error: any){
       console.error("Error signing in:", error);
-      
-      Alert.alert("SignIn Failed ", error.message)
+      Alert.alert(t("signInAlert"), error.message)
     }finally{
       dispatch(setLoadingFalse());
     }

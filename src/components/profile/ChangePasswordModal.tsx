@@ -54,16 +54,15 @@ export default function ChangePassword({ visible, hideModal }: any) {
       logout(router, dispatch);
 
     } catch (err: any) {
-      console.log("Error changing password:", err);
-
+      console.error("Error changing password:", err);
       if (err.code === "auth/wrong-password") {
-        alert("Ancien mot de passe incorrect.");
+        alert(t("changePasswordAlerts.wrongOldPassword"));
       } else if (err.code === "auth/weak-password") {
-        alert("Le nouveau mot de passe est trop faible.");
+        alert(t("changePasswordAlerts.weakNewPassword"));
       } else if (err.code === "auth/requires-recent-login") {
-        alert("Veuillez vous reconnecter pour changer votre mot de passe.");
+        alert(t("changePasswordAlerts.requiresRecentLogin"));
       } else {
-        alert("Une erreur est survenue.");
+        alert(t("changePasswordAlerts.genericError"));
       }
     }
 

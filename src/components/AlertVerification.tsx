@@ -5,6 +5,7 @@ import { PRIMARY_COLOR } from '../constants/colors';
 import { AlertVerificationInterface } from '../constants/interfaces';
 import { RootState } from '../redux/store';
 import { getActionColor, getIconColor } from '../utils/functions';
+import { useTranslation } from 'react-i18next';
 
 export default function AlertVerification({ 
   title, 
@@ -16,7 +17,8 @@ export default function AlertVerification({
   cancel,
   action,
 }: AlertVerificationInterface) {  
-  const loading = useSelector((state: RootState)=> state.loading.loading)
+  const loading = useSelector((state: RootState)=> state.loading.loading);
+  const { t } = useTranslation();
   return (
     <Portal> 
         <Modal 
@@ -47,7 +49,7 @@ export default function AlertVerification({
                     theme={{colors: { outline: PRIMARY_COLOR }}}
                     onPress={onCancel}
                 >
-                    {cancel ? "Cancel": "Continuer sans IA"}
+                    {cancel ? t("alertVerification.cancel") : t("alertVerification.cancelAI")}
                 </Button>
 
                 <Button 
@@ -55,7 +57,7 @@ export default function AlertVerification({
                     buttonColor={loading ? PRIMARY_COLOR+"50" : PRIMARY_COLOR} 
                     onPress={onConfirm}
                 >
-                    {loading&& cancel ? "Confirm...": !loading && cancel ? "Confirm" : !loading && !cancel ? "Confirmer avec IA" : "Confirmer avec IA ..."}
+                    {loading&& cancel ? t("alertVerification.confirm")+"...": !loading && cancel ? t("alertVerification.confirm") : !loading && !cancel ? t("alertVerification.confirmAI") : t("alertVerification.confirmAI")+"..."}
                 </Button>
             </View>
         </Modal>

@@ -6,6 +6,31 @@
         "inProgress": "In Progress",
         "done": "Done"
     },
+    "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",
+    "deleteAccountAlertTry":"User account and associated data deleted successfully.",
+    "deleteAccountAlertCatch": "Error deleting user account: ",
+    "changeLanguageAlert": "User not logged in.",
+    "onForgotPasswordAlert":"Password reset email sent successfully.",
+    "updatePhotoAlert": "Error Whene uploading Image : ",
+    "signInAlert":"Error Signing In : ",
+    "changePasswordAlerts": {
+      "wrongOldPassword": "The old password is incorrect.",
+      "weakNewPassword": "The new password is too weak.",
+      "requiresRecentLogin": "Please re-login to change your password.",
+      "genericError": "An error occurred while changing the password."
+    },
+    "aiTasks": {
+      "success": "Goals and related tasks have been processed successfully."
+    },
+    "onSubmitEditProfileAlert":"An error occurred.",
+    "registerFormAlert":"Error Registering User : ",
+    "registerFormAlertSuccess":"Registration Successful!",
+    "alertVerification":{
+      "cancel":"Cancel",
+      "confirm":"Confirm",
+      "confirmAI":"Confirm with AI",
+      "cancelAI":"Continue without AI"
+    },
     "verifyDeleteItem":{
       "title":"Are you sure you want to delete this item?",
       "body":"This action is irreversible."
@@ -46,7 +71,7 @@
         "email": "E-mail",
         "editProfile": "Edit Profile",
         "changePassword": "Change Password",
-        "DeleteAccount": "Supprimer le compte",
+        "DeleteAccount": "Delete Account",
         "DeletingAccount": "Deleting Account...",
         "userPhone": "User Phone Number",
         "goalsNull": "No objective at the moment"
@@ -195,7 +220,7 @@
     "settings":{
       "emailNotif": "Email Notifications"
     },
-    "GoalHistory":{
+    "goalHistory":{
       "updateStatusMsg": "This task has been moved to the status",
       "modalTitle": "Track your progress",
       "empty": {

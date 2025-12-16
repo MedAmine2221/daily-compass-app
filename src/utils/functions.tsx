@@ -66,11 +66,11 @@ export const uploadImageToCloudinary = async (localUri: string) => {
   }
 };
 
-export const pickImageFromGallery = async () => {
+export const pickImageFromGallery = async (t: any) => {
   // Request permissions if not already granted
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   if (status !== 'granted') {
-    alert('Sorry, we need camera roll permissions to make this work!');
+    alert(t("pickImageFromGalleryAlert"));
     return;
   }
   const result = await ImagePicker.launchImageLibraryAsync({
