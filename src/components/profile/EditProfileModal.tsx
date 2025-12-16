@@ -97,10 +97,10 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
     const newGoals = data.goals.slice(-newGoalsCount);
 
     const tasksRef = collection(db, "tasks");
-
-    for (const goal of newGoals) {
-      const prompt = getPrompt(goal);
-      let aiResponse = await gemini(prompt);
+    
+    for (const goal of newGoals) {      
+      const prompt = getPrompt(goal);      
+      let aiResponse = await gemini(prompt);      
       const clean = aiResponse
         .replace(/```json/i, "")
         .replace(/```/g, "")
@@ -136,13 +136,13 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
     Alert.alert("Goals and related tasks have been processed!");
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any) => {    
     try {
       const newGoalsCount = data.goals?.length - initGoalsListLength;
       if (addGoals || newGoalsCount <= 0) {        
         if (newGoalsCount > 0){
-          const allow = await askUserConfirmation();
-          if (allow) {
+          const allow = await askUserConfirmation();          
+          if (allow) {            
             await generateAiTasks(data);
           }
         } 

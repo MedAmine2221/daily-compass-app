@@ -98,7 +98,7 @@ const ai = new GoogleGenAI({
   apiKey: AI_API_KEY,
   apiVersion: 'v1alpha'
 });
-export async function gemini(prompt: string) {
+export async function gemini(prompt: string) {  
   let attempts = 0;
   const maxAttempts = 3;
 
@@ -117,13 +117,13 @@ export async function gemini(prompt: string) {
   si non vous pouvez utiliser vos propre connaissance
   `;
 
-  while (attempts < maxAttempts) {
+  while (attempts < maxAttempts) {    
     try {
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: fullPrompt,
       });
-
+      
       const text = response.text;
       try {
         return JSON.parse(text as string);
@@ -131,7 +131,7 @@ export async function gemini(prompt: string) {
         return text;
       }
     } catch (error: any) {
-      attempts++;
+      attempts++;      
       if (error.message?.includes("503") && attempts < maxAttempts) {
         await new Promise(res => setTimeout(res, 2000));
         continue;
@@ -399,39 +399,77 @@ export const updateItems = async ({collectionName, userId, dataToUpdated}:any, d
 
 export const getPrompt = (goal: any) => {
   return `
-    Create a detailed breakdown of tasks to achieve the following goal:
-    * Goal Name: ${goal.name}
-    * Description: ${goal.description}
-    * Priority: ${goal.priority}
-    * Start Date: ${new Date().toISOString().split("T")[0]}
-    * Deadline: ${goal.deadline}
-    Rules:
-    1. If the goal priority is **CRITICAL** or **HIGH**
-       * Each day must have **3 tasks**.
-       * Each task should be **no longer than 2 hours**.
-    2. **If the goal priority is ****MEDIUM**
-       * Each day should have **2 tasks**.
-       * Each task should be **no longer than 2 hours**.
-    3. **If the goal priority is LOW**
-       * Each day should have **1 task** **no longer than 2 hours**.
-    4. Divide the goal into the **maximum number of achievable tasks**, considering that the person has **very low capacity**
-    Return **only a valid JSON array** in the following format
+    You are an intelligent productivity and habit-planning assistant.
+
+    Your task is to generate tasks for ANY type of goal, including:
+    - Long or short projects
+    - Daily habits
+    - Health & nutrition goals
+    - Reminder-based goals (e.g. drinking water)
+
+    GOAL DETAILS:
+    - Name: ${goal.name}
+    - Description: ${goal.description}
+    - Priority: ${goal.priority}
+    - Start Date: ${new Date().toISOString().split("T")[0]}
+    - Deadline: ${goal.deadline ?? "No fixed deadline"}
+
+    GOAL TYPE RULES:
+    - If the goal is a **daily or repetitive action** (e.g. drink water, take vitamins, follow a nutrition plan),
+      treat it as a **HABIT goal**.
+    - Otherwise, treat it as a **PROJECT goal**.
+
+    GENERAL RULES:
+    1. The user has VERY LOW capacity.
+    2. Each task must take **no more than 2 hours**.
+    3. Tasks must be extremely simple and actionable.
+    4. Maximize task granularity (many small tasks).
+    5. Tasks must be realistic and sustainable.
+
+    PROJECT GOAL RULES:
+    - Split the goal into multiple steps.
+    - Distribute tasks evenly between start date and deadline.
+
+    HABIT GOAL RULES:
+    - Create **repeating daily tasks**.
+    - Generate one task per day.
+    - Each task represents a **single habit action**.
+    - Schedule tasks at a consistent time each day.
+
+    PRIORITY → DAILY LOAD:
+    - CRITICAL / HIGH → up to 3 tasks per day
+    - MEDIUM → up to 2 tasks per day
+    - LOW → 1 task per day
+
+    NOTIFICATION RULES:
+    - For HABIT goals → emailNotification = true
+    - For PROJECT goals → emailNotification = false
+
+    TIME RULES:
+    - Tasks must not overlap.
+    - Use realistic hours (e.g. between 08:00 and 20:00).
+
+    OUTPUT RULES (STRICT):
+    - Return ONLY a valid JSON array.
+    - No markdown, no comments, no text outside JSON.
+    - Date format: "YYYY-MM-DD HH:mm"
+
+    JSON FORMAT:
     [
       {
         "title": "Task title",
         "description": "Short description",
         "priority": "${goal.priority}",
-        "startDate": "YYYY-MM-DD hh:mm",
-        "endDate": "YYYY-MM-DD hh:mm",
+        "startDate": "YYYY-MM-DD HH:mm",
+        "endDate": "YYYY-MM-DD HH:mm",
         "status": "todo",
-        "goalName": "${goal.name}"
+        "goalName": "${goal.name}",
         "emailNotification": ${false}
       }
     ]
     Replace "priority", "goalName", "emailNotification" and "status" with the actual values based on the goal details above.
-  `
-}
-
+`;
+};
 
 export const getTabColor = (tabKey: string) => {
   switch (tabKey) {
