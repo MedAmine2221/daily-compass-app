@@ -1,5 +1,10 @@
 import * as yup from "yup";
-const ratingSchema =yup.object().shape({
-      problem: yup.string().required("Problem is required"),
-    });
+
+export const ratingSchema = (t: any) =>
+  yup.object().shape({
+    problem: yup
+      .string()
+      .required(t("errors.problemRequired")),
+  });
+
 export default ratingSchema;

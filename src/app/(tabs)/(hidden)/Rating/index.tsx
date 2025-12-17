@@ -3,7 +3,7 @@ import AppInput from "@/src/components/AppInput";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
-import ratingSchema from "@/src/schema/ratingSchema";
+import { ratingSchema } from "@/src/schema/ratingSchema";
 import { getItems } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore";
@@ -26,7 +26,7 @@ export default function ContactUs() {
   const loading = useSelector((state: RootState) => state.loading.loading);
   const { t } = useTranslation();
   const { control, handleSubmit, formState: { errors }, reset } = useForm({
-    resolver: yupResolver(ratingSchema),
+    resolver: yupResolver(ratingSchema(t)),
     defaultValues: {
       problem: '',
     },
