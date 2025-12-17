@@ -15,7 +15,18 @@
         "confirmPasswordRequired": "Please confirm your new password",
         "passwordNotMatch": "Passwords do not match"
       },
-      "promptRequired": "Prompt is required"
+      "promptRequired": "Prompt is required",
+      "goalNameRequired": "Goal name is required",
+      "goalDescriptionRequired": "Goal description is required",
+      "invalidPriority": "Invalid priority",
+      "priorityRequired": "Priority is required",
+      "invalidDeadline": "Deadline must be a valid date",
+      "deadlineRequired": "Deadline is required",
+      "deadlineInFuture": "Deadline must be in the future",
+      "usernameRequired": "Username is required",
+      "phoneNumberRequired": "Phone number is required",
+      "addressRequired": "Address is required",
+      "goalsRequired": "Goals are required"
     },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
     "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",
