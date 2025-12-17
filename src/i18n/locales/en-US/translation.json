@@ -14,7 +14,8 @@
         "newPasswordRequired": "New password is required",
         "confirmPasswordRequired": "Please confirm your new password",
         "passwordNotMatch": "Passwords do not match"
-      }
+      },
+      "promptRequired": "Prompt is required"
     },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
     "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",

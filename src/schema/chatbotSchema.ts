@@ -1,5 +1,8 @@
 import * as yup from "yup";
-const chatbotSchema =yup.object().shape({
-      prompt: yup.string().required("Prompt is required")
-    });
-export default chatbotSchema;
+
+export const chatbotSchema = (t: any) =>
+  yup.object().shape({
+    prompt: yup
+      .string()
+      .required(t("errors.promptRequired")),
+  });

@@ -5,7 +5,7 @@ import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { ChatBotInterface, Message } from "@/src/constants/interfaces";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
-import chatbotSchema from "@/src/schema/chatbotSchema";
+import { chatbotSchema } from "@/src/schema/chatbotSchema";
 import createMessage, { gemini, renderMessageText } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FlashList } from "@shopify/flash-list";
@@ -37,7 +37,7 @@ export default function ChatBot() {
     formState: { errors },
     reset,
   } = useForm({
-    resolver: yupResolver(chatbotSchema),
+    resolver: yupResolver(chatbotSchema(t)),
   });
 
   useEffect(() => {
