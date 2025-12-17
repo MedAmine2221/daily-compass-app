@@ -6,7 +6,7 @@ import { setCalendar } from "@/src/redux/calendar/calendarReducer";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
 import { setTask } from "@/src/redux/task/taskReducer";
-import taskSchema from "@/src/schema/tasksSchema";
+import { taskSchema } from "@/src/schema/tasksSchema";
 import { getUsers, transformTasksForCalendar } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore";
@@ -39,7 +39,7 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
     formState: { errors },
     reset
   } = useForm({
-    resolver: yupResolver(taskSchema)
+    resolver: yupResolver(taskSchema(t))
   });
   const userId = auth.currentUser?.uid 
   const onSubmit = async (data: any) => {

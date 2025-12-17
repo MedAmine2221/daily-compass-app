@@ -36,7 +36,13 @@
       "passwordMin": "Password must be at least 6 characters",
       "passwordMax": "Password must not exceed 20 characters",
       "confirmPasswordRequired": "Please confirm your password",
-      "passwordsNotMatch": "Passwords do not match"
+      "passwordsNotMatch": "Passwords do not match",
+      "titleRequired": "Title is required",
+      "descriptionRequired": "Description is required",
+      "startDateRequired": "Start date is required",
+      "startDateInFuture": "Start date must be in the future",
+      "endDateRequired": "End date is required",
+      "endDateAfterStart": "End date must be later than start date"
 
     },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
