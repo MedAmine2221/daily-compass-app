@@ -5,7 +5,7 @@ import Header from '@/src/components/Header';
 import { PRIMARY_COLOR } from '@/src/constants/colors';
 import { setLoadingFalse, setLoadingTrue } from '@/src/redux/loadingReducer';
 import { RootState } from '@/src/redux/store';
-import forgotPasswordSchema from '@/src/schema/forgotPasswordSchema';
+import { forgotPasswordSchema } from '@/src/schema/forgotPasswordSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -17,10 +17,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ForgotPassword() {
-    const {control, handleSubmit, formState: { errors }} = useForm({
-        resolver: yupResolver(forgotPasswordSchema),
-    });
     const { t } = useTranslation();
+    const {control, handleSubmit, formState: { errors }} = useForm({
+        resolver: yupResolver(forgotPasswordSchema(t)),
+    });
     const dispatch = useDispatch();
     const router = useRouter()
     const loading = useSelector((state: RootState)=>state.loading.loading)
