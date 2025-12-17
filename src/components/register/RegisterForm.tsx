@@ -34,7 +34,9 @@ export default function RegisterForm() {
             username: username,
             phoneNumber: "",
             address: "",
-            imageUrl:"",
+            validatedAccount: true,
+            freePeriod: 1,
+            imageUrl: "",
             goals: [],
             lang: LANG.FR,
             createdAt: new Date().toISOString(),
@@ -51,9 +53,31 @@ export default function RegisterForm() {
             }),
           })
           Alert.alert(t("registerFormAlertSuccess"));
-        } catch (error: any) {
-          Alert.alert(t("registerFormAlert"), error.message);
-        }finally {
+        } 
+        catch (error: any) {
+          if (error.code === "auth/email-already-in-use") {
+            Alert.alert(
+              t("registerFormAlert"),
+              t("emailAlreadyUsed") // message personnalisé
+            );
+          } else if (error.code === "auth/invalid-email") {
+            Alert.alert(
+              t("registerFormAlert"),
+              t("invalidEmail")
+            );
+          } else if (error.code === "auth/weak-password") {
+            Alert.alert(
+              t("registerFormAlert"),
+              t("weakPassword")
+            );
+          } else {
+            Alert.alert(
+              t("registerFormAlert"),
+              error.message
+            );
+          }
+        }
+        finally {
           dispatch(setLoadingFalse());
           router.replace('/auth');
         }

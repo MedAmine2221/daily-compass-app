@@ -6,6 +6,7 @@
         "inProgress": "In Progress",
         "done": "Done"
     },
+    "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
     "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",
     "deleteAccountAlertTry":"User account and associated data deleted successfully.",
     "deleteAccountAlertCatch": "Error deleting user account: ",
@@ -13,6 +14,10 @@
     "onForgotPasswordAlert":"Password reset email sent successfully.",
     "updatePhotoAlert": "Error Whene uploading Image : ",
     "signInAlert":"Error Signing In : ",
+    "signInAlertCredentials":"please check your credentials.",
+    "emailAlreadyUsed": "This email is already in use.",
+    "invalidEmail": "Invalid email address.",
+    "weakPassword": "Password is too weak.",
     "changePasswordAlerts": {
       "wrongOldPassword": "The old password is incorrect.",
       "weakNewPassword": "The new password is too weak.",

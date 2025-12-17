@@ -7,6 +7,7 @@
       "confirmAI":"Confirmer avec IA",
       "cancelAI":"Continuer sans IA"
     },
+    "signInAlertUnverified": "Vous avez dépassé la période d’essai gratuite. Veuillez passer à un plan payant.",
     "pickImageFromGalleryAlert": "Désolé, nous avons besoin des permissions de la pellicule pour que cela fonctionne !",
     "deleteAccountAlertTry":"Compte utilisateur et données associées supprimés avec succès.",
     "deleteAccountAlertCatch": "Erreur lors de la suppression du compte utilisateur : ",
@@ -14,6 +15,10 @@
     "onForgotPasswordAlert":"Un email de réinitialisation du mot de passe vous a été envoyé.",
     "updatePhotoAlert": "Erreur lors du téléchargement de l'image : ",
     "signInAlert":"Erreur lors de la connexion : ",
+    "signInAlertCredentials":"veuillez vérifier vos identifiants.",
+    "emailAlreadyUsed": "Cet email est déjà utilisé.",
+    "invalidEmail": "Adresse email invalide.",
+    "weakPassword": "Le mot de passe est trop faible.",
     "changePasswordAlerts": {
       "wrongOldPassword": "L’ancien mot de passe est incorrect.",
       "weakNewPassword": "Le nouveau mot de passe est trop faible.",
