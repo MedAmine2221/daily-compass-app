@@ -27,7 +27,9 @@
       "usernameRequired": "Le nom d'utilisateur est requis",
       "phoneNumberRequired": "Le numéro de téléphone est requis",
       "addressRequired": "L'adresse est requise",
-      "goalsRequired": "Les objectifs sont requis"
+      "goalsRequired": "Les objectifs sont requis",
+      "invalidEmail": "Email invalide",
+      "emailRequired": "Email est requis"
     },
     "signInAlertUnverified": "Vous avez dépassé la période d’essai gratuite. Veuillez passer à un plan payant.",
     "pickImageFromGalleryAlert": "Désolé, nous avons besoin des permissions de la pellicule pour que cela fonctionne !",

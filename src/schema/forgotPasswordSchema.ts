@@ -1,6 +1,12 @@
 import * as yup from 'yup';
 import 'yup-phone-lite';
-const forgotPasswordSchema = yup.object().shape({
-      email: yup.string().email("Invalid email").required("Email is required"),
-});
+
+export const forgotPasswordSchema = (t: any) =>
+  yup.object().shape({
+    email: yup
+      .string()
+      .email(t("errors.invalidEmail"))
+      .required(t("errors.emailRequired")),
+  });
+
 export default forgotPasswordSchema;
