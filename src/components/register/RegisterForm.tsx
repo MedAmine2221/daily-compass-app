@@ -3,7 +3,7 @@ import { PRIMARY_COLOR } from '@/src/constants/colors';
 import { LANG } from '@/src/constants/enums';
 import { setLoadingFalse, setLoadingTrue } from '@/src/redux/loadingReducer';
 import { RootState } from '@/src/redux/store';
-import signupSchema from '@/src/schema/signupSchema';
+import { signupSchema } from '@/src/schema/signupSchema';
 import createMessage from '@/src/utils/functions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
@@ -17,10 +17,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppInput from '../AppInput';
 
 export default function RegisterForm() {
-    const {control, handleSubmit, formState: { errors }} = useForm({
-        resolver: yupResolver(signupSchema),
-    });
     const { t } = useTranslation()
+    const {control, handleSubmit, formState: { errors }} = useForm({
+        resolver: yupResolver(signupSchema(t)),
+    });
     const dispatch = useDispatch()
     const loading = useSelector ((state: RootState) => state.loading.loading);
     const router = useRouter()

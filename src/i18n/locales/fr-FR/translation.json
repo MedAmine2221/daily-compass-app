@@ -31,7 +31,13 @@
       "invalidEmail": "Email invalide",
       "emailRequired": "Email est requis",
       "passwordRequired": "Le mot de passe est requis",
-      "problemRequired": "Le problème est requis"
+      "problemRequired": "Le problème est requis",
+      "usernameMin": "Le nom d'utilisateur doit contenir au moins 3 caractères",
+      "usernameMax": "Le nom d'utilisateur ne doit pas dépasser 15 caractères",
+      "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",
+      "passwordMax": "Le mot de passe ne doit pas dépasser 20 caractères",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsNotMatch": "Les mots de passe ne correspondent pas"
     },
     "signInAlertUnverified": "Vous avez dépassé la période d’essai gratuite. Veuillez passer à un plan payant.",
     "pickImageFromGalleryAlert": "Désolé, nous avons besoin des permissions de la pellicule pour que cela fonctionne !",

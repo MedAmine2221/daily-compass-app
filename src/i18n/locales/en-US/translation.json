@@ -30,7 +30,13 @@
       "invalidEmail": "Invalid email",
       "emailRequired": "Email is required",
       "passwordRequired": "Password is required",
-      "problemRequired": "Problem is required"
+      "problemRequired": "Problem is required",
+      "usernameMin": "Username must be at least 3 characters",
+      "usernameMax": "Username must not exceed 15 characters",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordMax": "Password must not exceed 20 characters",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsNotMatch": "Passwords do not match"
 
     },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",

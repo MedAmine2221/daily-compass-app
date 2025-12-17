@@ -1,8 +1,25 @@
 import * as yup from "yup";
-const signupSchema =yup.object().shape({
-      username: yup.string().min(3).max(15).required("Username is required"),
-      email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().min(6).max(20).required("Password is required"),
-      confirmPassword: yup.string().oneOf([yup.ref("password")],"confirmPassword"),
-    });
+
+export const signupSchema = (t: any) =>
+  yup.object().shape({
+    username: yup
+      .string()
+      .min(3, t("errors.usernameMin"))
+      .max(15, t("errors.usernameMax"))
+      .required(t("errors.usernameRequired")),
+    email: yup
+      .string()
+      .email(t("errors.invalidEmail"))
+      .required(t("errors.emailRequired")),
+    password: yup
+      .string()
+      .min(6, t("errors.passwordMin"))
+      .max(20, t("errors.passwordMax"))
+      .required(t("errors.passwordRequired")),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], t("errors.passwordsNotMatch"))
+      .required(t("errors.confirmPasswordRequired")),
+  });
+
 export default signupSchema;
