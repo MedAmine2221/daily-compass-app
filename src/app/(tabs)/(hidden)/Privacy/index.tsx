@@ -118,7 +118,7 @@ export default function Privacy() {
                         <Text className="mx-5 text-lg">
                             {t("privacy.contact.body")}
                         </Text>
-                        <Text className="mx-5 text-lg" style={{fontWeight: "bold"}}>
+                        <Text className="mx-5 mb-10 text-lg" style={{fontWeight: "bold"}}>
                             amine.lazreg.dev@gmail.com
                         </Text>
                     </View>
