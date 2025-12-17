@@ -7,6 +7,7 @@ import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
 import { removeTaskWithGoalName, setTask } from "@/src/redux/task/taskReducer";
 import { setUser } from "@/src/redux/user/userReducer";
+import { editProfileWithGoalsSchema } from "@/src/schema/editProfileWithGoalsSchema";
 import { gemini, getPrompt, transformTasksForCalendar, updateItems } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore";
@@ -20,7 +21,6 @@ import AlertVerification from "../AlertVerification";
 import AppDatePicker from "../AppDatePicker";
 import AppDropdown from "../AppDropdown";
 import AppInput from "../AppInput";
-import { editProfileWithGoalsSchema } from "@/src/schema/editProfileWithGoalsSchema";
 
 export default function EditProfileModal({ userInfo, visible, hideModal }: EditProfileModalInterface) {
   const calendar = useSelector((state: RootState) => state.calendar.calendar);
