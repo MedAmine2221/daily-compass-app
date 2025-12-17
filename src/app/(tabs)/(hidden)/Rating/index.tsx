@@ -16,7 +16,7 @@ import { Rating } from "react-native-ratings";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ContactUs() {
+export default function RatingApp() {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(3);
     const user = auth.currentUser;
@@ -99,7 +99,7 @@ export default function ContactUs() {
               shadowOpacity: 0.1,
               shadowRadius: 5,
             }}
-            contentContainerStyle={{ paddingBottom: 40 }}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center", paddingBottom: 40 }}
             showsVerticalScrollIndicator={false}
           >
             <Text style={{ textAlign: "center", marginBottom: 10, fontSize: 18, color: "#fbbf24" }}>
