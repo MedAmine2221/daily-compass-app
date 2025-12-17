@@ -130,7 +130,7 @@ export default function MyAgenda() {
               {formatDate(selected, i18n.language)}
             </Text>
             <Text className="text-sm text-gray-600 font-medium">
-              {tasks?.length} {t("agenda.event")} {tasks?.length > 1 ? "s" : ""}
+              {tasks?.length} {t("agenda.event")}{tasks?.length > 1 ? "s" : ""}
             </Text>
           </View>
 
