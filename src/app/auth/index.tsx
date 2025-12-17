@@ -3,11 +3,12 @@ import CheckBox from '@/src/components/CheckBox';
 import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';
 import { AuthDataInterface } from '@/src/constants/interfaces';
-import loginSchema from "@/src/schema/loginSchema";
+import { loginSchema } from "@/src/schema/loginSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { useTranslation } from 'react-i18next';
 import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Auth() {
   const router = useRouter();
   const [authData, setAuthData] = useState<AuthDataInterface>();
-
+  const { t } = useTranslation();
   const {
     control,
     handleSubmit,
@@ -23,7 +24,7 @@ export default function Auth() {
     getValues,
     reset
   } = useForm<AuthDataInterface>({
-    resolver : yupResolver(loginSchema),
+    resolver : yupResolver(loginSchema(t)),
     defaultValues: {
       email: authData?.email ?? '',
       password: authData?.password ?? '',

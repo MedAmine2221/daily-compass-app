@@ -28,7 +28,8 @@
       "addressRequired": "Address is required",
       "goalsRequired": "Goals are required",
       "invalidEmail": "Invalid email",
-      "emailRequired": "Email is required"
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required"
     },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
     "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",
