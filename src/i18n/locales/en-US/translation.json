@@ -6,6 +6,16 @@
         "inProgress": "In Progress",
         "done": "Done"
     },
+    "errors": {
+      "changePassword":{
+        "passwordMin": "Password must be at least 6 characters",
+        "passwordMax": "Password must not exceed 20 characters",
+        "oldPasswordRequired": "Old password is required",
+        "newPasswordRequired": "New password is required",
+        "confirmPasswordRequired": "Please confirm your new password",
+        "passwordNotMatch": "Passwords do not match"
+      }
+    },
     "signInAlertUnverified": "Your account has exceeded the free trial period. Please upgrade to a paid plan.",
     "pickImageFromGalleryAlert": "Sorry, we need camera roll permissions to make this work !",
     "deleteAccountAlertTry":"User account and associated data deleted successfully.",
