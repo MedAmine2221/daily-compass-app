@@ -1,7 +1,8 @@
-import { auth } from "@/FirebaseConfig";
+import { auth } from "../../FirebaseConfig";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
+import { changePassSchema } from "@/src/schema/changePassword";
 import { logout } from "@/src/utils/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "expo-router";
@@ -14,7 +15,6 @@ import { Button, IconButton, Modal, Portal, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import AlertVerification from "../AlertVerification";
 import AppInput from "../AppInput";
-import { changePassSchema } from "@/src/schema/changePassword";
 
 export default function ChangePassword({ visible, hideModal }: any) {
   const { t } = useTranslation();

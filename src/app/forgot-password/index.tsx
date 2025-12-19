@@ -1,4 +1,4 @@
-import { auth } from '@/FirebaseConfig';
+import { auth } from '@/src/FirebaseConfig';
 import AppInput from '@/src/components/AppInput';
 import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';

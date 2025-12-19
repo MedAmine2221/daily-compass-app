@@ -1,4 +1,4 @@
-import { auth } from "@/FirebaseConfig";
+import { auth } from "../../../FirebaseConfig";
 import AppHeader from "@/src/components/AppHeader";
 import { flags } from "@/src/constants";
 import { PRIMARY_COLOR } from "@/src/constants/colors";

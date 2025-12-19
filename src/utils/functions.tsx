@@ -1,4 +1,3 @@
-import { auth, db } from "@/FirebaseConfig";
 import { AI_API_KEY } from "@/keys";
 import { GoogleGenAI } from "@google/genai";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,6 +9,7 @@ import { Text } from "react-native-paper";
 import { STATIC_KNOWLEDGE } from "../constants";
 import { PRIORITY, STATUS } from "../constants/enums";
 import { DeleteItemOptions, getItemsOptions, Message } from "../constants/interfaces";
+import { auth, db } from "../FirebaseConfig";
 import { clearCalendar } from "../redux/calendar/calendarReducer";
 import { clearChat, setChat } from "../redux/chat/chatReducer";
 import { AppDispatch, store } from "../redux/store";

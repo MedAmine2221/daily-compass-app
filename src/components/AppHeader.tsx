@@ -1,4 +1,4 @@
-import { auth } from "@/FirebaseConfig";
+import { auth } from "../FirebaseConfig";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

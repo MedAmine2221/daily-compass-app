@@ -1,4 +1,4 @@
-import { auth, db } from "@/FirebaseConfig";
+import { auth, db } from "../../../FirebaseConfig";
 import AlertVerification from "@/src/components/AlertVerification";
 import AppHeader from "@/src/components/AppHeader";
 import ChangePassword from "@/src/components/profile/ChangePasswordModal";

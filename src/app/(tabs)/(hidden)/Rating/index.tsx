@@ -1,4 +1,4 @@
-import { auth, db } from "@/FirebaseConfig";
+import { auth, db } from "../../../../FirebaseConfig";
 import AppInput from "@/src/components/AppInput";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";

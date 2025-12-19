@@ -1,4 +1,4 @@
-import { auth, db } from "@/FirebaseConfig";
+import { auth, db } from "../../FirebaseConfig";
 import { priorities } from "@/src/constants";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { EditProfileModalInterface } from "@/src/constants/interfaces";

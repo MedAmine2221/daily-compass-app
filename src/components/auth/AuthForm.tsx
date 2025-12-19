@@ -1,4 +1,4 @@
-import { auth } from '@/FirebaseConfig';
+import { auth } from '@/src/FirebaseConfig';
 import { PRIMARY_COLOR } from '@/src/constants/colors';
 import { STATUS } from '@/src/constants/enums';
 import { AuthDataInterface, AuthFormsPropsInterface } from '@/src/constants/interfaces';

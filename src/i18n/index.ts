@@ -11,10 +11,16 @@ const resources = {
 };
 
 const initI18n = async () => {
-  let savedLanguage = await AsyncStorage.getItem("language");
-
-  if (!savedLanguage) {
-    savedLanguage = Localization.locale;
+  let savedLanguage = Localization?.locale;
+  if (typeof window !== "undefined" && window.navigator) {
+    try {
+      const storedLanguage = await AsyncStorage.getItem("language");
+      if (storedLanguage) {
+        savedLanguage = storedLanguage;
+      }
+    } catch (error) {
+      console.warn("Erreur lecture AsyncStorage, utilisation locale système:", error);
+    }
   }
 
   // eslint-disable-next-line import/no-named-as-default-member

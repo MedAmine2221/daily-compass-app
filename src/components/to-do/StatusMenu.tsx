@@ -1,4 +1,4 @@
-import { auth } from '@/FirebaseConfig';
+import { auth } from '@/src/FirebaseConfig';
 import { STATUS } from '@/src/constants/enums';
 import { TaskInterface } from '@/src/constants/interfaces';
 import { removeCalendarTask } from '@/src/redux/calendar/calendarReducer';
