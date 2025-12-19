@@ -30,11 +30,7 @@ export default function RegisterForm() {
         try {
           const userCredential = await createUserWithEmailAndPassword(auth, email, confirmPassword);
           const user = userCredential.user;
-          await sendEmailVerification(user);
-          Alert.alert(
-            "Confirm your email",
-            "A verification email has been sent. Please click the link to activate your account."
-          );
+          await sendEmailVerification(user);        
           await setDoc(doc(db, "users", user.uid), {
             username: username,
             phoneNumber: "",
