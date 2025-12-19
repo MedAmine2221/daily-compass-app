@@ -7,7 +7,7 @@ import { signupSchema } from '@/src/schema/signupSchema';
 import createMessage from '@/src/utils/functions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,11 @@ export default function RegisterForm() {
         try {
           const userCredential = await createUserWithEmailAndPassword(auth, email, confirmPassword);
           const user = userCredential.user;
+          await sendEmailVerification(user);
+          Alert.alert(
+            "Confirm your email",
+            "A verification email has been sent. Please click the link to activate your account."
+          );
           await setDoc(doc(db, "users", user.uid), {
             username: username,
             phoneNumber: "",

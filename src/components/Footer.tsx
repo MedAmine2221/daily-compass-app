@@ -33,12 +33,12 @@ export default function Footer() {
                     onPress={()=> openLink(InstaLink)}             
                 />
             </LinearGradient>
-            <IconButton 
+            {/* <IconButton 
                 size={35} 
                 icon="google" 
                 iconColor='#de493d'
                 onPress={()=> openLink("")}             
-            />
+            /> */}
         </View>
         <View>
             <Text className='text-center text-gray-400 mt-2 mb-4'>
