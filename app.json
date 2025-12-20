@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mohamed-amine-lazreg.todoapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -40,7 +41,22 @@
       ],
       "expo-localization",
       "expo-mail-composer",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "manifest": {
+              "usesFeatures": [
+                {
+                  "name": "android.hardware.camera.ar",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
