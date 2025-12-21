@@ -13,10 +13,10 @@ export default function AppInput({
   secureTextEntry,
   icon,
   keyboardType,
-  multiline,
 }: AppInputInterface) {
   const [focused, setFocused] = useState(false);
   const [eyeOff, setEyeOff] = useState(true);
+
   return (
     <Controller
       name={name}
@@ -24,7 +24,7 @@ export default function AppInput({
       render={({ field: { onChange, value } }) => (
         <View>
           <TextInput
-            multiline={multiline}
+            multiline={value?.length > 50 && true}
             keyboardType={keyboardType}
             mode="outlined"
             label={label}

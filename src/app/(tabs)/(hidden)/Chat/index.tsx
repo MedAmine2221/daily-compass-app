@@ -193,7 +193,6 @@ export default function ChatBot() {
               name="prompt"
               label={t("chat.prompt")}
               icon="message"
-              multiline
             />
           </View>
           {loading ? (

@@ -121,7 +121,6 @@ export default function RatingApp() {
                   name="problem"
                   label={t("rating.problemsLabel")}
                   icon="bug"
-                  multiline
                 />
               </View>
             )}

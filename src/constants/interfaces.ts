@@ -99,7 +99,6 @@ export interface AppInputInterface {
     secureTextEntry?: boolean;
     icon: string;
     keyboardType?: KeyboardType;
-    multiline?: boolean;
 }
 
 export interface BadgeInterface {

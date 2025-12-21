@@ -132,7 +132,6 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
             errors={errors}
             name="description"
             label={t("todo.addModal.taskDesc")}
-            multiline
             icon="subtitles"
           />
           <View className="my-2"/>

@@ -224,7 +224,6 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
               </View>
 
               <AppInput
-                multiline
                 control={control}
                 errors={errors}
                 name={`goals.${index}.name`}
@@ -238,7 +237,6 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
                 name={`goals.${index}.description`}
                 label={t("editProfileModal.goalDesc")}
                 icon="text"
-                multiline
               />
               <View style={{ marginVertical: 5 }} />
               <AppDropdown
