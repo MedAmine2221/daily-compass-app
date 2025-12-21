@@ -31,6 +31,7 @@ export default function ChatBot() {
   const scrollViewRef = useRef<FlashList<any>>(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const {
     control,
     handleSubmit,
@@ -38,17 +39,14 @@ export default function ChatBot() {
     reset,
   } = useForm({
     resolver: yupResolver(chatbotSchema(t)),
-    defaultValues:{
-      prompt: ""
-    }
+    defaultValues: { prompt: "" },
   });
 
   useEffect(() => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
-  }, [messages]);
+  }, [messages, loading]);
 
   const submit = async (data: ChatBotInterface) => {
-    
     reset();
     const time = new Date().toLocaleTimeString([], {
       year: "numeric",
@@ -57,18 +55,23 @@ export default function ChatBot() {
       hour: "2-digit",
       minute: "2-digit",
     });
-    createMessage({ sender: "user", text: data.prompt, time: time});
-    const botMessage = { sender: "bot", text: "", time };
+    createMessage({ sender: "user", text: data.prompt, time });
     dispatch(setLoadingTrue());
+
     const response = await gemini(data.prompt);
+
     if (response === null) {
-      createMessage({ ...botMessage, text: "Retrail" });
+      createMessage({ sender: "bot", text: "Retrail", time });
       dispatch(setLoadingFalse());
       return;
     }
-    createMessage({ ...botMessage, text: response });
+
+    createMessage({ sender: "bot", text: response, time });
     dispatch(setLoadingFalse());
   };
+  const displayedMessages = loading
+    ? [...messages, { sender: "bot", text: "loading", time: "" }]
+    : messages;
 
   return (
     <KeyboardAvoidingView
@@ -85,109 +88,113 @@ export default function ChatBot() {
       >
         <SafeAreaView className="bg-white">
           <AppHeader moduleName={t("modulesNames.chatbot")} />
-
         </SafeAreaView>
+
         <FlashList
           ref={scrollViewRef}
-          data={[...messages].sort(
+          data={[...displayedMessages].sort(
             (a, b) =>
               new Date(a.createdAt as Date).getTime() -
               new Date(b.createdAt as Date).getTime()
           )}
           keyExtractor={(_, index) => index.toString()}
           className="bg-white"
-          renderItem={({ item, index }: { item: Message; index: number }) => (
-            <View
-              key={index}
-              className={`${
-                item?.sender === "user" ? 
-                  "flex-row items-end justify-end" : 
-                  item?.sender === "bot" && item.text !== "Retrail" ? 
-                    "flex-row items-end justify-start" : 
-                    "flex-row items-center justify-center"
-              }`}
-            >
-              {item?.sender === "bot" && item.text !=="Retrail" && (
-                <Image
-                  source={require("../../../../assets/images/bot.png")}
-                  className="w-[45px] h-[45px] rounded-full mr-2"
-                />
-              )}
-              {item.sender === "bot" && item.text=== "Retrail" ?(
-                <View
-                  className={'w-[80%] border-[1px] border-red-300 rounded-2xl mt-3 px-4 py-3 bg-red-100'}
-                >
-                  <View className="flex-row items-center justify-between">
-                    <Text
-                      style={{ color: "#dc2626" }}
-                      className="text-xl"
-                      >
-                      {item?.text}
-                    </Text>
-                    <IconButton
-                      icon="reload"
-                      iconColor={"black"}
-                      size={24}
+          renderItem={({ item, index }: { item: Message; index: number }) => {
+            if (item.text === "loading") {
+              return (
+                <View className="flex-row items-end justify-start mt-3">
+                  <Image
+                    source={require("../../../../assets/images/bot.png")}
+                    className="w-[45px] h-[45px] rounded-full mr-2"
+                  />
+                  <View className="max-w-[80%] rounded-t-2xl rounded-r-2xl px-4 py-3 bg-gray-300">
+                    <LoadingDots
+                      size={10}
+                      dots={3}
+                      colors={["#374151", "#374151", "#374151"]}
+                      bounceHeight={2}
                     />
                   </View>
-                  <Text
-                    style={{
-                      color: "#dc2626",
-                    }}
-                    className="text-xs mt-1 self-end"
-                  >
-                    {item?.time}
-                  </Text>
                 </View>
-              ) : (
+              );
+            }
+
+            if (item.text === "Retrail") {
+              return (
+                <View className="flex-row items-center justify-center mt-3">
+                  <View className="w-[80%] border-[1px] border-red-300 rounded-2xl px-4 py-3 bg-red-100">
+                    <View className="flex-row items-center justify-between">
+                      <Text style={{ color: "#dc2626" }} className="text-xl">
+                        {item.text}
+                      </Text>
+                      <IconButton icon="reload" iconColor="black" size={24} />
+                    </View>
+                    <Text
+                      style={{ color: "#dc2626" }}
+                      className="text-xs mt-1 self-end"
+                    >
+                      {item.time}
+                    </Text>
+                  </View>
+                </View>
+              );
+            }
+
+            return (
+              <View
+                key={index}
+                className={`${
+                  item.sender === "user"
+                    ? "flex-row items-end justify-end"
+                    : "flex-row items-end justify-start"
+                }`}
+              >
+                {item.sender === "bot" && (
+                  <Image
+                    source={require("../../../../assets/images/bot.png")}
+                    className="w-[45px] h-[45px] rounded-full mr-2"
+                  />
+                )}
+
                 <View
                   className={`max-w-[80%] rounded-t-2xl mt-3 ${
-                    item?.sender === "user" ? "rounded-l-2xl" : "rounded-r-2xl"
+                    item.sender === "user" ? "rounded-l-2xl" : "rounded-r-2xl"
                   } px-4 py-3 ${
-                    item?.sender === "user" ? "bg-primary" : "bg-gray-300"
+                    item.sender === "user" ? "bg-primary" : "bg-gray-300"
                   }`}
-                  style={item?.sender === "user" ? { backgroundColor: PRIMARY_COLOR } : {}}
+                  style={
+                    item.sender === "user" ? { backgroundColor: PRIMARY_COLOR } : {}
+                  }
                 >
-            
-                  {renderMessageText(item?.text, item)}
+                  {renderMessageText(item.text, item)}
                   <Text
                     style={{
-                      color: item?.sender === "user" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.5)",
+                      color:
+                        item.sender === "user"
+                          ? "rgba(255,255,255,0.7)"
+                          : "rgba(0,0,0,0.5)",
                     }}
                     className="text-xs mt-1 self-end"
                   >
-                    {item?.time}
+                    {item.time}
                   </Text>
                 </View>
-              )
-              }
-              {item?.sender === "user" && (
-                <Image
-                  source={user?.photoURL ? { uri: user.photoURL } : require("../../../../assets/images/user.png")}
-                  className="w-[45px] h-[45px] rounded-full ml-2"
-                />
-              )}
-            </View>
-          )}
+
+                {item.sender === "user" && (
+                  <Image
+                    source={
+                      user?.photoURL
+                        ? { uri: user.photoURL }
+                        : require("../../../../assets/images/user.png")
+                    }
+                    className="w-[45px] h-[45px] rounded-full ml-2"
+                  />
+                )}
+              </View>
+            );
+          }}
         />
-        {loading && (
-          <View className="bg-white flex-row items-end justify-start">
-            <Image
-              source={require("../../../../assets/images/bot.png")}
-              className="w-[45px] h-[45px] rounded-full mr-2"
-            />
-            <View
-              className="max-w-[80%] rounded-t-2xl rounded-r-2xl px-4 py-3 bg-gray-300"
-            >
-              <LoadingDots
-                size={10}
-                dots={3}
-                colors={["#374151", "#374151", "#374151"]}
-                bounceHeight={2}
-              />
-            </View>
-          </View>
-        )}
+
         <View className="flex-row px-4 bg-white items-center">
           <View className="flex-1">
             <AppInput
@@ -198,6 +205,7 @@ export default function ChatBot() {
               icon="message"
             />
           </View>
+
           {loading ? (
             <ActivityIndicator
               color={PRIMARY_COLOR}
@@ -210,7 +218,7 @@ export default function ChatBot() {
               iconColor={PRIMARY_COLOR}
               size={32}
               onPress={handleSubmit(submit)}
-              rippleColor={"transparent"}
+              rippleColor="transparent"
             />
           )}
         </View>
