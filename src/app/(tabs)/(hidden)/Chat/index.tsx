@@ -1,4 +1,3 @@
-import { auth } from "../../../../FirebaseConfig";
 import AppHeader from "@/src/components/AppHeader";
 import AppInput from "@/src/components/AppInput";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
@@ -23,6 +22,7 @@ import LoadingDots from "react-native-loading-dots";
 import { ActivityIndicator, IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../../../FirebaseConfig";
 
 export default function ChatBot() {
   const user = auth.currentUser;
@@ -185,7 +185,7 @@ export default function ChatBot() {
             </View>
           </View>
         )}
-        <View className="flex-row px-4 bg-white">
+        <View className="flex-row px-4 bg-white items-center">
           <View className="flex-1">
             <AppInput
               control={control}
@@ -199,7 +199,7 @@ export default function ChatBot() {
             <ActivityIndicator
               color={PRIMARY_COLOR}
               size={28}
-              style={{ top: -10 }}
+              style={{ marginLeft: 5 }}
             />
           ) : (
             <IconButton
