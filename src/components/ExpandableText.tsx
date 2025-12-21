@@ -4,8 +4,11 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { PRIMARY_COLOR } from "../constants/colors";
 import { splitText } from "../utils/functions";
 
-export default function ExpandableText({ text, maxChars = 20 }:  {
+export default function ExpandableText({ text, textColor, textSize, textWeight, maxChars = 20 }:  {
   text: string;
+  textSize: number;
+  textWeight: "bold" | "normal";
+  textColor: string;
   maxChars?: number;
 }) {
   const { t } = useTranslation();
@@ -21,9 +24,9 @@ export default function ExpandableText({ text, maxChars = 20 }:  {
   return (
     <View style={{ flexShrink: 1 }}>
       {visibleLines.map((line, index) => (
-        <Text key={index} style={{ color: "black" }}>
+        <Text key={index} style={{ color: textColor, fontSize: textSize, fontWeight: textWeight }}>
           {expanded
-            ? line + (index < visibleLines.length - 1 ? "-" : "")
+            ? line + (index < visibleLines.length - 1 ? " - " : "")
             : line}
         </Text>
       ))}

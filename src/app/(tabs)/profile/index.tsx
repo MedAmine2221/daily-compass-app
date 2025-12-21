@@ -3,7 +3,6 @@ import AppHeader from "@/src/components/AppHeader";
 import ExpandableText from "@/src/components/ExpandableText";
 import ChangePassword from "@/src/components/profile/ChangePasswordModal";
 import EditProfileModal from "@/src/components/profile/EditProfileModal";
-import GoalHistoryModal from "@/src/components/profile/GoalHistory";
 import { PRIMARY_COLOR, RED } from "@/src/constants/colors";
 import { GoalsInterface } from "@/src/constants/interfaces";
 import { removeCalendarTasksByGoalName } from "@/src/redux/calendar/calendarReducer";
@@ -143,35 +142,29 @@ export default function Profile() {
                     subtitle={typeof item.subtitle === "object" ? 
                       <View className="flex-row flex-wrap">
                         {item.subtitle.map((goal: GoalsInterface, index: number) => (
-                          <View key={index} style={{flexDirection: "row", alignItems: "center"}}>
-                            <View key={index} style={{ marginBottom: 6 }}>
+                          <View key={index} style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+                            <View style={{ flex: 1, marginBottom: 6 }}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <Text style={{ color: "black" }} className="text-base mr-1">
-                                  {index + 1} -
-                                </Text>
-                                <ExpandableText text={goal?.name} maxChars={25} />
+                                <ExpandableText textColor={PRIMARY_COLOR} textSize={14} textWeight="bold" text={goal?.name} maxChars={25} />
                               </View>
                               <Text
                                 style={{
                                   color: "black",
-                                  marginLeft: 22,
+                                  marginLeft: 0,
                                 }}
                                 className="text-sm"
                               >
                                 {goal?.deadline}
                               </Text>
                             </View>
-                            <IconButton 
-                              icon={"history"} 
-                              iconColor="black" 
-                              size={24} 
-                              onPress={
-                                () => setHistoryVisible(true)
-                              }
-                            />
-                            {historyVisible && <GoalHistoryModal goalInfo={goal} visible={historyVisible} hideModal={hideGoalHistoryModal} />}
-                            {
-                              loading ?             
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                              <IconButton 
+                                icon={"history"} 
+                                iconColor="black" 
+                                size={24} 
+                                onPress={() => setHistoryVisible(true)}
+                              />
+                              {loading ?             
                                 <ActivityIndicator
                                   color="red"
                                   size={20}
@@ -181,28 +174,10 @@ export default function Profile() {
                                   icon={"trash-can-outline"} 
                                   iconColor="red" 
                                   size={24} 
-                                  onPress={
-                                    () => setDeleteGoalOpenModal(true)
-                                  }
+                                  onPress={() => setDeleteGoalOpenModal(true)}
                                 />
-                            }
-                            {
-                              deleteGoalOpenModal &&
-                                <AlertVerification
-                                  title={t("deleteGoal.title")}
-                                  body={t("deleteGoal.body")}
-                                  icon={'trash-can-outline'}
-                                  visible={deleteGoalOpenModal} 
-                                  onConfirm={
-                                    () => deleteGoal(index, item.subtitle)
-                                  }
-                                  onCancel={
-                                    () =>setDeleteGoalOpenModal(false)
-                                  }
-                                  cancel
-                                  action= "delete"
-                                />
-                            } 
+                              }
+                            </View>
                           </View>
                         ))}
                       </View>
