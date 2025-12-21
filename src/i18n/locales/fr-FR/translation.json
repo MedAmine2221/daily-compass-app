@@ -7,6 +7,8 @@
       "confirmAI":"Confirmer avec IA",
       "cancelAI":"Continuer sans IA"
     },
+    "viewMore": "Voir plus",
+    "viewLess": "Voir moins",
     "errors": {
       "changePassword":{
         "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",

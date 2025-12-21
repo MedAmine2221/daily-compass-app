@@ -6,6 +6,8 @@
         "inProgress": "In Progress",
         "done": "Done"
     },
+    "viewMore": "View more",
+    "viewLess": "View less",
     "errors": {
       "changePassword":{
         "passwordMin": "Password must be at least 6 characters",

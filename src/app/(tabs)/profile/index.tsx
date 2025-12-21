@@ -1,6 +1,6 @@
-import { auth, db } from "../../../FirebaseConfig";
 import AlertVerification from "@/src/components/AlertVerification";
 import AppHeader from "@/src/components/AppHeader";
+import ExpandableText from "@/src/components/ExpandableText";
 import ChangePassword from "@/src/components/profile/ChangePasswordModal";
 import EditProfileModal from "@/src/components/profile/EditProfileModal";
 import GoalHistoryModal from "@/src/components/profile/GoalHistory";
@@ -21,6 +21,7 @@ import { ScrollView, View } from "react-native";
 import { ActivityIndicator, Avatar, Button, Card, FAB, IconButton, PaperProvider, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
+import { auth, db } from "../../../FirebaseConfig";
 
 export default function Profile() {
   const router = useRouter();
@@ -143,9 +144,23 @@ export default function Profile() {
                       <View className="flex-row flex-wrap">
                         {item.subtitle.map((goal: GoalsInterface, index: number) => (
                           <View key={index} style={{flexDirection: "row", alignItems: "center"}}>
-                            <Text style={{color: "black"}} key={index} className="text-base mr-1">
-                              {index+1 + " - "+goal?.name + " for "+ goal?.deadline}{index + 1 < item.subtitle.length - 1 ? ',' : ''}
-                            </Text>
+                            <View key={index} style={{ marginBottom: 6 }}>
+                              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <Text style={{ color: "black" }} className="text-base mr-1">
+                                  {index + 1} -
+                                </Text>
+                                <ExpandableText text={goal?.name} maxChars={25} />
+                              </View>
+                              <Text
+                                style={{
+                                  color: "black",
+                                  marginLeft: 22,
+                                }}
+                                className="text-sm"
+                              >
+                                {goal?.deadline}
+                              </Text>
+                            </View>
                             <IconButton 
                               icon={"history"} 
                               iconColor="black" 
