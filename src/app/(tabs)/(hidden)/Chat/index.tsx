@@ -38,6 +38,9 @@ export default function ChatBot() {
     reset,
   } = useForm({
     resolver: yupResolver(chatbotSchema(t)),
+    defaultValues:{
+      prompt: ""
+    }
   });
 
   useEffect(() => {
