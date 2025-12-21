@@ -33,7 +33,7 @@ export default function AppDropdown({
               ${focused ? "border-[1.25px]" : "border-[0.5px]"}
               ${focused ? "border-[#4e4db0]" : errors?.[name] ? "border-red-400" : "border-black"}
               bg-white
-              px-3
+              px-5
             `}
           >
             <MaterialCommunityIcons
@@ -41,7 +41,7 @@ export default function AppDropdown({
               size={22}
               color={focused ? PRIMARY_COLOR : errors[name] ? "#f87171" : "#777"}
             />
-
+            <View className="mx-2" />
             <Dropdown
               style={{ flex: 1, height: 50 }}
               selectedTextStyle={{ color: "black", fontSize: 15 }}
