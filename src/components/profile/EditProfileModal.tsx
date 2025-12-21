@@ -1,4 +1,3 @@
-import { auth, db } from "../../FirebaseConfig";
 import { priorities } from "@/src/constants";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { EditProfileModalInterface } from "@/src/constants/interfaces";
@@ -17,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Alert, ScrollView, View } from "react-native";
 import { Button, IconButton, Modal, Portal, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+import { auth, db } from "../../FirebaseConfig";
 import AlertVerification from "../AlertVerification";
 import AppDatePicker from "../AppDatePicker";
 import AppDropdown from "../AppDropdown";
@@ -201,40 +201,63 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
               } name="address" label={t("editProfileModal.address")} icon="map-marker" />
           <View className="my-2" />
           {fields.map((field, index) => (
-            <View key={field.id}>
-              <View className="flex-row items-center justify-between">
-                <AppInput control={control} errors={errors} name={`goals.${index}.name`} label={t("editProfileModal.goalName")} icon="target" />
-                <IconButton 
-                  icon="trash-can-outline" 
-                  size={30} 
-                  iconColor="red" 
-                  onPress={() => {
-                    remove(index); 
-                    // setRemoveGoals(true);
-                  }} 
+            <View
+              key={field.id}
+              style={{
+                borderWidth: 1,
+                borderColor: "#ddd",
+                borderRadius: 10,
+                padding: 10,
+                marginBottom: 15,
+                backgroundColor: "#f9f9f9",
+              }}
+            >
+              {/* Ligne header avec icône trash sur toute la largeur */}
+              <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+                <IconButton
+                  icon="trash-can-outline"
+                  size={25}
+                  iconColor="red"
+                  onPress={() => remove(index)}
+                  style={{ margin: 0 }}
                 />
               </View>
-              <View className="my-2" />
-              <AppInput control={control} errors={errors} name={`goals.${index}.description`} label={t("editProfileModal.goalDesc")} icon="text" multiline />
-              <View className="my-2" />
-              <AppDropdown 
+
+              <AppInput
+                multiline
+                control={control}
+                errors={errors}
+                name={`goals.${index}.name`}
+                label={t("editProfileModal.goalName")}
+                icon="target"
+              />
+              <View style={{ marginVertical: 5 }} />
+              <AppInput
+                control={control}
+                errors={errors}
+                name={`goals.${index}.description`}
+                label={t("editProfileModal.goalDesc")}
+                icon="text"
+                multiline
+              />
+              <View style={{ marginVertical: 5 }} />
+              <AppDropdown
                 control={control}
                 errors={errors}
                 name={`goals.${index}.priority`}
                 label={t("editProfileModal.priority")}
                 data={priorities}
-                icon = "alert-circle-outline"
+                icon="alert-circle-outline"
               />
-              <View className="my-2" />
+              <View style={{ marginVertical: 5 }} />
               <AppDatePicker
-                control={control} 
-                errors={errors} 
-                name={`goals.${index}.deadline`} 
+                control={control}
+                errors={errors}
+                name={`goals.${index}.deadline`}
                 label={t("editProfileModal.deadline")}
               />
             </View>
           ))}
-
           <View className="items-center">
             <Button
               mode="contained-tonal"
