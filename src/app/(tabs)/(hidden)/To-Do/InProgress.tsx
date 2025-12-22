@@ -2,6 +2,7 @@ import AlertVerification from "@/src/components/AlertVerification";
 import AppDropdown from "@/src/components/AppDropdown";
 import Badge from "@/src/components/Badge";
 import EmptyComponent from "@/src/components/EmptyList";
+import ExpandableText from "@/src/components/ExpandableText";
 import SearchInput from "@/src/components/SearchInput";
 import StatusMenu from "@/src/components/to-do/StatusMenu";
 import { priorities } from "@/src/constants";
@@ -78,7 +79,7 @@ export default function InProgressList() {
             <View key={index} style={{ marginBottom: 16, marginHorizontal: 12 }}>
               <Card style= {{ backgroundColor: "white" }}>
                 <View className="flex-row justify-between items-center w-[70%]">
-                  <Card.Title title={item.title} />
+                  <Card.Title title={<ExpandableText maxChars={33} text={item.title} textColor="black" textWeight="normal" textSize={16} />} />
                   <Text
                     style={{
                       marginLeft: 10,
@@ -97,7 +98,7 @@ export default function InProgressList() {
                   </Text>
                 </View>
                 <Card.Content>
-                  <Text variant="bodyMedium">{item.description}</Text>
+                  <ExpandableText maxChars={50} text={item.description} textColor="black" textWeight="normal" textSize={16} />
                   <Text className="self-end mt-4" variant="bodyMedium" style={{fontWeight: "bold"}}>{item.startDate +" - " + item.endDate}</Text>
                 </Card.Content>
                 <Card.Actions>

@@ -1,43 +1,56 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { PRIMARY_COLOR } from "../constants/colors";
 import { splitText } from "../utils/functions";
 
-export default function ExpandableText({ text, textColor, textSize, textWeight, maxChars = 20 }:  {
+export default function ExpandableText({
+  text,
+  textColor,
+  textSize,
+  textWeight,
+  maxChars = 20,
+}: {
   text: string;
   textSize: number;
   textWeight: "bold" | "normal";
   textColor: string;
   maxChars?: number;
-}) {
+}) {  
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const lines = splitText(text, maxChars);
+  
+  const hasMore = lines.length > 1;
 
-  const visibleLines = expanded
-    ? lines
-    : [
-        lines[0] + (text.length > maxChars ? "..." : "")
-      ];
+  const displayedText = expanded
+    ? lines.join(" - ")
+    : lines[0] + (text.length > maxChars ? "..." : "");
 
   return (
     <View style={{ flexShrink: 1 }}>
-      {visibleLines.map((line, index) => (
-        <Text key={index} style={{ color: textColor, fontSize: textSize, fontWeight: textWeight }}>
-          {expanded
-            ? line + (index < visibleLines.length - 1 ? " - " : "")
-            : line}
-        </Text>
-      ))}
+      <Text
+        style={{
+          color: textColor,
+          fontSize: textSize,
+          fontWeight: textWeight,
+        }}
+      >
+        {displayedText}
 
-      {lines.length > 1 && (
-        <TouchableOpacity onPress={() => setExpanded(!expanded)}>
-          <Text style={{ color: PRIMARY_COLOR, marginTop: 2 }}>
+        {hasMore && (
+          <Text
+            onPress={() => setExpanded(!expanded)}
+            style={{
+              color: PRIMARY_COLOR,
+              fontWeight: "bold",
+            }}
+          >
+            {" "}
             {expanded ? t("viewLess") : t("viewMore")}
           </Text>
-        </TouchableOpacity>
-      )}
+        )}
+      </Text>
     </View>
   );
 }
