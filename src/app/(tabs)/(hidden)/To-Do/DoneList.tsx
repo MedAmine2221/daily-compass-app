@@ -22,22 +22,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function DoneList() {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const prioritiesList= [
+    { label: t("all"), value: "All", shortLabel: t("all") },
+    ...priorities
+  ]
   const [openModal, setOpenModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskInterface>();
   const [editingTaskId, setEditingTaskId] = useState<number>();
   const [openStatusMenuId, setOpenStatusMenuId] = useState<number>();
-  const [selectedPriority, setSelectedPriority] = useState(PRIORITY.CRITICAL)
+  const [selectedPriority, setSelectedPriority] = useState(prioritiesList[0].value);
   const [value, setValue] = useState("");
   const tasksList = useSelector((state: RootState) => state.tasks.tasksDone);
   const filterdDataWithValue = useMemo(()=>{
-    return tasksList.filter((task)=>task.title.toLowerCase().includes(value.toLowerCase()) && task.priority === selectedPriority);
+    return tasksList.filter((task)=>task.title.toLowerCase().includes(value.toLowerCase()) && (selectedPriority === "All" ? true : task.priority === selectedPriority));
   },[tasksList, value, selectedPriority]);
 
   const filterdDataWithoutValue = useMemo(()=>{
-    return tasksList.filter((task)=>task.priority === selectedPriority);
+    return tasksList.filter((task)=>( selectedPriority === "All" ? true : task.priority === selectedPriority));
   },[tasksList, selectedPriority]);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
   const onSubmitDelete = async (item: TaskInterface) => {    
     await deleteItem(
       {
@@ -65,7 +69,7 @@ export default function DoneList() {
           <View className="w-[100%] bottom-1">
             <AppDropdown
               label=""
-              data={priorities}
+              data={prioritiesList}
               icon="target"
               onChange={setSelectedPriority}
               valeur={selectedPriority}

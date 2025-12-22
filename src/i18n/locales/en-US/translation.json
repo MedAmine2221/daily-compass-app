@@ -1,6 +1,7 @@
 {
     "language": "Language",
     "at": "at",
+    "all":"All",
     "statusName":{
         "todo": "To Do",
         "inProgress": "In Progress",

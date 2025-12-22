@@ -1,6 +1,7 @@
 {
     "language": "Langue",
     "at": "à",
+    "all":"Tous",
     "alertVerification":{
       "cancel":"Annuler",
       "confirm":"Confirmer",
