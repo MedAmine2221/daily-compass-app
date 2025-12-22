@@ -47,7 +47,12 @@ export default function AppDropdown({
               selectedTextStyle={{ color: "black", fontSize: 15 }}
               placeholderStyle={{ color: "#777", fontSize: 14 }}
               data={data}
-              labelField="label"
+              labelField="shortLabel"
+              renderItem={(item) => (
+                <Text style={{ padding: 10 }}>
+                  {item.label}
+                </Text>
+              )}
               valueField="value"
               value={value}
               placeholder="Select"
@@ -87,13 +92,18 @@ export default function AppDropdown({
           size={22}
           color={focused ? PRIMARY_COLOR : "#777"}
         />
-
+        <View className="mx-2" />
         <Dropdown
           style={{ flex: 1, height: 50 }}
           selectedTextStyle={{ color: "black", fontSize: 15 }}
           placeholderStyle={{ color: "#777", fontSize: 14 }}
           data={data}
-          labelField="label"
+          labelField="shortLabel"
+          renderItem={(item) => (
+            <Text style={{ padding: 10 }}>
+              {item.label}
+            </Text>
+          )}
           valueField="value"
           value={valeur}
           placeholder="Select"

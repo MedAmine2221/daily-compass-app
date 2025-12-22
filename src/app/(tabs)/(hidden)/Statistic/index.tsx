@@ -25,6 +25,10 @@ export default function Statistic() {
     const mappedGoals = rawGoals.map((goal: GoalsInterface) => ({
       label: goal.name,
       value: goal.name,
+      shortLabel:
+        goal.name.length > 25
+          ? goal.name.slice(0, 25) + "..."
+          : goal.name,
     }));
 
     const urgentGoal = {

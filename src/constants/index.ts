@@ -85,10 +85,10 @@ export const STATIC_KNOWLEDGE = {
 };
 
 export const priorities =[
-  {value: PRIORITY.HIGH, label:PRIORITY.HIGH},
-  {value: PRIORITY.MEDIUM, label:PRIORITY.MEDIUM},
-  {value: PRIORITY.LOW, label:PRIORITY.LOW},
-  {value: PRIORITY.CRITICAL, label:PRIORITY.CRITICAL},
+  {value: PRIORITY.HIGH, label:PRIORITY.HIGH, shortLabel: PRIORITY.HIGH},
+  {value: PRIORITY.MEDIUM, label:PRIORITY.MEDIUM , shortLabel: PRIORITY.MEDIUM},
+  {value: PRIORITY.LOW, label:PRIORITY.LOW , shortLabel: PRIORITY.LOW},
+  {value: PRIORITY.CRITICAL, label:PRIORITY.CRITICAL , shortLabel: PRIORITY.CRITICAL},
 ];
 
 export const flags = [

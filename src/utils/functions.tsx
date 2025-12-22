@@ -16,10 +16,10 @@ import { AppDispatch, store } from "../redux/store";
 import { clearTask } from "../redux/task/taskReducer";
 import { clearUser } from "../redux/user/userReducer";
 
-export const splitText = (text: string, maxChars: number) => {
-  if (text.length <= maxChars) return [text];
-  const regex = new RegExp(`.{1,${maxChars}}`, "g");
-  return text.match(regex) || [];
+export const splitText = (text: string, maxChars: number) => {  
+  if (text?.length <= maxChars) return [text];
+  const regex = new RegExp(`.{1,${maxChars}}`, "g");  
+  return text?.match(regex) || [];
 };
 
 export const saveToken = async (token: string) => {

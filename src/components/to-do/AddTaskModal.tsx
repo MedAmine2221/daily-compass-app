@@ -1,4 +1,3 @@
-import { auth, db } from "../../FirebaseConfig";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { PRIORITY } from "@/src/constants/enums";
 import { AddTaskModalInterface } from "@/src/constants/interfaces";
@@ -16,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import { Button, IconButton, Modal, Portal, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+import { auth, db } from "../../FirebaseConfig";
 import AlertVerification from "../AlertVerification";
 import AppDatePicker from "../AppDatePicker";
 import AppDropdown from "../AppDropdown";
@@ -26,12 +26,13 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState)=> state.loading.loading)
   const goals = useSelector((state: RootState) => state.user.items)?.goals?.map((goal: any) => {
-    return { label: goal.name, value: goal.name };
+    return { label: goal.name, value: goal.name, shortLabel: goal.name.length > 25 ? goal.name.slice(0, 25) + "..." : goal.name };
   });
   const tasks = useSelector((state: RootState)=> state.tasks.tasks);  
   const calendar = useSelector((state: RootState)=> state.calendar.calendar);  
 
-  const [selectedGoal, setSelectedGoal] = useState(goals && goals.length > 0 ? goals[0].value : "");  
+  const [selectedGoal, setSelectedGoal] = useState(goals && goals.length > 0 ? goals[0].value : "");
+    
   const [openModal, setOpenModal] = useState(false);
   const {
     control,
