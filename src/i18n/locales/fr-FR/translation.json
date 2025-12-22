@@ -231,7 +231,6 @@
         "inProgress": "En cours",
         "done": "Terminé"
       },
-      "taskCritical": "urgent task",
       "changeStatus":{
         "message":"Appuie sur le statut pour le modifier"
       },

@@ -27,11 +27,19 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
   const loading = useSelector((state: RootState)=> state.loading.loading)
   const goals = useSelector((state: RootState) => state.user.items)?.goals?.map((goal: any) => {
     return { label: goal.name, value: goal.name, shortLabel: goal.name.length > 25 ? goal.name.slice(0, 25) + "..." : goal.name };
-  });
+  }) || [];
+  const goalsList = [
+    {
+      label: "No Goal - Critical Task",
+      value: "urgent task",
+      shortLabel: "No Goal - Critical Task",
+    },
+    ...goals
+  ];
   const tasks = useSelector((state: RootState)=> state.tasks.tasks);  
   const calendar = useSelector((state: RootState)=> state.calendar.calendar);  
 
-  const [selectedGoal, setSelectedGoal] = useState(goals && goals.length > 0 ? goals[0].value : "");
+  const [selectedGoal, setSelectedGoal] = useState(goalsList && goalsList.length > 0 ? goalsList[0].value : "");
     
   const [openModal, setOpenModal] = useState(false);
   const {
@@ -55,15 +63,15 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
         const dataAdded = {
           title: data.title,
           description: data.description,
-          priority: goal === undefined ? PRIORITY.CRITICAL : goal.priority,
+          priority: selectedGoal === 'urgent task' ? PRIORITY.CRITICAL : goal.priority,
           startDate: data.startDate,
           endDate: data.endDate,
           status: "todo",
           emailNotification: false,
-          goalName: goal === undefined ? t("todo.taskCritical") : goal.name,
+          goalName: selectedGoal,
           userId: userId,
           createdAt: new Date().toISOString(),
-        }
+        };
         await addDoc(tasksRef, dataAdded);
         dispatch(setTask({...tasks, ...dataAdded}))
         const calendarReadyData = transformTasksForCalendar([dataAdded]);
@@ -110,15 +118,16 @@ export const AddTaskModal = ({ visible, hideModal }: AddTaskModalInterface)=>{
           <Text className="text-3xl m-5" style={{color:PRIMARY_COLOR, fontWeight: "bold"}}>
             {t("todo.addModal.title")}
           </Text>
-          <AppDropdown                 
-            label={t("todo.addModal.goalName")}
-            data={goals}
-            icon = "target"
+          {goals && goals.length > 0 && (
+            <AppDropdown
+              label={t("todo.addModal.goalName")}
+              data={goalsList}
+              icon="target"
             onChange={
               setSelectedGoal
             }
             valeur={selectedGoal}
-          />
+          />)}
           <View className="my-2"/>
           <AppInput
             control={control}

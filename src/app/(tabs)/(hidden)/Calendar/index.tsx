@@ -14,7 +14,6 @@ export default function MyAgenda() {
   const [calendarKey, setCalendarKey] = useState(0);
   const data = useSelector((state: RootState) => state.calendar.calendar);
   const [selected, setSelected] = useState(new Date().toISOString().split("T")[0]);
-  // Update the locale according to the chosen language
   useEffect(() => {
       LocaleConfig.locales[i18n.language === "fr-FR" ? 'fr' : 'en'] = {
         monthNames: [
