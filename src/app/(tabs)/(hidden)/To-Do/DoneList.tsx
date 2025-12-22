@@ -80,13 +80,29 @@ export default function DoneList() {
           data={value === "" ? filterdDataWithoutValue : filterdDataWithValue}
           renderItem={({ item, index }: {item:TaskInterface, index:number}) => (
             <View key={index} style={{ marginBottom: 16, marginHorizontal: 12 }}>
-              <Card style= {{ backgroundColor: "white" }}>
-                <View className="flex-row justify-between items-center w-[70%]">
-                  <Card.Title title={<ExpandableText maxChars={33} text={item.title} textColor="black" textWeight="normal" textSize={16} />} />
+              <Card style={{ backgroundColor: "white", elevation: 2 }}>
+                {/* En-tête avec titre et priorité */}
+                <View style={{ 
+                  flexDirection: "row", 
+                  justifyContent: "space-between", 
+                  alignItems: "center",
+                  paddingHorizontal: 16,
+                  paddingTop: 16
+                }}>
+                  <View style={{ flex: 1 }}>
+                    <ExpandableText 
+                      maxChars={30} 
+                      text={item.title} 
+                      textColor="black" 
+                      textWeight="bold" 
+                      textSize={16} 
+                    />
+                  </View>
                   <Text
                     style={{
                       marginLeft: 10,
                       fontWeight: "bold",
+                      fontSize: 16,
                       color:
                         item.priority === PRIORITY.MEDIUM
                           ? "#f59e0b"
@@ -100,20 +116,46 @@ export default function DoneList() {
                     {item.priority}
                   </Text>
                 </View>
-                <Card.Content>
-                  <ExpandableText maxChars={50} text={item.description} textColor="black" textWeight="normal" textSize={16} />
-                  <Text className="self-end mt-4" variant="bodyMedium" style={{fontWeight: "bold"}}>{item.startDate +" - " + item.endDate}</Text>
-                </Card.Content>
-                <Card.Actions>
-                  <View className="flex-col">
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: "100%",
-                      }}
-                    >
+
+                {/* Description */}
+                <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+                  <ExpandableText 
+                    maxChars={50} 
+                    text={item.description} 
+                    textColor="black" 
+                    textWeight="normal" 
+                    textSize={16} 
+                  />
+                </View>
+
+                {/* Dates */}
+                <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
+                  <Text 
+                    style={{
+                      textAlign: "right", 
+                      fontSize: 12, 
+                      color: "#888",
+                      fontWeight: "500"
+                    }}
+                  >
+                    {item.startDate + " - " + item.endDate}
+                  </Text>
+                </View>
+
+                {/* Actions */}
+                <Card.Actions style={{ 
+                  borderTopWidth: 1, 
+                  borderTopColor: "#f0f0f0",
+                  paddingHorizontal: 8,
+                  paddingVertical: 8 
+                }}>
+                  <View style={{ width: "100%" }}>
+                    <View style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}>
+                      {/* Badge de statut */}
                       <Badge 
                         text={t("todo.status."+item.status)} 
                         color={item.status === "inProgress"
@@ -134,29 +176,54 @@ export default function DoneList() {
                             setOpenStatusMenuId(index);
                           }
                         }}
-                      />                  
+                      />
+                      
+                      {/* Boutons d'action */}
                       <View style={{ flexDirection: "row" }}>
-                        {
-                        openStatusMenuId === index || editingTaskId === index ? 
+                        {openStatusMenuId === index || editingTaskId === index ? 
                           <IconButton 
                             icon="close" 
+                            size={22}
+                            iconColor="#666"
                             onPress={() => {
                               setEditingTaskId(undefined);
                               setOpenStatusMenuId(undefined);
                             }} 
                           />
                           : 
-                          <IconButton icon="circle-edit-outline" onPress={() => setEditingTaskId(index)} />
+                          <IconButton 
+                            icon="circle-edit-outline" 
+                            size={22}
+                            iconColor="#666"
+                            onPress={() => setEditingTaskId(index)} 
+                          />
                         }
-                        <IconButton icon="trash-can-outline" onPress={ () => {
-                          setSelectedTask(item);
-                          setOpenModal(true)                          
-                        }} />
+                        <IconButton 
+                          icon="trash-can-outline" 
+                          size={22}
+                          iconColor="#dc2626"
+                          onPress={() => {
+                            setSelectedTask(item);
+                            setOpenModal(true);                          
+                          }} 
+                        />
                       </View>
                     </View>
-                    {openStatusMenuId === index && <StatusMenu from={"done"} item={item} />}
-                    {editingTaskId === index && (
-                      <Text style={{ color: "#b91c1c" }}>
+                    
+                    {/* Menu de statut ou message d'édition */}
+                    {openStatusMenuId === index && (
+                      <View style={{ marginTop: 8 }}>
+                        <StatusMenu from={"todo"} item={item} />
+                      </View>
+                    )}
+                    
+                    {editingTaskId === index && openStatusMenuId !== index && (
+                      <Text style={{ 
+                        color: "#b91c1c", 
+                        fontSize: 14, 
+                        marginTop: 8,
+                        fontStyle: "italic"
+                      }}>
                         {t("todo.changeStatus.message")}
                       </Text>
                     )}
