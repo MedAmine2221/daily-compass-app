@@ -161,16 +161,25 @@ export default function Statistic() {
               {t("stats.taskStatusDistribution")}
             </Text>
             <View className="items-center">
-              <PieChart
-                data={pieData}
-                showText
-                textColor="white"
-                textSize={14}
-                textBackgroundRadius={18}
-                innerRadius={60}
-                radius={90}
-                showValuesAsLabels
-              />
+
+              {total === 0 ? 
+                <EmptyComponent
+                  emoji={"📭"}
+                  title={t("statEmpty.title")}
+                  desc={t("statEmpty.body")}
+                />
+                :
+                <PieChart
+                  data={pieData}
+                  showText
+                  textColor="white"
+                  textSize={14}
+                  textBackgroundRadius={18}
+                  innerRadius={60}
+                  radius={90}
+                  showValuesAsLabels
+                />
+              }
             </View>
 
             <View className="flex-row justify-around mt-4">
