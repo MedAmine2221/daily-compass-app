@@ -32,8 +32,9 @@ export default function Statistic() {
     }));
 
     const urgentGoal = {
-      label: t("urgentTask") ?? "Urgent task",
+      label: "No Goal - Critical Task",
       value: "urgent task",
+      shortLabel: "No Goal - Critical Task",
     };
 
     const exists = mappedGoals.some(
@@ -41,7 +42,7 @@ export default function Statistic() {
     );
 
     return exists ? mappedGoals : [urgentGoal, ...mappedGoals];
-  }, [rawGoals, t]);
+  }, [rawGoals]);
 
 
   const [selectedGoal, setSelectedGoal] = useState(
@@ -103,7 +104,7 @@ export default function Statistic() {
   }, [selectedGoal, t, tasks, tasksDone, tasksInProgress, total]);
 
   const barData = useMemo(() => {
-    return goals.map((g: { label: string; value: string }) => {
+    return goals.map((g: any) => {
       const todo = tasks.filter(
         (task: TaskInterface) =>
           normalize(task.goalName) === normalize(g.value)
@@ -122,7 +123,7 @@ export default function Statistic() {
       const totalGoal = todo + inProgress + done;
 
       return {
-        label: g.label,
+        label: g.shortLabel,
         value: totalGoal > 0 ? Math.round((done / totalGoal) * 100) : 0,
         frontColor:
           normalize(selectedGoal) === normalize(g.value)
@@ -131,7 +132,6 @@ export default function Statistic() {
       };
     });
   }, [goals, tasks, tasksInProgress, tasksDone, selectedGoal]);
-
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -193,13 +193,19 @@ export default function Statistic() {
             <BarChart
               barWidth={40}
               noOfSections={5}
+              endSpacing={100}
               barBorderRadius={6}
               data={barData}
               yAxisThickness={0}
               xAxisThickness={0}
-              spacing={40}
+              xAxisLabelTextStyle={{
+                fontSize: 16,
+                width: "100%",
+              }}
+              spacing={150}
               maxValue={100}
             />
+
           </View>
         </ScrollView>
       )}
