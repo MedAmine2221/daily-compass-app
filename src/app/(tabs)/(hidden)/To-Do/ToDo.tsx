@@ -85,7 +85,6 @@ export default function ToDoList() {
           renderItem={({ item, index }: {item:TaskInterface, index:number}) => (
             <View key={index} style={{ marginBottom: 16, marginHorizontal: 12 }}>
               <Card style={{ backgroundColor: "white", elevation: 2 }}>
-                {/* En-tête avec titre et priorité */}
                 <View style={{ 
                   flexDirection: "row", 
                   justifyContent: "space-between", 
