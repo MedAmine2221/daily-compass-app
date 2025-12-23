@@ -33,7 +33,6 @@ export default function ChangePassword({ visible, hideModal }: any) {
 
 
   const onSubmit = async (data: any) => {    
-    dispatch(setLoadingTrue());
 
     try {
       const user = auth.currentUser;
@@ -41,6 +40,7 @@ export default function ChangePassword({ visible, hideModal }: any) {
       if (!user || !user.email) {
         throw new Error("User not logged in");
       }
+      dispatch(setLoadingTrue());
       // Credential created using the old password
       const credential = EmailAuthProvider.credential(user.email, data.oldPassword);
 

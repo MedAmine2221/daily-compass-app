@@ -40,8 +40,8 @@ export default function AuthForm({
   const signIn = async (data: AuthDataInterface) => {
     try{
       setAuthData(data);
-      dispatch(setLoadingTrue());
       const { email, password } = data;
+      dispatch(setLoadingTrue());
       const user = await signInWithEmailAndPassword(auth , email, password)
       const userInfo = await getUsers({id: user.user.uid})
       if(user.user.emailVerified){

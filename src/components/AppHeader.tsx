@@ -36,7 +36,6 @@ export default function AppHeader({
 
   const updatePhoto = async () => {
     try {
-      dispatch(setLoadingTrue());
       const selectedImgUri = await pickImageFromGallery(t);
       if (!selectedImgUri) return;
       
@@ -46,6 +45,7 @@ export default function AppHeader({
       
       const firebaseUser = auth.currentUser;
       if(user){ 
+        dispatch(setLoadingTrue());
         await updateItems({
           collectionName: "users", 
           userId: firebaseUser!.uid, 

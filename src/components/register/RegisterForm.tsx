@@ -25,9 +25,9 @@ export default function RegisterForm() {
     const loading = useSelector ((state: RootState) => state.loading.loading);
     const router = useRouter()
     const onSubmit = async (data: any) => {
-        dispatch(setLoadingTrue());
-        const { email, confirmPassword, username } = data;
-        try {
+      const { email, confirmPassword, username } = data;
+      try {
+          dispatch(setLoadingTrue());
           const userCredential = await createUserWithEmailAndPassword(auth, email, confirmPassword);
           const user = userCredential.user;
           await sendEmailVerification(user);        
