@@ -54,7 +54,8 @@ export interface CheckBoxInterface {
 export interface EditProfileModalInterface {
     userInfo: any,
     visible: boolean, 
-    hideModal: ()=>void
+    hideModal: ()=>void,
+    deleteGoal: (index: number, goals: GoalsInterface[]) => void; // <-- new
 } 
 
 export interface AlertVerificationInterface {

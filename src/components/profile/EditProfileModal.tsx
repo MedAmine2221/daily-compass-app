@@ -1,6 +1,6 @@
 import { priorities } from "@/src/constants";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
-import { EditProfileModalInterface } from "@/src/constants/interfaces";
+import { EditProfileModalInterface, GoalsInterface } from "@/src/constants/interfaces";
 import { setCalendar } from "@/src/redux/calendar/calendarReducer";
 import { setLoadingFalse, setLoadingTrue } from "@/src/redux/loadingReducer";
 import { RootState } from "@/src/redux/store";
@@ -22,7 +22,7 @@ import AppDatePicker from "../AppDatePicker";
 import AppDropdown from "../AppDropdown";
 import AppInput from "../AppInput";
 
-export default function EditProfileModal({ userInfo, visible, hideModal }: EditProfileModalInterface) {
+export default function EditProfileModal({ userInfo, visible, hideModal, deleteGoal }: EditProfileModalInterface) {
   const calendar = useSelector((state: RootState) => state.calendar.calendar);
   const loading = useSelector((state: RootState)=>state.loading.loading);
   const dispatch = useDispatch();
@@ -31,6 +31,15 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
   const initGoalsListLength = userInfo?.goals?.length || 0;
   const [addGoals, setAddGoals] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [goalToDelete, setGoalToDelete] = useState<{
+    index: number;
+    goals: GoalsInterface[];
+  } | null>(null);
+  const confirmDeleteGoal = (index: number) => {
+    if (!userInfo?.goals) return;
+    setGoalToDelete({ index, goals: userInfo.goals });
+  };
+
   const [modalHandlers, setModalHandlers] = useState({
     onConfirm: () => {},
     onCancel: () => {}
@@ -218,7 +227,10 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
                   icon="trash-can-outline"
                   size={25}
                   iconColor="red"
-                  onPress={() => remove(index)}
+                  onPress={() => {
+                    confirmDeleteGoal(index)
+                    remove(index)
+                  }}
                   style={{ margin: 0 }}
                 />
               </View>
@@ -284,6 +296,21 @@ export default function EditProfileModal({ userInfo, visible, hideModal }: EditP
           </View>
         </ScrollView>
       </Modal>
+      {goalToDelete && (
+        <AlertVerification
+          visible
+          title={t("deleteGoal.title")}
+          body={t("deleteGoal.body")}
+          icon="trash-can-outline"
+          onConfirm={() => {
+            deleteGoal(goalToDelete.index, goalToDelete.goals);
+            setGoalToDelete(null);
+          }}
+          onCancel={() => setGoalToDelete(null)}
+          cancel
+          action="delete"
+        />
+      )}
       {openModal && <AlertVerification
         visible={openModal}
         title={t("verifyEditProfil.title")}

@@ -28,8 +28,6 @@ export default function Profile() {
   const login = auth.currentUser;
 
   const user = useSelector((state: RootState) => state.user.items);
-  const loading = useSelector((state: RootState) => state.loading.loading);
-
   const [editVisible, setEditVisible] = useState(false);
   const [changePassVisible, setChangePassVisible] = useState(false);
   const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
@@ -44,7 +42,6 @@ export default function Profile() {
 
   const deleteGoal = async (index: number, goals: GoalsInterface[]) => {
     try {
-      dispatch(setLoadingTrue());
       const goal = goals[index];
       const newGoals = goals.filter((_, i) => i !== index);
 
@@ -74,7 +71,6 @@ export default function Profile() {
     } catch (e) {
       console.log(e);
     } finally {
-      dispatch(setLoadingFalse());
       setGoalToDelete(null);
     }
   };
@@ -248,6 +244,9 @@ export default function Profile() {
           visible
           userInfo={user}
           hideModal={() => setEditVisible(false)}
+          deleteGoal={(index: number, goals: GoalsInterface[]) =>
+            deleteGoal(index, goals)
+          }
         />
       )}
 
