@@ -1,5 +1,6 @@
 import AppHeader from "@/src/components/AppHeader";
 import EmptyComponent from "@/src/components/EmptyList";
+import ExpandableText from "@/src/components/ExpandableText";
 import { PRIMARY_COLOR } from "@/src/constants/colors";
 import { RootState } from "@/src/redux/store";
 import { formatDate, getDatesBetween, getStatusColorClass } from "@/src/utils/functions";
@@ -145,9 +146,13 @@ export default function MyAgenda() {
                     <Text className="text-sm font-semibold text-indigo-600 mb-1">
                       {item.dateDebut} → {item.dateFin}
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">
-                      {item.name}
-                    </Text>
+                    <ExpandableText 
+                      text={item.name}
+                      maxChars={30}
+                      textColor="black"
+                      textSize={14}
+                      textWeight="normal"
+                    />
                   </View>
                 </View>
               )}
