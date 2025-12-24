@@ -18,7 +18,7 @@ import { FlashList } from "@shopify/flash-list";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Button, Card, IconButton, Text } from "react-native-paper";
+import { Card, IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
