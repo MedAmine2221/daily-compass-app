@@ -226,7 +226,7 @@ export default function InProgressList() {
                     </View>
                     {openStatusMenuId === index && (
                       <View style={{ marginTop: 8 }}>
-                        <StatusMenu from={"todo"} item={item} />
+                        <StatusMenu from={"inProgress"} item={item} />
                       </View>
                     )}
                     

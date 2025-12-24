@@ -64,16 +64,16 @@ export default function StatusMenu({from, item}:{from: string; item: TaskInterfa
               endDate: item.endDate,
             }
           };
-          switch (from) {
+          switch (from) {            
             case STATUS.TODO:
               switch (status) {
                 case STATUS.DONE:
-                  dispatch(removeDoneTasks({ title: item.title }));
+                  dispatch(removeDoneTasks({ item }));
                   dispatch(removeCalendarTask(calendarPayload));
                   break;
 
                 case STATUS.InProgress:
-                  dispatch(removeInProgressTasks({ title: item.title }));
+                  dispatch(removeInProgressTasks({ item }));
                   break;
               }
               break;
@@ -81,12 +81,12 @@ export default function StatusMenu({from, item}:{from: string; item: TaskInterfa
             case STATUS.InProgress:
               switch (status) {
                 case STATUS.DONE:
-                  dispatch(inProgress_To_Done({ title: item.title }));
+                  dispatch(inProgress_To_Done({ item }));
                   dispatch(removeCalendarTask(calendarPayload));
                   break;
 
-                case STATUS.TODO:
-                  dispatch(inProgress_To_ToDo({ title: item.title }));
+                case STATUS.TODO:                  
+                  dispatch(inProgress_To_ToDo({ item }));
                   break;
               }
               break;
@@ -94,11 +94,11 @@ export default function StatusMenu({from, item}:{from: string; item: TaskInterfa
             case STATUS.DONE:
               switch (status) {
                 case STATUS.InProgress:
-                  dispatch(Done_To_InProgress({ title: item.title }));
+                  dispatch(Done_To_InProgress({ item }));
                   break;
 
                 case STATUS.TODO:
-                  dispatch(Done_To_ToDo({ title: item.title }));
+                  dispatch(Done_To_ToDo({ item }));
                   break;
               }
               break;

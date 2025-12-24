@@ -45,51 +45,69 @@ const taskSlice = createSlice({
             state.tasks = state.tasks.filter((t: TaskInterface) => t.goalName !== title);
         },
         removeDoneTasks: (state, action) => {
-            const { title } =action.payload;
-            const doneTasks = state.tasks.find((t: TaskInterface) => t.title === title);            
-            state.tasks = state.tasks.filter((t: TaskInterface) => t.title !== title);
-            if(doneTasks){
-                state.tasksDone.push(doneTasks);
+            const { item } = action.payload;
+            const doneTaskIndex = state.tasks.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (doneTaskIndex !== -1) {
+                const [doneTask] = state.tasks.splice(doneTaskIndex, 1);
+                state.tasksDone.push(doneTask);
             }
         },
         removeInProgressTasks: (state, action) => {
-            const { title } =action.payload;
-            const inProgressTasks = state.tasks.find((t: TaskInterface) => t.title === title);            
-            state.tasks = state.tasks.filter((t: TaskInterface) => t.title !== title);
-            if(inProgressTasks){
-                state.tasksInProgress.push(inProgressTasks);
+            const { item } = action.payload;
+            const inProgressTaskIndex = state.tasks.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (inProgressTaskIndex !== -1) {
+                const [inProgressTask] = state.tasks.splice(inProgressTaskIndex, 1); // supprime du tasks
+                state.tasksInProgress.push(inProgressTask); // ajoute à tasksDone
             }
         },
         inProgress_To_Done: (state, action) => {
-            const { title } =action.payload;
-            const doneTasks = state.tasksInProgress.find((t: TaskInterface) => t.title === title);            
-            state.tasksInProgress = state.tasksInProgress.filter((t: TaskInterface) => t.title !== title);
-            if(doneTasks){
-                state.tasksDone.push(doneTasks);
+            const { item } = action.payload;
+            const doneTasksIndex = state.tasksInProgress.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (doneTasksIndex !== -1) {
+                const [doneTask] = state.tasksInProgress.splice(doneTasksIndex, 1); // supprime du tasks
+                state.tasksDone.push(doneTask); // ajoute à tasksDone
             }
         },
         inProgress_To_ToDo: (state, action) => {
-            const { title } =action.payload;
-            const toDo = state.tasksInProgress.find((t: TaskInterface) => t.title === title);            
-            state.tasksInProgress = state.tasksInProgress.filter((t: TaskInterface) => t.title !== title);
-            if(toDo){
-                state.tasks.push(toDo);
+            const { item } = action.payload;
+            const todoTasksIndex = state.tasksInProgress.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (todoTasksIndex !== -1) {
+                const [todoTask] = state.tasksInProgress.splice(todoTasksIndex, 1); // supprime du tasks
+                state.tasks.push(todoTask); // ajoute à tasksDone
             }
         },
         Done_To_InProgress: (state, action) => {
-            const { title } =action.payload;
-            const inProgressTask = state.tasksDone.find((t: TaskInterface) => t.title === title);            
-            state.tasksDone = state.tasksDone.filter((t: TaskInterface) => t.title !== title);
-            if(inProgressTask){
-                state.tasksInProgress.push(inProgressTask);
+            const { item } = action.payload;
+            const inProgressTasksIndex = state.tasksDone.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (inProgressTasksIndex !== -1) {
+                const [inProgressTask] = state.tasksDone.splice(inProgressTasksIndex, 1); // supprime du tasks
+                state.tasksInProgress.push(inProgressTask); // ajoute à tasksDone
             }
         },
         Done_To_ToDo: (state, action) => {
-            const { title } =action.payload;
-            const todoTask = state.tasksDone.find((t: TaskInterface) => t.title === title);            
-            state.tasksDone = state.tasksDone.filter((t: TaskInterface) => t.title !== title);
-            if(todoTask){
-                state.tasks.push(todoTask);
+            const { item } = action.payload;
+            const todoTasksIndex = state.tasksDone.findIndex(
+                t => t.title === item.title && t.startDate === item.startDate && t.endDate === item.endDate
+            );
+
+            if (todoTasksIndex !== -1) {
+                const [todoTask] = state.tasksDone.splice(todoTasksIndex, 1); // supprime du tasks
+                state.tasks.push(todoTask); // ajoute à tasksDone
             }
         },
         updateTask: (state, action) => {

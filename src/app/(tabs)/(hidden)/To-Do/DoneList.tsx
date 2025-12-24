@@ -225,7 +225,7 @@ export default function DoneList() {
                     </View>
                     {openStatusMenuId === index && (
                       <View style={{ marginTop: 8 }}>
-                        <StatusMenu from={"todo"} item={item} />
+                        <StatusMenu from={"done"} item={item} />
                       </View>
                     )}
                     
