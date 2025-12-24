@@ -5,8 +5,9 @@ import Header from '@/src/components/Header';
 import { AuthDataInterface } from '@/src/constants/interfaces';
 import { loginSchema } from "@/src/schema/loginSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useTranslation } from 'react-i18next';
 import { Keyboard, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -30,6 +31,14 @@ export default function Auth() {
       password: authData?.password ?? '',
     },
   });
+  useEffect(() => {
+    const saveAuthData = async () => {
+      if (!authData) return;
+      const stringValue = JSON.stringify(authData);
+      await AsyncStorage.setItem('authData', stringValue);
+    };
+    saveAuthData();
+  }, [authData]);
   return (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <SafeAreaView className='flex-1 bg-white'>

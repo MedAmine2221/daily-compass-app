@@ -3,18 +3,112 @@ import { GoogleGenAI } from "@google/genai";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import { Router } from "expo-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { Linking } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import { Text } from "react-native-paper";
 import { STATIC_KNOWLEDGE } from "../constants";
 import { PRIORITY, STATUS } from "../constants/enums";
-import { DeleteItemOptions, getItemsOptions, Message } from "../constants/interfaces";
+import { AuthDataInterface, DeleteItemOptions, getItemsOptions, Message } from "../constants/interfaces";
 import { auth, db } from "../FirebaseConfig";
-import { clearCalendar } from "../redux/calendar/calendarReducer";
+import { clearCalendar, setCalendar } from "../redux/calendar/calendarReducer";
 import { clearChat, setChat } from "../redux/chat/chatReducer";
+import { setLoadingFalse, setLoadingTrue } from "../redux/loadingReducer";
 import { AppDispatch, store } from "../redux/store";
-import { clearTask } from "../redux/task/taskReducer";
-import { clearUser } from "../redux/user/userReducer";
+import { clearTask, setTask, setTaskDone, setTaskInProgress } from "../redux/task/taskReducer";
+import { clearUser, setUser } from "../redux/user/userReducer";
+  export const signIn = async (dispatch: any, router: any, t: any, data?: AuthDataInterface, setAuthData?: any, reconnect?:boolean) => {
+    try{
+      dispatch(setLoadingTrue());
+      let user;
+      if (reconnect) {
+        const connectedInfo = await AsyncStorage.getItem('authData');
+        const parsed = connectedInfo ? JSON.parse(connectedInfo) : null;
+        const emailFromStorage = parsed?.email;
+        const passwordFromStorage = parsed?.password;
+        if (!emailFromStorage || !passwordFromStorage) {
+          throw new Error("No stored credentials found for reconnect.");
+        }
+        user = await signInWithEmailAndPassword(auth, emailFromStorage, passwordFromStorage);
+      } else {
+        if (!data) {
+          throw new Error("Missing authentication data.");
+        }
+        const { email, password } = data;
+        setAuthData(data);
+        user = await signInWithEmailAndPassword(auth, email, password);
+      }
+      const userInfo = await getUsers({id: user.user.uid})
+      if(user.user.emailVerified){
+        if(userInfo.data()?.validatedAccount){
+          if (user) {
+            await saveToken(user?.user?.accessToken)
+            
+            if (!user.user) return null;
+            const uid = user.user.uid;
+            const userSnap = await getUsers({id: uid})
+            const messages = await getItems({
+              collectionName: "chat",
+              filters: [{
+                field: "userId",
+                operator: '==',
+                value: uid,
+              }]
+            })
+            const task = await getItems({
+              collectionName: "tasks",
+              filters: [{
+                field: "userId",
+                operator: '==',
+                value: uid,
+              }]
+            })         
+            if (userSnap.exists()) {
+              dispatch(setUser(userSnap.data()))
+              messages?.docs.map(doc => dispatch(setChat(doc.data())))
+              task?.docs.map(doc => {            
+                  switch(doc.data().status){
+                      case STATUS.TODO : 
+                        dispatch(setTask(doc.data()));
+                        break;
+                      case STATUS.InProgress : 
+                        dispatch(setTaskInProgress(doc.data())); 
+                        break;
+                      case STATUS.DONE : 
+                        dispatch(setTaskDone(doc.data()));
+                        break;
+                      default: console.warn("Unknown status:", doc.data().status);
+                  } 
+                  
+                }
+              )
+              const taskDocs = task?.docs.map(doc => doc.data());
+              if(taskDocs){
+                const calendarReadyData = transformTasksForCalendar(taskDocs);            
+                dispatch(setCalendar(calendarReadyData));
+              }     
+            } else {
+              console.log("No such user document!");
+              return null;
+            }
+            router.replace("/(tabs)/welcom")        
+          }
+        }else{
+          Alert.alert(t("signInAlert"), t("signInAlertUnverified"))
+        }
+      }else{
+        Alert.alert(
+          "Confirm your email",
+          "A verification email has been sent. Please click the link to activate your account."
+        );  
+      }
+    }catch(error: any){
+      console.error("Error signing in:", error);
+      Alert.alert(t("signInAlert"), t("signInAlertCredentials"))
+    }finally{
+      dispatch(setLoadingFalse());
+    }
+  } 
 
 export const splitText = (text: string, maxChars: number) => {  
   if (text?.length <= maxChars) return [text];
