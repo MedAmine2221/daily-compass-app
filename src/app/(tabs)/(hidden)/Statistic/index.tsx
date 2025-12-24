@@ -82,20 +82,20 @@ export default function Statistic() {
 
     return [
       {
-        value: Math.round((todo / total) * 100) || 0,
-        text: `${Math.round((todo / total) * 100)}%`,
+        value: Number(((todo / total) * 100).toFixed(1)) || 0,
+        text: `${((todo / total) * 100).toFixed(1)}%`,
         color: "#ef4444",
         text2: t("statusName.todo"),
       },
       {
-        value: Math.round((pending / total) * 100) || 0,
-        text: `${Math.round((pending / total) * 100)}%`,
+        value: Number(((pending / total) * 100).toFixed(1)) || 0,
+        text: `${((pending / total) * 100).toFixed(1)}%`,
         color: "#eab308",
         text2: t("statusName.inProgress"),
       },
       {
-        value: Math.round((done / total) * 100) || 0,
-        text: `${Math.round((done / total) * 100)}%`,
+        value: Number(((done / total) * 100).toFixed(1)) || 0,
+        text: `${((done / total) * 100).toFixed(1)}%`,
         color: "#16a34a",
         text2: t("statusName.done"),
       },
@@ -124,7 +124,7 @@ export default function Statistic() {
 
       return {
         label: g.shortLabel,
-        value: totalGoal > 0 ? Math.round((done / totalGoal) * 100) : 0,
+        value: totalGoal > 0 ? Number((done / totalGoal) * 100).toFixed(1) : 0,
         frontColor:
           normalize(selectedGoal) === normalize(g.value)
             ? PRIMARY_COLOR
@@ -172,11 +172,12 @@ export default function Statistic() {
                 <PieChart
                   data={pieData}
                   showText
+                  labelsPosition = "mid"
                   textColor="white"
                   textSize={14}
                   textBackgroundRadius={18}
-                  innerRadius={60}
-                  radius={90}
+                  innerRadius={70}
+                  radius={110}
                   showValuesAsLabels
                 />
               }
@@ -201,7 +202,8 @@ export default function Statistic() {
             </Text>
             <BarChart
               barWidth={40}
-              noOfSections={5}
+              noOfSections={4}
+              stepValue={25}
               endSpacing={100}
               barBorderRadius={6}
               data={barData}
