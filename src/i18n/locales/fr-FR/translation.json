@@ -232,8 +232,17 @@
         "inProgress": "En cours",
         "done": "Terminé"
       },
+      "priority": {
+        "low": "FAIBLE",
+        "medium": "MOYENNE",
+        "high": "ÉLEVÉE",
+        "critical": "CRITIQUE"
+      },
       "changeStatus":{
         "message":"Appuie sur le statut pour le modifier"
+      },
+      "changePriority":{
+        "message": "Appuie sur la priorité pour la modifier"
       },
       "filter":{
         "todo":"Liste des tâches a faire",

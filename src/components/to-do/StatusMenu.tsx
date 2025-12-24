@@ -57,46 +57,6 @@ export default function StatusMenu({from, item}:{from: string; item: TaskInterfa
           dispatch(updateTask({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
           dispatch(updateTaskDone({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
           dispatch(updateTaskInProgress({ title: item.title, updatedData: { status, statusUpdatedAt: now } }));
-          // switch(from){
-          //   case STATUS.TODO : 
-          //     switch(status){
-          //       case STATUS?.DONE :
-          //         dispatch(removeDoneTasks({title: item.title}));
-          //         break;
-          //       case STATUS.InProgress :
-          //         dispatch(removeInProgressTasks({title: item.title}));
-          //         break;
-          //       default :
-          //         console.error("unkown status");
-          //     }
-          //     break;
-          //   case STATUS.InProgress : 
-          //     switch(status){
-          //       case STATUS?.DONE :
-          //         dispatch(inProgress_To_Done({title: item.title}));
-          //         break;
-          //       case STATUS.TODO :
-          //         dispatch(inProgress_To_ToDo({title: item.title}));
-          //         break;
-          //       default :
-          //         console.error("unkown status ");
-          //     }
-          //     break;
-          //   case STATUS.DONE :
-          //     switch(status){
-          //       case STATUS?.InProgress :
-          //         dispatch(Done_To_InProgress({title: item.title}));
-          //         break;
-          //       case STATUS.TODO :
-          //         dispatch(Done_To_ToDo({title: item.title}));
-          //         break;
-          //       default :
-          //         console.error("unkown status");
-          //     }
-          //     break;
-          //   default :
-          //     console.error("unkown default status");
-          // }
           const calendarPayload = {
             data: {
               title: item.title,

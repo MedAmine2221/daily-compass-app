@@ -4,6 +4,7 @@ import Badge from "@/src/components/Badge";
 import EmptyComponent from "@/src/components/EmptyList";
 import ExpandableText from "@/src/components/ExpandableText";
 import SearchInput from "@/src/components/SearchInput";
+import PriorityMenu from "@/src/components/to-do/PriorityMenu";
 import StatusMenu from "@/src/components/to-do/StatusMenu";
 import { priorities } from "@/src/constants";
 import { PRIORITY } from "@/src/constants/enums";
@@ -17,7 +18,7 @@ import { FlashList } from "@shopify/flash-list";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Card, IconButton, Text } from "react-native-paper";
+import { Button, Card, IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ export default function ToDoList() {
   const [selectedTask, setSelectedTask] = useState<TaskInterface>();
   const [editingTaskId, setEditingTaskId] = useState<number>();
   const [openStatusMenuId, setOpenStatusMenuId] = useState<number>();
+  const [openPriorityMenuId, setOpenPriorityMenuId] = useState<number>();
   const [selectedPriority, setSelectedPriority] = useState(prioritiesList[0].value);
   const [value, setValue] = useState("");
   const tasksList = useSelector((state: RootState) => state.tasks.tasks);
@@ -101,26 +103,51 @@ export default function ToDoList() {
                       textSize={16} 
                     />
                   </View>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      fontWeight: "bold",
-                      fontSize: 16,
-                      color:
-                        item.priority === PRIORITY.MEDIUM
+                  <View className="flex-col">
+                    <Button 
+                      onPress={() => {
+                        if (editingTaskId === index) {
+                          setOpenPriorityMenuId(index);
+                        }
+                      }}
+                      disabled = {editingTaskId !== index}
+                    >
+                      <Text
+                        style={{
+                          marginLeft: 10,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                          color:
+                          item.priority === PRIORITY.MEDIUM
                           ? "#f59e0b"
                           : item.priority === PRIORITY.LOW
                           ? "#15803d"
                           : item.priority === PRIORITY.HIGH 
                           ? "#b91c1c"
                           : "#424242",
-                    }}
-                  >
-                    {item.priority}
-                  </Text>
+                        }}
+                        >
+                        {item.priority}
+                      </Text>
+                    </Button>
+                    {openPriorityMenuId === index && (
+                      <View style={{ marginTop: 8, zIndex: 1 }}>
+                        <PriorityMenu from={"todo"} item={item} />
+                      </View>
+                    )}
+                    
+                    {editingTaskId === index && openPriorityMenuId !== index && (
+                      <Text style={{ 
+                        color: "#b91c1c", 
+                        fontSize: 14, 
+                        marginTop: 8,
+                        fontStyle: "italic"
+                      }}>
+                        {t("todo.changePriority.message")}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-
-                {/* Description */}
                 <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
                   <ExpandableText 
                     maxChars={50} 
@@ -130,8 +157,6 @@ export default function ToDoList() {
                     textSize={16} 
                   />
                 </View>
-
-                {/* Dates */}
                 <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
                   <Text 
                     style={{
@@ -145,7 +170,6 @@ export default function ToDoList() {
                   </Text>
                 </View>
 
-                {/* Actions */}
                 <Card.Actions style={{ 
                   borderTopWidth: 1, 
                   borderTopColor: "#f0f0f0",
@@ -158,7 +182,6 @@ export default function ToDoList() {
                       alignItems: "center",
                       justifyContent: "space-between",
                     }}>
-                      {/* Badge de statut */}
                       <Badge 
                         text={t("todo.status."+item.status)} 
                         color={item.status === "inProgress"
@@ -179,9 +202,7 @@ export default function ToDoList() {
                             setOpenStatusMenuId(index);
                           }
                         }}
-                      />
-                      
-                      {/* Boutons d'action */}
+                      />                      
                       <View style={{ flexDirection: "row" }}>
                         {openStatusMenuId === index || editingTaskId === index ? 
                           <IconButton 
@@ -191,6 +212,7 @@ export default function ToDoList() {
                             onPress={() => {
                               setEditingTaskId(undefined);
                               setOpenStatusMenuId(undefined);
+                              setOpenPriorityMenuId(undefined)
                             }} 
                           />
                           : 
@@ -213,7 +235,6 @@ export default function ToDoList() {
                       </View>
                     </View>
                     
-                    {/* Menu de statut ou message d'édition */}
                     {openStatusMenuId === index && (
                       <View style={{ marginTop: 8 }}>
                         <StatusMenu from={"todo"} item={item} />
