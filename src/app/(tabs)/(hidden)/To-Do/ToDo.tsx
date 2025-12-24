@@ -103,51 +103,45 @@ export default function ToDoList() {
                       textSize={16} 
                     />
                   </View>
-                  <View className="flex-col">
-                    <Button 
-                      onPress={() => {
-                        if (editingTaskId === index) {
-                          setOpenPriorityMenuId(index);
-                        }
+                  <View className="flex-row justify-center items-center">
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 16,
+                        color:
+                        item.priority === PRIORITY.MEDIUM
+                        ? "#f59e0b"
+                        : item.priority === PRIORITY.LOW
+                        ? "#15803d"
+                        : item.priority === PRIORITY.HIGH 
+                        ? "#b91c1c"
+                        : "#424242",
                       }}
-                      disabled = {editingTaskId !== index}
-                    >
-                      <Text
-                        style={{
-                          marginLeft: 10,
-                          fontWeight: "bold",
-                          fontSize: 16,
-                          color:
-                          item.priority === PRIORITY.MEDIUM
-                          ? "#f59e0b"
-                          : item.priority === PRIORITY.LOW
-                          ? "#15803d"
-                          : item.priority === PRIORITY.HIGH 
-                          ? "#b91c1c"
-                          : "#424242",
-                        }}
-                        >
-                        {item.priority}
-                      </Text>
-                    </Button>
-                    {openPriorityMenuId === index && (
-                      <View style={{ marginTop: 8, zIndex: 1 }}>
-                        <PriorityMenu from={"todo"} item={item} />
-                      </View>
-                    )}
-                    
-                    {editingTaskId === index && openPriorityMenuId !== index && (
-                      <Text style={{ 
-                        color: "#b91c1c", 
-                        fontSize: 14, 
-                        marginTop: 8,
-                        fontStyle: "italic"
-                      }}>
-                        {t("todo.changePriority.message")}
-                      </Text>
-                    )}
+                      >
+                      {item.priority}
+                    </Text>
+                    {
+                      editingTaskId === index && openPriorityMenuId !== index && ( 
+                        <IconButton                       
+                          onPress={() => {
+                            if (editingTaskId === index) {
+                              setOpenPriorityMenuId(index);
+                            }
+                          }}
+                          disabled = {editingTaskId !== index} 
+                          size={25}
+                          iconColor="#f59e0b"
+                          icon={"pencil-outline"} 
+                        /> 
+                      )
+                    }
                   </View>
                 </View>
+                {openPriorityMenuId === index && (
+                  <View className="mr-8 items-end">
+                    <PriorityMenu from={"todo"} item={item} />
+                  </View>
+                )}
                 <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
                   <ExpandableText 
                     maxChars={50} 
