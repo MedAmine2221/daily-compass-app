@@ -27,7 +27,6 @@ export default function EditProfileModal({ userInfo, visible, hideModal, deleteG
   const loading = useSelector((state: RootState)=>state.loading.loading);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const tasks = useSelector((state: RootState)=> state.tasks.tasks);
   const initGoalsListLength = userInfo?.goals?.length || 0;
   const [addGoals, setAddGoals] = useState(false);
   const [openModal, setOpenModal] = useState(false);
