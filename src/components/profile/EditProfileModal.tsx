@@ -106,10 +106,13 @@ export default function EditProfileModal({ userInfo, visible, hideModal, deleteG
     const newGoals = data.goals.slice(-newGoalsCount);
 
     const tasksRef = collection(db, "tasks");
-    
-    for (const goal of newGoals) {      
-      const prompt = getPrompt(goal);      
-      let aiResponse = await gemini(prompt);      
+
+    let allNewTasks: any[] = [];
+
+    for (const goal of newGoals) {
+      const prompt = getPrompt(goal);
+      let aiResponse = await gemini(prompt);
+
       const clean = aiResponse
         .replace(/```json/i, "")
         .replace(/```/g, "")
@@ -120,28 +123,37 @@ export default function EditProfileModal({ userInfo, visible, hideModal, deleteG
       } catch {
         console.log("Invalid JSON:", clean);
         continue;
-      }      
+      }
+
       for (const task of taskList) {
         const addedTask = {
           ...task,
           userId: firebaseUser!.uid,
           createdAt: new Date().toISOString(),
-        }
-        await addDoc(tasksRef, addedTask);
-        dispatch(setTask({...tasks, ...addedTask}))
-        const calendarReadyData = transformTasksForCalendar([addedTask]);
-        const mergedCalendar = { ...calendar };
-        Object.entries(calendarReadyData).forEach(([date, tasks]) => {
-          if (!mergedCalendar[date]) {
-            mergedCalendar[date] = tasks;
-          } else {
-            mergedCalendar[date] = [...mergedCalendar[date], ...tasks];
-          }
-        });
+        };
 
-        dispatch(setCalendar(mergedCalendar));
+        await addDoc(tasksRef, addedTask);
+        allNewTasks.push(addedTask);
       }
     }
+    const calendarReadyData = transformTasksForCalendar(allNewTasks);
+
+    const mergedCalendar = { ...(calendar || {}) };
+
+    Object.entries(calendarReadyData).forEach(([date, tasks]) => {
+      if (!mergedCalendar[date]) {
+        mergedCalendar[date] = tasks;
+      } else {
+        mergedCalendar[date] = [...mergedCalendar[date], ...tasks];
+      }
+    });
+
+    dispatch(setCalendar(mergedCalendar));
+
+    allNewTasks.forEach(task => {
+      dispatch(setTask(task));
+    });
+
     Alert.alert(t("aiTasks.success"));
   };
 
