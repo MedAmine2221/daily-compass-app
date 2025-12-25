@@ -55,7 +55,9 @@ export default function ChangePassword({ visible, hideModal }: any) {
 
     } catch (err: any) {
       console.error("Error changing password:", err);
-      if (err.code === "auth/wrong-password") {
+      console.log("err.code ",err.code);
+      
+      if (err.code === "auth/invalid-credential") {
         alert(t("changePasswordAlerts.wrongOldPassword"));
       } else if (err.code === "auth/weak-password") {
         alert(t("changePasswordAlerts.weakNewPassword"));
