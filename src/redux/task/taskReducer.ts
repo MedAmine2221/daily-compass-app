@@ -37,8 +37,8 @@ const taskSlice = createSlice({
             state.tasksDone = [];
         },
         removeTask: (state, action) => {
-            const { title } = action.payload;
-            state.tasks = state.tasks.filter((t: TaskInterface) => t.title !== title);
+            const { item } = action.payload;
+            state.tasks = state.tasks.filter((t: TaskInterface) => t.title !== item.title && t.startDate !== item.startDate && t.endDate !== item.endDate);
         },
         removeTaskWithGoalName: (state, action) => {
             const { title } = action.payload;

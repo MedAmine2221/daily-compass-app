@@ -53,9 +53,12 @@ export default function ToDoList() {
         collectionName: "tasks",
         filters: [
           { field: "title", operator: "==", value: item.title },
+          { field: "description", operator: "==", value: item.description },
+          { field: "endDate", operator: "==", value: item.endDate },
+          { field: "startDate", operator: "==", value: item.startDate },
         ],
         updateStates: [
-          removeTask(item),
+          removeTask({item}),
           removeCalendarTask({data: item})
         ],
       },

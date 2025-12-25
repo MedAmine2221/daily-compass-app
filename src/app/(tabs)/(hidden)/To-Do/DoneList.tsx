@@ -52,7 +52,7 @@ export default function DoneList() {
           { field: "title", operator: "==", value: item.title },
         ],
         updateStates: [
-          removeTask(item),
+          removeTask({item}),
           removeCalendarTask({data: item})
         ],
       },

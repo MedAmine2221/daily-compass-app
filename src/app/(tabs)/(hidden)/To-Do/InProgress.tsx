@@ -53,7 +53,7 @@ export default function InProgressList() {
           { field: "title", operator: "==", value: item.title },
         ],
         updateStates: [
-          removeTask(item),
+          removeTask({item}),
           removeCalendarTask({data: item})
         ],
       },
