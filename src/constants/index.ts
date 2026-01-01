@@ -80,7 +80,8 @@ export const STATIC_KNOWLEDGE = {
         "Anglais",
         "Arabe"
     ],
-    cv_file: "https://drive.google.com/file/d/1XM__X3RcQ_k4cKmvBIFjuTpTmu0AzD4Q/view?usp=drive_link"
+    cv_file: "https://drive.google.com/file/d/14yw9vwc7c3UhcohgQWULzrt7uPflh3_3/view?usp=sharing",
+
   }
 };
 
