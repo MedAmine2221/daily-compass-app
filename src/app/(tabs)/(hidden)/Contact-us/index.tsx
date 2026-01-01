@@ -10,17 +10,7 @@ export default function ContactUs() {
     <SafeAreaView className="flex-1 bg-white">
         <View style={{flex:1, backgroundColor: PRIMARY_COLOR}}>
             <Text className="self-center" style={{padding:10, marginTop:10, color: "white", fontWeight: "bold", fontSize: 25}} >{t("contact.title")}</Text>
-            <Image 
-                style={{
-                    width:150,
-                    height:150,
-                    alignSelf: "center",
-                    justifyContent:"center",
-                    marginTop:20,
-                    top:20
-                }}  
-                source={require("../../../../assets/images/social-media.png")} 
-            />
+            <Image className="justify-center self-center" source={require("../../../../assets/images/amine.png")} style={{width: 200, height: 200}} />
             <View className="bg-white h-[65%]"
                 style={{
                     borderTopLeftRadius: 60,
@@ -45,9 +35,9 @@ export default function ContactUs() {
 
                         <IconButton icon={"github"} size={30} iconColor="white" onPress={()=>openLink("https://github.com/MedAmine2221")} />
                     </View>
-                    {/* <View style={{alignItems:"center", justifyContent:"center", margin:10, backgroundColor: "#6b7280", borderRadius:100, width:50, height:50}}>
-                        <IconButton icon={"web"} size={30} iconColor="white" onPress={()=>openLink("")} />
-                    </View> */}
+                    <View style={{alignItems:"center", justifyContent:"center", margin:10, backgroundColor: "#6b7280", borderRadius:100, width:50, height:50}}>
+                        <IconButton icon={"web"} size={30} iconColor="white" onPress={()=>openLink("https://portfolio-rho-brown-aosm4qjgn0.vercel.app/")} />
+                    </View>
                 </View>
                 <View className="border-[0.5px] border-gray-700 w-full mb-5"/>
                 <Text style={{color:"#6b7280", fontWeight:"bold", padding:5, fontSize:20}}> {t("contact.contactDeveloper")} </Text>
@@ -66,8 +56,8 @@ export default function ContactUs() {
                         <Text className="text-[16px]">+216 53 739 484</Text>
                     </View>
                 </View>
-                {/* <View className="items-center justify-center">
-                    <Image source={require("../../../../assets/images/qr-code.png")} style={{width: 100, height: 100}} />
+                <View className="items-center justify-center">
+                    <Image source={require("../../../../assets/images/MohamedAminePortfolio.png")} style={{width: 100, height: 100}} />
                     <Text
                         style={{
                             fontWeight: "bold",
@@ -77,9 +67,9 @@ export default function ContactUs() {
                             paddingHorizontal: 10,
                         }}
                     >
-                        {t("contact.qrTitle")}
+                        {"https://portfolio-rho-brown-aosm4qjgn0.vercel.app"}
                     </Text>
-                </View> */}
+                </View>
             </View>
         </View>
     </SafeAreaView>
